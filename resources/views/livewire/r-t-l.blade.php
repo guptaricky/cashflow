@@ -907,7 +907,7 @@
                     </div>
                 </div>
                 <hr class="horizontal dark my-sm-4">
-                <a class="btn btn-outline-dark w-100" href="">View documentation</a>
+                <!-- <a class="btn btn-outline-dark w-100" href="">View documentation</a>
                 <div class="w-100 text-center">
                     <a class="github-button" href="https://github.com/creativetimofficial/material-dashboard"
                         data-icon="octicon-star" data-size="large" data-show-count="true"
@@ -921,7 +921,7 @@
                         class="btn btn-dark mb-0 me-2" target="_blank">
                         <i class="fab fa-facebook-square me-1" aria-hidden="true"></i> Share
                     </a>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
