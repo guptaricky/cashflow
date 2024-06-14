@@ -7,8 +7,9 @@ use App\Http\Livewire\Auth\ResetPassword;
 use App\Http\Livewire\Billing;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Dashboard;
-use App\Http\Livewire\Cashflow;
+use App\Http\Livewire\CashflowForm;
 use App\Http\Livewire\Cashflow2;
+use App\Http\Livewire\ContactForm;
 use App\Http\Livewire\ExampleLaravel\UserManagement;
 use App\Http\Livewire\ExampleLaravel\UserProfile;
 use App\Http\Livewire\Notifications;
@@ -48,8 +49,9 @@ Route::get('user-management', UserManagement::class)->middleware('auth')->name('
 
 Route::group(['middleware' => 'auth'], function () {
 Route::get('dashboard', Dashboard::class)->name('dashboard');
-Route::get('cashflow', Cashflow::class)->name('cashflow');
+Route::get('cashflow', CashflowForm::class)->name('cashflow');
 Route::get('cashflow2', Cashflow2::class)->name('cashflow2');
+Route::get('ContactForm', ContactForm::class)->name('ContactForm');
 Route::get('billing', Billing::class)->name('billing');
 Route::get('profile', Profile::class)->name('profile');
 Route::get('tables', Tables::class)->name('tables');
