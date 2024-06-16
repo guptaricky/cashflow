@@ -1,4 +1,4 @@
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
 <div class="">
     <!-- Navbar -->
     <!-- End Navbar -->
@@ -424,73 +424,130 @@
 </div>
 
 <script>
-    $(document).ready(function() {
-        $('#unitPrice').on('blur', function() {
-            let unitPrice = $(this).val();
-            let quantity = $('#quantity').val();
+   
+// $(document).ready(function(){
+//     $('#unitPrice').on('blur', function(){
+//         let unitPrice = $(this).val();
+//         let quantity = $('#quantity').val();
+        
+//         let unitMaterialPrice = unitPrice * 0.31;
+//         $('#unitMaterialPrice').val(unitMaterialPrice);
 
-            let unitMaterialPrice = unitPrice * 0.31;
-            $('#unitMaterialPrice').val(unitMaterialPrice);
-            $('#unitMaterialPrice2').html(unitMaterialPrice);
+//         if(quantity > 0){
+//             let unitOtherCharges = 250/quantity;
+//             let freight = 530/quantity;
+//             let unitLocalHandling = unitMaterialPrice * 0.03;
+//             let customDuty = unitMaterialPrice * 0.06;
+//             let bankCharges = unitMaterialPrice * 0.09;
+//             let landedCost = unitOtherCharges * 0.09;
+//             let profitMargin = unitMaterialPrice * 0.25;
+//             let sellingPrice = parseFloat(landedCost) + parseFloat(profitMargin);
+//             let totalSelling = parseFloat(sellingPrice) * parseFloat(quantity);
+//             let qty = parseFloat(quantity);
+//             let totalMaterialPrice = parseFloat(unitMaterialPrice) * parseFloat(qty);
+//             let totalOthercharges = parseFloat(unitOtherCharges) * parseFloat(qty);
+//             let totalFreight = parseFloat(freight) * parseFloat(qty);
+//             let totalHandling = parseFloat(unitLocalHandling) * parseFloat(qty);
+//             let totalCustoms = parseFloat(unitLocalHandling) * parseFloat(qty);
+//             let totalBankComm = parseFloat(bankCharges) * parseFloat(qty);
+//             let totalCompanyMargin = parseFloat(profitMargin) * parseFloat(qty);
+//             $('#qty').val(qty);
+//             $('#unitOtherCharges').val(unitOtherCharges);
+//             $('#freight').val(freight);
+//             $('#unitLocalHandling').val(unitLocalHandling);
+//             $('#customDuty').val(customDuty);
+//             $('#bankCharges').val(bankCharges);
+//             $('#landedCost').val(landedCost);
+//             $('#profitMargin').val(profitMargin);
+//             $('#sellingPrice').val(sellingPrice);
+//             $('#totalSelling').val(totalSelling);
+//             $('#totalSelling').val(totalSelling);
+//             $('#totalMaterialPrice').val(totalMaterialPrice);
+//             $('#totalOthercharges').val(totalOthercharges);
+//             $('#totalFreight').val(totalFreight);
+//             $('#totalHandling').val(totalHandling);
+//             $('#totalCustoms').val(totalCustoms);
+//             $('#totalBankComm').val(totalBankComm);
+//             $('#totalCompanyMargin').val(totalCompanyMargin);
+//         }
+//         else if(quantity == null || quantity == ''){
+//             alert("quantity cannot be empty")
+//         }
+        
+        
+       
+        
+//     });
+// });
 
-            if (quantity > 0) {
-                let unitOtherCharges = 250 / quantity;
-                let freight = 530 / quantity;
-                let unitLocalHandling = unitMaterialPrice * 0.03;
-                let customDuty = unitMaterialPrice * 0.06;
-                let bankCharges = unitMaterialPrice * 0.09;
-                let landedCost = unitOtherCharges * 0.09;
-                let profitMargin = unitMaterialPrice * 0.25;
-                let sellingPrice = parseFloat(landedCost) + parseFloat(profitMargin);
-                let totalSelling = parseFloat(sellingPrice) * parseFloat(quantity);
-                let qty = parseFloat(quantity);
-                let totalMaterialPrice = parseFloat(unitMaterialPrice) * parseFloat(qty);
-                let totalOthercharges = parseFloat(unitOtherCharges) * parseFloat(qty);
-                let totalFreight = parseFloat(freight) * parseFloat(qty);
-                let totalHandling = parseFloat(unitLocalHandling) * parseFloat(qty);
-                let totalCustoms = parseFloat(unitLocalHandling) * parseFloat(qty);
-                let totalBankComm = parseFloat(bankCharges) * parseFloat(qty);
-                let totalCompanyMargin = parseFloat(profitMargin) * parseFloat(qty);
-                $('#unitOtherCharges').val(unitOtherCharges);
-                $('#freight').val(freight);
-                $('#unitLocalHandling').val(unitLocalHandling);
-                $('#customDuty').val(customDuty);
-                $('#bankCharges').val(bankCharges);
-                $('#landedCost').val(landedCost);
-                $('#profitMargin').val(profitMargin);
-                $('#sellingPrice').val(sellingPrice);
-                $('#totalSelling').val(totalSelling);
-                $('#totalMaterialPrice').val(totalMaterialPrice);
-                $('#totalOthercharges').val(totalOthercharges);
-                $('#totalFreight').val(totalFreight);
-                $('#totalHandling').val(totalHandling);
-                $('#totalCustoms').val(totalCustoms);
-                $('#totalBankComm').val(totalBankComm);
-                $('#totalCompanyMargin').val(totalCompanyMargin);
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('unitPrice').addEventListener('blur', function() {
+        let unitPrice = this.value;
+        let quantity = document.getElementById('quantity').value;
 
-                $('#unitOtherCharges2').html(unitOtherCharges);
-                $('#freight2').html(freight);
-                $('#unitLocalHandling2').html(unitLocalHandling);
-                $('#customDuty2').html(customDuty);
-                $('#bankCharges2').html(bankCharges);
-                $('#landedCost2').html(landedCost);
-                $('#profitMargin2').html(profitMargin);
-                $('#sellingPrice2').html(sellingPrice);
-                $('#totalSelling2').html(totalSelling);
-                $('#totalMaterialPrice2').html(totalMaterialPrice);
-                $('#totalOthercharges2').html(totalOthercharges);
-                $('#totalFreight2').html(totalFreight);
-                $('#totalHandling2').html(totalHandling);
-                $('#totalCustoms2').html(totalCustoms);
-                $('#totalBankComm2').html(totalBankComm);
-                $('#totalCompanyMargin2').html(totalCompanyMargin);
-            } else if (quantity == null || quantity == '') {
-                alert("quantity cannot be empty")
-            }
+        let unitMaterialPrice = unitPrice * 0.31;
+        // document.getElementById('unitMaterialPrice').value = unitMaterialPrice;
+        @this.set('unitMaterialPrice', unitMaterialPrice);
 
+        if (quantity > 0) {
+            let unitOtherCharges = 250 / quantity;
+            let freight = 530 / quantity;
+            let unitLocalHandling = unitMaterialPrice * 0.03;
+            let customDuty = unitMaterialPrice * 0.06;
+            let bankCharges = unitMaterialPrice * 0.09;
+            let landedCost = unitOtherCharges * 0.09;
+            let profitMargin = unitMaterialPrice * 0.25;
+            let sellingPrice = parseFloat(landedCost) + parseFloat(profitMargin);
+            let totalSelling = parseFloat(sellingPrice) * parseFloat(quantity);
+            let qty = parseFloat(quantity);
+            let totalMaterialPrice = parseFloat(unitMaterialPrice) * parseFloat(qty);
+            let totalOthercharges = parseFloat(unitOtherCharges) * parseFloat(qty);
+            let totalFreight = parseFloat(freight) * parseFloat(qty);
+            let totalHandling = parseFloat(unitLocalHandling) * parseFloat(qty);
+            let totalCustoms = parseFloat(customDuty) * parseFloat(qty); // Corrected totalCustoms calculation
+            let totalBankComm = parseFloat(bankCharges) * parseFloat(qty);
+            let totalCompanyMargin = parseFloat(profitMargin) * parseFloat(qty);
+            
+            // document.getElementById('qty').value = qty;
+            // document.getElementById('unitOtherCharges').value = unitOtherCharges;
+            // document.getElementById('freight').value = freight;
+            // document.getElementById('unitLocalHandling').value = unitLocalHandling;
+            // document.getElementById('customDuty').value = customDuty;
+            // document.getElementById('bankCharges').value = bankCharges;
+            // document.getElementById('landedCost').value = landedCost;
+            // document.getElementById('profitMargin').value = profitMargin;
+            // document.getElementById('sellingPrice').value = sellingPrice;
+            // document.getElementById('totalSelling').value = totalSelling;
+            // document.getElementById('totalMaterialPrice').value = totalMaterialPrice;
+            // document.getElementById('totalOthercharges').value = totalOthercharges;
+            // document.getElementById('totalFreight').value = totalFreight;
+            // document.getElementById('totalHandling').value = totalHandling;
+            // document.getElementById('totalCustoms').value = totalCustoms;
+            // document.getElementById('totalBankComm').value = totalBankComm;
+            // document.getElementById('totalCompanyMargin').value = totalCompanyMargin;
 
-
-
-        });
+            @this.set('qty',qty);
+            @this.set('unitOtherCharges',unitOtherCharges);
+            @this.set('freight',freight);
+            @this.set('unitLocalHandling',unitLocalHandling);
+            @this.set('customDuty',customDuty);
+            @this.set('bankCharges',bankCharges);
+            @this.set('landedCost',landedCost);
+            @this.set('profitMargin',profitMargin);
+            @this.set('sellingPrice',sellingPrice);
+            @this.set('totalSelling',totalSelling);
+            @this.set('totalMaterialPrice',totalMaterialPrice);
+            @this.set('totalOthercharges',totalOthercharges);
+            @this.set('totalFreight',totalFreight);
+            @this.set('totalHandling',totalHandling);
+            @this.set('totalCustoms',totalCustoms);
+            @this.set('totalBankComm',totalBankComm);
+            @this.set('totalCompanyMargin',totalCompanyMargin);
+        } else if (quantity === null || quantity === '') {
+            alert("quantity cannot be empty");
+        }
     });
-</script>
+});
+
+
+</script>    

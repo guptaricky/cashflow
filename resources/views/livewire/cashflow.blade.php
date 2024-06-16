@@ -13,7 +13,7 @@
                                 <h6 class="mb-0">Cashflow</h6>
                             </div>
                             <div class="col-6 text-end">
-                                <button class="btn btn-outline-primary btn-sm mb-0">View All</button>
+                                <button class="btn btn-outline-primary btn-sm mb-0"><a href="{{ route('cashflow-list') }}">View Cashflow</a></button>
                             </div>
                         </div>
                     </div>
@@ -305,7 +305,8 @@ document.addEventListener('DOMContentLoaded', function() {
         let quantity = document.getElementById('quantity').value;
 
         let unitMaterialPrice = unitPrice * 0.31;
-        document.getElementById('unitMaterialPrice').value = unitMaterialPrice;
+        // document.getElementById('unitMaterialPrice').value = unitMaterialPrice;
+        @this.set('unitMaterialPrice', unitMaterialPrice);
 
         if (quantity > 0) {
             let unitOtherCharges = 250 / quantity;
@@ -326,23 +327,41 @@ document.addEventListener('DOMContentLoaded', function() {
             let totalBankComm = parseFloat(bankCharges) * parseFloat(qty);
             let totalCompanyMargin = parseFloat(profitMargin) * parseFloat(qty);
             
-            document.getElementById('qty').value = qty;
-            document.getElementById('unitOtherCharges').value = unitOtherCharges;
-            document.getElementById('freight').value = freight;
-            document.getElementById('unitLocalHandling').value = unitLocalHandling;
-            document.getElementById('customDuty').value = customDuty;
-            document.getElementById('bankCharges').value = bankCharges;
-            document.getElementById('landedCost').value = landedCost;
-            document.getElementById('profitMargin').value = profitMargin;
-            document.getElementById('sellingPrice').value = sellingPrice;
-            document.getElementById('totalSelling').value = totalSelling;
-            document.getElementById('totalMaterialPrice').value = totalMaterialPrice;
-            document.getElementById('totalOthercharges').value = totalOthercharges;
-            document.getElementById('totalFreight').value = totalFreight;
-            document.getElementById('totalHandling').value = totalHandling;
-            document.getElementById('totalCustoms').value = totalCustoms;
-            document.getElementById('totalBankComm').value = totalBankComm;
-            document.getElementById('totalCompanyMargin').value = totalCompanyMargin;
+            // document.getElementById('qty').value = qty;
+            // document.getElementById('unitOtherCharges').value = unitOtherCharges;
+            // document.getElementById('freight').value = freight;
+            // document.getElementById('unitLocalHandling').value = unitLocalHandling;
+            // document.getElementById('customDuty').value = customDuty;
+            // document.getElementById('bankCharges').value = bankCharges;
+            // document.getElementById('landedCost').value = landedCost;
+            // document.getElementById('profitMargin').value = profitMargin;
+            // document.getElementById('sellingPrice').value = sellingPrice;
+            // document.getElementById('totalSelling').value = totalSelling;
+            // document.getElementById('totalMaterialPrice').value = totalMaterialPrice;
+            // document.getElementById('totalOthercharges').value = totalOthercharges;
+            // document.getElementById('totalFreight').value = totalFreight;
+            // document.getElementById('totalHandling').value = totalHandling;
+            // document.getElementById('totalCustoms').value = totalCustoms;
+            // document.getElementById('totalBankComm').value = totalBankComm;
+            // document.getElementById('totalCompanyMargin').value = totalCompanyMargin;
+
+            @this.set('qty',qty);
+            @this.set('unitOtherCharges',unitOtherCharges);
+            @this.set('freight',freight);
+            @this.set('unitLocalHandling',unitLocalHandling);
+            @this.set('customDuty',customDuty);
+            @this.set('bankCharges',bankCharges);
+            @this.set('landedCost',landedCost);
+            @this.set('profitMargin',profitMargin);
+            @this.set('sellingPrice',sellingPrice);
+            @this.set('totalSelling',totalSelling);
+            @this.set('totalMaterialPrice',totalMaterialPrice);
+            @this.set('totalOthercharges',totalOthercharges);
+            @this.set('totalFreight',totalFreight);
+            @this.set('totalHandling',totalHandling);
+            @this.set('totalCustoms',totalCustoms);
+            @this.set('totalBankComm',totalBankComm);
+            @this.set('totalCompanyMargin',totalCompanyMargin);
         } else if (quantity === null || quantity === '') {
             alert("quantity cannot be empty");
         }

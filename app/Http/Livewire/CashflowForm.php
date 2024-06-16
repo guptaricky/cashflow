@@ -31,6 +31,7 @@ class CashflowForm extends Component
     public $customDuty;
     public $bankCharges;
     public $landedCost;
+    public $companyProfileMargin;
     public $profitMargin;
     public $targetPrice;
     public $sellingPrice;
@@ -50,89 +51,57 @@ class CashflowForm extends Component
 
     public function submit()
     {
+        // print_r($this->all());die;
         Log::debug('Submit method has been called.');
         // dd($this->serialNo);
-        Log::debug('Submitted Data:', [
-            'serialNo' => $this->serialNo,
-            'clientName' => $this->clientName,
-            'clientRef' => $this->clientRef,
-            'date' => $this->date,
-            'company' => $this->company,
-            'department' => $this->department,
-            'description' => $this->description,
-            'countryOrigin' => $this->countryOrigin,
-            'uom' => $this->uom,
-            'packagingInfo' => $this->packagingInfo,
-            'modeofshipment' => $this->modeofshipment,
-            'availability' => $this->availability,
-            'goodsTravel' => $this->goodsTravel,
-            'quantity' => $this->quantity,
-            'incoterms' => $this->incoterms,
-            'unitPrice' => $this->unitPrice,
-            'unitMaterialPrice' => $this->unitMaterialPrice,
-            'unitOtherCharges' => $this->unitOtherCharges,
-            'freight' => $this->freight,
-            'unitLocalHandling' => $this->unitLocalHandling,
-            'customDuty' => $this->customDuty,
-            'bankCharges' => $this->bankCharges,
-            'landedCost' => $this->landedCost,
-            'profitMargin' => $this->profitMargin,
-            'targetPrice' => $this->targetPrice,
-            'sellingPrice' => $this->sellingPrice,
-            'totalSelling' => $this->totalSelling,
-            'qty' => $this->qty,
-            'totalMaterialPrice' => $this->totalMaterialPrice,
-            'totalOthercharges' => $this->totalOthercharges,
-            'totalFreight' => $this->totalFreight,
-            'totalHandling' => $this->totalHandling,
-            'totalCustoms' => $this->totalCustoms,
-            'totalBankComm' => $this->totalBankComm,
-            'totalCompanyMargin' => $this->totalCompanyMargin
-           
-        ]);
+        
+        
         $this->validate();
 
-        Cashflow::create([
-            'serialNo' => $this->serialNo,
-            'clientName' => $this->clientName,
-            'clientRef' => $this->clientRef,
-            'date' => $this->date,
-            'company' => $this->company,
-            'department' => $this->department,
-            'description' => $this->description,
-            'countryOrigin' => $this->countryOrigin,
-            'uom' => $this->uom,
-            'packagingInfo' => $this->packagingInfo,
-            'modeofshipment' => $this->modeofshipment,
-            'availability' => $this->availability,
-            'goodsTravel' => $this->goodsTravel,
-            'quantity' => $this->quantity,
-            'incoterms' => $this->incoterms,
-            'unitPrice' => $this->unitPrice,
-            'unitMaterialPrice' => $this->unitMaterialPrice,
-            'unitOtherCharges' => $this->unitOtherCharges,
-            'freight' => $this->freight,
-            'unitLocalHandling' => $this->unitLocalHandling,
-            'customDuty' => $this->customDuty,
-            'bankCharges' => $this->bankCharges,
-            'landedCost' => $this->landedCost,
-            'profitMargin' => $this->profitMargin,
-            'targetPrice' => $this->targetPrice,
-            'sellingPrice' => $this->sellingPrice,
-            'totalSelling' => $this->totalSelling,
-            'qty' => $this->qty,
-            'totalMaterialPrice' => $this->totalMaterialPrice,
-            'totalOthercharges' => $this->totalOthercharges,
-            'totalFreight' => $this->totalFreight,
-            'totalHandling' => $this->totalHandling,
-            'totalCustoms' => $this->totalCustoms,
-            'totalBankComm' => $this->totalBankComm,
-            'totalCompanyMargin' => $this->totalCompanyMargin,
-        ]);
+        Cashflow::create($this->all()
+        // [
+        //     'serialNo' => $this->serialNo,
+        //     'clientName' => $this->clientName,
+        //     'clientRef' => $this->clientRef,
+        //     'date' => $this->date,
+        //     'company' => $this->company,
+        //     'department' => $this->department,
+        //     'description' => $this->description,
+        //     'countryOrigin' => $this->countryOrigin,
+        //     'uom' => $this->uom,
+        //     'packagingInfo' => $this->packagingInfo,
+        //     'modeofshipment' => $this->modeofshipment,
+        //     'availability' => $this->availability,
+        //     'goodsTravel' => $this->goodsTravel,
+        //     'quantity' => $this->quantity,
+        //     'incoterms' => $this->incoterms,
+        //     'unitPrice' => $this->unitPrice,
+        //     'unitMaterialPrice' => $this->unitMaterialPrice,
+        //     'unitOtherCharges' => $this->unitOtherCharges,
+        //     'freight' => $this->freight,
+        //     'unitLocalHandling' => $this->unitLocalHandling,
+        //     'customDuty' => $this->customDuty,
+        //     'bankCharges' => $this->bankCharges,
+        //     'landedCost' => $this->landedCost,
+        //     'companyProfileMargin' => $this->companyProfileMargin,
+        //     'profitMargin' => $this->profitMargin,
+        //     'targetPrice' => $this->targetPrice,
+        //     'sellingPrice' => $this->sellingPrice,
+        //     'totalSelling' => $this->totalSelling,
+        //     'qty' => $this->qty,
+        //     'totalMaterialPrice' => $this->totalMaterialPrice,
+        //     'totalOthercharges' => $this->totalOthercharges,
+        //     'totalFreight' => $this->totalFreight,
+        //     'totalHandling' => $this->totalHandling,
+        //     'totalCustoms' => $this->totalCustoms,
+        //     'totalBankComm' => $this->totalBankComm,
+        //     'totalCompanyMargin' => $this->totalCompanyMargin,
+        // ]
+    );
 
         session()->flash('message', 'Contact form successfully submitted.');
 
-        $this->reset(['serialNo']);
+        $this->reset();
     }
     public function render()
     {
