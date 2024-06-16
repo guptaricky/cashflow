@@ -46,21 +46,30 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white {{ Route::currentRouteName() == 'cashflow' ? ' active bg-gradient-primary' : '' }} "
-                    href="{{ route('cashflow') }}">
+                <a class="nav-link text-white {{ Route::currentRouteName() == 'add-cash-flow-details' ? ' active bg-gradient-primary' : '' }} "
+                    href="{{ route('add-cash-flow-details') }}">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">dashboard</i>
                     </div>
-                    <span class="nav-link-text ms-1">Cashflow 1</span>
+                    <span class="nav-link-text ms-1">Add Cash Flow Details</span>
                 </a>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link text-white {{ Route::currentRouteName() == 'cashflow2' ? ' active bg-gradient-primary' : '' }} "
                     href="{{ route('cashflow2') }}">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">dashboard</i>
                     </div>
                     <span class="nav-link-text ms-1">Cashflow 2</span>
+                </a>
+            </li> -->
+            <li class="nav-item">
+                <a class="nav-link text-white {{ Route::currentRouteName() == 'cash-flow-list' ? ' active bg-gradient-primary' : '' }} "
+                    href="{{ route('cash-flow-list') }}">
+                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="material-icons opacity-10">dashboard</i>
+                    </div>
+                    <span class="nav-link-text ms-1">Cash Flow List</span>
                 </a>
             </li>
             <!-- <li class="nav-item">

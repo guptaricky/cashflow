@@ -10,7 +10,10 @@ class CashflowList extends Component
 {
     public function render()
     {
-        return view('livewire.cashflow-list');
+        $dataSource = Cashflow::all();
+        return view('livewire.cashflow-list',[
+            'dataSource' => $dataSource,
+        ]);
     }
     
 }

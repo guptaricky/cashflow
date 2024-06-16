@@ -50,8 +50,8 @@ Route::get('user-management', UserManagement::class)->middleware('auth')->name('
 
 Route::group(['middleware' => 'auth'], function () {
 Route::get('dashboard', Dashboard::class)->name('dashboard');
-Route::get('cashflow', CashflowForm::class)->name('cashflow');
-Route::get('cashflow-list', CashflowList::class)->name('cashflow-list');
+Route::get('add-cash-flow-details', CashflowForm::class)->name('add-cash-flow-details');
+Route::get('cash-flow-list', CashflowList::class)->name('cash-flow-list');
 Route::get('cashflow2', Cashflow2::class)->name('cashflow2');
 Route::get('ContactForm', ContactForm::class)->name('ContactForm');
 Route::get('billing', Billing::class)->name('billing');
