@@ -99,7 +99,7 @@ class CashflowForm extends Component
         // ]
     );
 
-        session()->flash('message', 'Contact form successfully submitted.');
+        session()->flash('message', 'Entry submitted successfully.');
 
         $this->reset();
     }
