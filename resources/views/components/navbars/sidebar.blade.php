@@ -49,7 +49,7 @@
                 <a class="nav-link text-white {{ Route::currentRouteName() == 'add-cash-flow-details' ? ' active bg-gradient-primary' : '' }} "
                     href="{{ route('add-cash-flow-details') }}">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">dashboard</i>
+                        <i class="material-icons opacity-10">playlist_add</i>
                     </div>
                     <span class="nav-link-text ms-1">Add Cash Flow Details</span>
                 </a>
@@ -67,9 +67,27 @@
                 <a class="nav-link text-white {{ Route::currentRouteName() == 'cash-flow-list' ? ' active bg-gradient-primary' : '' }} "
                     href="{{ route('cash-flow-list') }}">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">dashboard</i>
+                        <i class="material-icons opacity-10">list</i>
                     </div>
                     <span class="nav-link-text ms-1">Cash Flow List</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white {{ Route::currentRouteName() == 'currency' ? ' active bg-gradient-primary' : '' }} "
+                    href="{{ route('currency') }}">
+                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="material-icons opacity-10">currency_exchange</i>
+                    </div>
+                    <span class="nav-link-text ms-1">Currency</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white {{ Route::currentRouteName() == 'company' ? ' active bg-gradient-primary' : '' }} "
+                    href="{{ route('company') }}">
+                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="material-icons opacity-10">add_business</i>
+                    </div>
+                    <span class="nav-link-text ms-1">Company</span>
                 </a>
             </li>
             <!-- <li class="nav-item">

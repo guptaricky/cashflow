@@ -4,6 +4,8 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\Cashflow;
+use App\Models\Currency;
+use App\Models\Company;
 use Illuminate\Support\Facades\Log;
 
 class CashflowForm extends Component
@@ -51,52 +53,12 @@ class CashflowForm extends Component
 
     public function submit()
     {
-        // print_r($this->all());die;
         Log::debug('Submit method has been called.');
-        // dd($this->serialNo);
-        
-        
+
         $this->validate();
 
         Cashflow::create($this->all()
-        // [
-        //     'serialNo' => $this->serialNo,
-        //     'clientName' => $this->clientName,
-        //     'clientRef' => $this->clientRef,
-        //     'date' => $this->date,
-        //     'company' => $this->company,
-        //     'department' => $this->department,
-        //     'description' => $this->description,
-        //     'countryOrigin' => $this->countryOrigin,
-        //     'uom' => $this->uom,
-        //     'packagingInfo' => $this->packagingInfo,
-        //     'modeofshipment' => $this->modeofshipment,
-        //     'availability' => $this->availability,
-        //     'goodsTravel' => $this->goodsTravel,
-        //     'quantity' => $this->quantity,
-        //     'incoterms' => $this->incoterms,
-        //     'unitPrice' => $this->unitPrice,
-        //     'unitMaterialPrice' => $this->unitMaterialPrice,
-        //     'unitOtherCharges' => $this->unitOtherCharges,
-        //     'freight' => $this->freight,
-        //     'unitLocalHandling' => $this->unitLocalHandling,
-        //     'customDuty' => $this->customDuty,
-        //     'bankCharges' => $this->bankCharges,
-        //     'landedCost' => $this->landedCost,
-        //     'companyProfileMargin' => $this->companyProfileMargin,
-        //     'profitMargin' => $this->profitMargin,
-        //     'targetPrice' => $this->targetPrice,
-        //     'sellingPrice' => $this->sellingPrice,
-        //     'totalSelling' => $this->totalSelling,
-        //     'qty' => $this->qty,
-        //     'totalMaterialPrice' => $this->totalMaterialPrice,
-        //     'totalOthercharges' => $this->totalOthercharges,
-        //     'totalFreight' => $this->totalFreight,
-        //     'totalHandling' => $this->totalHandling,
-        //     'totalCustoms' => $this->totalCustoms,
-        //     'totalBankComm' => $this->totalBankComm,
-        //     'totalCompanyMargin' => $this->totalCompanyMargin,
-        // ]
+       
     );
 
         session()->flash('message', 'Entry submitted successfully.');
@@ -105,7 +67,12 @@ class CashflowForm extends Component
     }
     public function render()
     {
-        return view('livewire.cashflow');
+        $companies = Company::all();
+        $currencies = Currency::all();
+        return view('livewire.cashflow',[
+            'companies' => $companies,
+            'currencies' => $currencies,
+        ]);
     }
     
 }

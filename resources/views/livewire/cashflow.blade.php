@@ -18,7 +18,6 @@
                         </div>
                     </div>
                     <div class="card-body p-3">
-                        
                         @if (session()->has('message'))
                         <div class="alert alert-success">
                             {{ session('message') }}
@@ -51,8 +50,9 @@
                                 <div class="mb-3 col-md-3">
                                     <label class="form-label">Company</label>
                                     <select class="form-control border border-2 p-2" id="company" wire:model ="company">
-                                        <option value="Integra Medical"> Integra Medical </option>
-                                        <option value="Intra Trading & Contracting">Intra Trading & Contracting</option>
+                                    @foreach($companies as $index => $company)
+                                        <option value="{{ $company->name }}"> {{ $company->name }} </option>
+                                    @endforeach    
                                     </select>
                                 </div>
                                 <div class="mb-3 col-md-3">
@@ -117,7 +117,7 @@
                             <div class="row">
                                 <div class="mb-3 col-md-3">
                                     <label class="form-label">INCOTERMS</label>
-                                    <select id="incoterms" wire:model="incoterms" class="form-control border border-2 p-2" id="modeofshipment">
+                                    <select id="incoterms" wire:model="incoterms" class="form-control border border-2 p-2">
                                         <option value="EXW">EXW</option>
                                         <option value="FOB">FOB</option>
                                         <option value="C&P">C&P</option>
@@ -128,7 +128,17 @@
                                     </select>
                                 </div>
                                 <div class="mb-3 col-md-3">
-                                    <label class="form-label">Unit Price in Different Currency in USD</label>
+                                    <label class="form-label">Currency</label>
+                                    <select id="currency" class="form-control border border-2 p-2" onchange="changeCurrencyLabel(this.value)">
+                                    <option value=""> -- Select any Currency -- </option>
+                                        @foreach($currencies as $index => $currency)
+                                            <option value="{{ $currency->name }}-{{ $currency->conversion_factor }}"> {{ $currency->name }} ({{ $currency->code }} ) </option>
+                                        @endforeach   
+                                    </select>
+                                    <input id="conversion_factor" type="hidden" >
+                                </div>
+                                <div class="mb-3 col-md-3">
+                                    <label class="form-label ">Unit Price <span id="currency_label" class="font-weight-bold"> (in Dealing Currency)</span></label>
                                     <input id="unitPrice" wire:model="unitPrice" type="text" class="form-control border border-2 p-2" >
                                     @error('unitPrice') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
                                 </div>
@@ -243,109 +253,45 @@
 </div>
 
 <script>
-   
-// $(document).ready(function(){
-//     $('#unitPrice').on('blur', function(){
-//         let unitPrice = $(this).val();
-//         let quantity = $('#quantity').val();
-        
-//         let unitMaterialPrice = unitPrice * 0.31;
-//         $('#unitMaterialPrice').val(unitMaterialPrice);
 
-//         if(quantity > 0){
-//             let unitOtherCharges = 250/quantity;
-//             let freight = 530/quantity;
-//             let unitLocalHandling = unitMaterialPrice * 0.03;
-//             let customDuty = unitMaterialPrice * 0.06;
-//             let bankCharges = unitMaterialPrice * 0.09;
-//             let landedCost = unitOtherCharges * 0.09;
-//             let profitMargin = unitMaterialPrice * 0.25;
-//             let sellingPrice = parseFloat(landedCost) + parseFloat(profitMargin);
-//             let totalSelling = parseFloat(sellingPrice) * parseFloat(quantity);
-//             let qty = parseFloat(quantity);
-//             let totalMaterialPrice = parseFloat(unitMaterialPrice) * parseFloat(qty);
-//             let totalOthercharges = parseFloat(unitOtherCharges) * parseFloat(qty);
-//             let totalFreight = parseFloat(freight) * parseFloat(qty);
-//             let totalHandling = parseFloat(unitLocalHandling) * parseFloat(qty);
-//             let totalCustoms = parseFloat(unitLocalHandling) * parseFloat(qty);
-//             let totalBankComm = parseFloat(bankCharges) * parseFloat(qty);
-//             let totalCompanyMargin = parseFloat(profitMargin) * parseFloat(qty);
-//             $('#qty').val(qty);
-//             $('#unitOtherCharges').val(unitOtherCharges);
-//             $('#freight').val(freight);
-//             $('#unitLocalHandling').val(unitLocalHandling);
-//             $('#customDuty').val(customDuty);
-//             $('#bankCharges').val(bankCharges);
-//             $('#landedCost').val(landedCost);
-//             $('#profitMargin').val(profitMargin);
-//             $('#sellingPrice').val(sellingPrice);
-//             $('#totalSelling').val(totalSelling);
-//             $('#totalSelling').val(totalSelling);
-//             $('#totalMaterialPrice').val(totalMaterialPrice);
-//             $('#totalOthercharges').val(totalOthercharges);
-//             $('#totalFreight').val(totalFreight);
-//             $('#totalHandling').val(totalHandling);
-//             $('#totalCustoms').val(totalCustoms);
-//             $('#totalBankComm').val(totalBankComm);
-//             $('#totalCompanyMargin').val(totalCompanyMargin);
-//         }
-//         else if(quantity == null || quantity == ''){
-//             alert("quantity cannot be empty")
-//         }
-        
-        
-       
-        
-//     });
-// });
+function changeCurrencyLabel(str){
+    parts = str.split("-")
+    // let currency = document.getElementById('currency').value;
+    // document.getElementById("currency_label").textContent= "(in "+ currency + ")";
+    document.getElementById("conversion_factor").value= parts[1];
+}
 
 document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('unitPrice').addEventListener('blur', function() {
+    document.getElementById('unitPrice').addEventListener('keyup', function() {
         let unitPrice = this.value;
+        let conversion_factor = document.getElementById('conversion_factor').value;
         let quantity = document.getElementById('quantity').value;
+        // let currency = document.getElementById('currency').value;
 
-        let unitMaterialPrice = unitPrice * 0.31;
+        let unitMaterialPrice = (unitPrice / conversion_factor).toFixed(2);
         // document.getElementById('unitMaterialPrice').value = unitMaterialPrice;
         @this.set('unitMaterialPrice', unitMaterialPrice);
 
         if (quantity > 0) {
-            let unitOtherCharges = 250 / quantity;
-            let freight = 530 / quantity;
-            let unitLocalHandling = unitMaterialPrice * 0.03;
-            let customDuty = unitMaterialPrice * 0.06;
-            let bankCharges = unitMaterialPrice * 0.09;
-            let landedCost = unitOtherCharges * 0.09;
-            let profitMargin = unitMaterialPrice * 0.25;
-            let sellingPrice = parseFloat(landedCost) + parseFloat(profitMargin);
-            let totalSelling = parseFloat(sellingPrice) * parseFloat(quantity);
+            let unitOtherCharges = (250 / quantity).toFixed(2);
+            let freight = (530 / quantity).toFixed(2);
+            let unitLocalHandling = (unitMaterialPrice * 0.03.toFixed(2)).toFixed(2);
+            let customDuty = (unitMaterialPrice * 0.06).toFixed(2);
+            let bankCharges = (unitMaterialPrice * 0.09).toFixed(2);
+            let landedCost = (unitOtherCharges * 0.09).toFixed(2);
+            let profitMargin = (unitMaterialPrice * 0.25).toFixed(2);
+            let sellingPrice = (parseFloat(landedCost) + parseFloat(profitMargin)).toFixed(2);
+            let totalSelling = (parseFloat(sellingPrice) * parseFloat(quantity)).toFixed(2);
             let qty = parseFloat(quantity);
-            let totalMaterialPrice = parseFloat(unitMaterialPrice) * parseFloat(qty);
-            let totalOthercharges = parseFloat(unitOtherCharges) * parseFloat(qty);
-            let totalFreight = parseFloat(freight) * parseFloat(qty);
-            let totalHandling = parseFloat(unitLocalHandling) * parseFloat(qty);
-            let totalCustoms = parseFloat(customDuty) * parseFloat(qty); // Corrected totalCustoms calculation
-            let totalBankComm = parseFloat(bankCharges) * parseFloat(qty);
-            let totalCompanyMargin = parseFloat(profitMargin) * parseFloat(qty);
-            
-            // document.getElementById('qty').value = qty;
-            // document.getElementById('unitOtherCharges').value = unitOtherCharges;
-            // document.getElementById('freight').value = freight;
-            // document.getElementById('unitLocalHandling').value = unitLocalHandling;
-            // document.getElementById('customDuty').value = customDuty;
-            // document.getElementById('bankCharges').value = bankCharges;
-            // document.getElementById('landedCost').value = landedCost;
-            // document.getElementById('profitMargin').value = profitMargin;
-            // document.getElementById('sellingPrice').value = sellingPrice;
-            // document.getElementById('totalSelling').value = totalSelling;
-            // document.getElementById('totalMaterialPrice').value = totalMaterialPrice;
-            // document.getElementById('totalOthercharges').value = totalOthercharges;
-            // document.getElementById('totalFreight').value = totalFreight;
-            // document.getElementById('totalHandling').value = totalHandling;
-            // document.getElementById('totalCustoms').value = totalCustoms;
-            // document.getElementById('totalBankComm').value = totalBankComm;
-            // document.getElementById('totalCompanyMargin').value = totalCompanyMargin;
-
+            let totalMaterialPrice = (parseFloat(unitMaterialPrice) * parseFloat(qty)).toFixed(2);
+            let totalOthercharges = (parseFloat(unitOtherCharges) * parseFloat(qty)).toFixed(2);
+            let totalFreight = (parseFloat(freight) * parseFloat(qty)).toFixed(2);
+            let totalHandling = (parseFloat(unitLocalHandling) * parseFloat(qty)).toFixed(2);
+            let totalCustoms = (parseFloat(customDuty) * parseFloat(qty)).toFixed(2); // Corrected totalCustoms calculation
+            let totalBankComm = (parseFloat(bankCharges) * parseFloat(qty)).toFixed(2);
+            let totalCompanyMargin = (parseFloat(profitMargin) * parseFloat(qty)).toFixed(2);
             @this.set('qty',qty);
+            // @this.set('currency_label',currency);
             @this.set('unitOtherCharges',unitOtherCharges);
             @this.set('freight',freight);
             @this.set('unitLocalHandling',unitLocalHandling);
@@ -363,7 +309,7 @@ document.addEventListener('DOMContentLoaded', function() {
             @this.set('totalBankComm',totalBankComm);
             @this.set('totalCompanyMargin',totalCompanyMargin);
         } else if (quantity === null || quantity === '') {
-            alert("quantity cannot be empty");
+            //alert("quantity cannot be empty");
         }
     });
 });
