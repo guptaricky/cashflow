@@ -73,7 +73,7 @@
                                     <button onclick="searchContent()" type="button" class="btn btn-success btn-label waves-effect waves-light w-lg "><i class="ri-search-2-line label-icon align-middle fs-16 me-2"></i> Search</button>
                                     <button onclick="resetContent()" type="button" class="btn btn-danger waves-effect waves-light  "> Reset</button>
                                     <button id="exportBtn" type="button" class="btn btn-warning waves-effect waves-light ">Export</button> {{---<a href="{{ route('cashflow.export' )}}"> Export </a>--}}
-                                    <button type="button" class="btn btn-warning waves-effect waves-light "><a href="{{ route('cashflow.exportAll' )}}"> Export To XERO format</a></button>
+                                    <button id="exportBtnXero" type="button" class="btn btn-warning waves-effect waves-light "> Export To XERO format</button>
                                 </div><!--end col-->
                             </div><!--end row-->
                         </form>
@@ -101,7 +101,7 @@
                                     @foreach($cashflows as $index => $cashflow)
                                     <tr class="gridjs-tr" >
                                         <td data-column-id="sno" class="gridjs-td"><span><a href="" class="fw-medium">{{ $index + 1 }}</a></span></td>
-                                        <td data-column-id="serialno" class="gridjs-td">{{ $cashflow->serialNo }}</td>
+                                        <td data-column-id="serialno" class="gridjs-td"><a href="{{ route('cashflow.detail', ['id' => $cashflow->id] ) }}"><span class="badge text-bg-secondary">{{ $cashflow->serialNo }}</span></a></td>
                                         <td data-column-id="date" class="gridjs-td">{{ $cashflow->date }}</td>
                                         <td data-column-id="clientname" class="gridjs-td">{{ $cashflow->clientName }}</td>
                                         <td data-column-id="department" class="gridjs-td">{{ $cashflow->department }}</td>
@@ -152,38 +152,6 @@ function searchContent() {
         }
     });
 }
-// function exportContent() {
-//     var company = $('#company').val();
-//     var department = $('#department').val();
-//     var fromDate = $('#fromDate').val();
-//     var toDate = $('#toDate').val();
-  
-//     $.ajax({
-//         url: "{{ route('cashflow.export') }}", // Backend script to handle the search query
-//         type: 'GET',
-//         data: { company: company,department: department, fromDate: fromDate, toDate: toDate },
-//         xhrFields: {
-//             responseType: 'blob' // Set response type to blob to handle file download
-//         },
-//         success: function(response, status, xhr) {
-//             // Create a link to download the file
-//             var blob = new Blob([response], { type: 'application/vnd.ms-excel' });
-//             var link = document.createElement('a');
-//             link.href = window.URL.createObjectURL(blob);
-//             link.download = 'filtered_cashflow.xlsx';
-
-//             // Append the link to the body and trigger the download
-//             document.body.appendChild(link);
-//             link.click();
-
-//             // Clean up and remove the link
-//             document.body.removeChild(link);
-//         },
-//         error: function() {
-//             $('#results').html('<p>An error has occurred</p>');
-//         }
-//     });
-// }
 $('#exportBtn').on('click', function() {
     var company = $('#company').val();
     var department = $('#department').val();
@@ -215,7 +183,37 @@ $('#exportBtn').on('click', function() {
         }
     });
 });
+$('#exportBtnXero').on('click', function() {
+    var company = $('#company').val();
+    var department = $('#department').val();
+    var fromDate = $('#fromDate').val();
+    var toDate = $('#toDate').val();
 
+    var queryParams = `company=${company}&department=${department}&fromDate=${fromDate}&toDate=${toDate}`;
+    // alert(queryParams)
+    $.ajax({
+        url: '/cashflow/exportXero?' + queryParams,
+        type: 'GET',
+        xhrFields: {
+            responseType: 'blob' // Expecting a blob response (Excel file)
+        },
+        success: function(data, status, xhr) {
+            var blob = new Blob([data], { type: 'application/vnd.ms-excel' });
+            var link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.download = 'filtered_cashflow.xlsx';
+
+            document.body.appendChild(link);
+
+            link.click();
+
+            document.body.removeChild(link);
+        },
+        error: function(xhr, status, error) {
+            console.error('Failed to export data:', error);
+        }
+    });
+});
 
 function resetContent() {
     $('#company').val('');

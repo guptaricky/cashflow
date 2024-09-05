@@ -10,10 +10,6 @@ class CashflowService
 
     public function search($filters)
     {
-        // if(empty($filters)){
-        //     $this->results = Cashflow::get();
-        // }
-        // else{
             $this->results = Cashflow::when($filters['company'], function ($query, $company) {
                 return $query->where('company', 'LIKE', "%{$company}%");
             })
@@ -25,9 +21,7 @@ class CashflowService
             })
             ->orderBy('created_at', 'DESC')
             ->get();
-        // }
-        
-
+       
         return $this->results;
     }
 

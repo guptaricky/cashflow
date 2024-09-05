@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exports\ExportCashflow;
+use App\Exports\ExportXero;
 use Excel;
 use App\Models\Cashflow as ModelsCashflow;
 use App\Models\Company;
@@ -139,9 +140,10 @@ class Cashflow extends Controller
         return Excel::download(new ExportCashflow($cashflow), 'cashflow.xlsx');
     }
 
-    public function exportAll() {
+    public function exportXero(Request $request) {
+        $filters = $request->only(['company', 'department', 'fromDate', 'toDate']);
         $cashflow = $this->cashflowService->getResults();
-        return Excel::download(new ExportCashflow($cashflow), 'cashflow.xlsx');
+        return Excel::download(new ExportXero($cashflow), 'cashflow.xlsx');
     }
     public function update() {}
 
