@@ -62,10 +62,10 @@
                             <div class="col-xxl-3 col-md-6">
                                 <div>
                                     <label for="Company" class="@error('serialNo') is-invalid @enderror form-label">Company</label>
-                                    <select id="company" name="company" class="form-select" data-choices="" data-choices-sorting="true">
+                                    <select id="company" name="company" class="form-select" data-choices="" data-choices-sorting="true" >
                                         <option selected="">Choose...</option>
                                         @foreach($companies as $index => $company)
-                                        <option value="{{ $company->name }}"> {{ $company->name }} </option>
+                                        <option value="{{ $company->name }}" {{ old('company') == $company->name ? 'selected' : '' }}> {{ $company->name }} </option>
                                         @endforeach
                                     </select>
                                     @error('company') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
@@ -76,10 +76,10 @@
                                     <label for="department" class="@error('department') is-invalid @enderror form-label">Department</label>
                                     <select id="department" name="department" class="form-select" data-choices="" data-choices-sorting="true">
                                         <option selected="">Choose...</option>
-                                        <option value="Division 1">Division 1</option>
-                                        <option value="Division 2">Division 2</option>
-                                        <option value="Central 1">Central 1</option>
-                                        <option value="Central 2">Central 2</option>
+                                        <option value="Division 1" {{ old('department') == 'Division 1' ? 'selected' : '' }} >Division 1</option>
+                                        <option value="Division 2" {{ old('department') == 'Division 2' ? 'selected' : '' }} >Division 2</option>
+                                        <option value="Central 1" {{ old('department') == 'Central 1' ? 'selected' : '' }} >Central 1</option>
+                                        <option value="Central 2" {{ old('department') == 'Central 2' ? 'selected' : '' }} >Central 2</option>
                                     </select>
                                     @error('department') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
                                 </div>
@@ -116,10 +116,10 @@
                             <div class="col-xxl-3 col-md-6">
                                 <div>
                                     <label for="modeofshipment" class="@error('modeofshipment') is-invalid @enderror form-label">Mode of Shipment</label>
-                                    <select id="modeofshipment" name="modeofshipment" class="form-select" data-choices="" data-choices-sorting="true">
-                                        <option value="Air Freight">Air Freight</option>
-                                        <option value="Sea Freight">Sea Freight</option>
-                                        <option value="Land Freight">Land Freight</option>
+                                    <select id="modeofshipment" name="modeofshipment" class="form-select" data-choices="" data-choices-sorting="true" value="{{ old('modeofshipment') }}">
+                                        <option value="Air Freight" {{ old('modeofshipment') == 'Air Freight' ? 'selected' : '' }} >Air Freight</option>
+                                        <option value="Sea Freight" {{ old('modeofshipment') == 'Sea Freight' ? 'selected' : '' }} >Sea Freight</option>
+                                        <option value="Land Freight" {{ old('modeofshipment') == 'Land Freight' ? 'selected' : '' }} >Land Freight</option>
                                     </select>
                                     @error('modeofshipment') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
                                 </div>
@@ -150,14 +150,14 @@
                             <div class="col-xxl-3 col-md-6">
                                 <div>
                                     <label for="incoterms" class="@error('incoterms') is-invalid @enderror form-label">INCOTERMS</label>
-                                    <select id="incoterms" name="incoterms" class="form-select" data-choices="" data-choices-sorting="true">
-                                        <option value="EXW">EXW</option>
-                                        <option value="FOB">FOB</option>
-                                        <option value="C&P">C&P</option>
-                                        <option value="CIF">CIF</option>
-                                        <option value="CIP">CIP</option>
-                                        <option value="DAP">DAP</option>
-                                        <option value="DPT">DPT</option>
+                                    <select id="incoterms" name="incoterms" class="form-select" data-choices="" data-choices-sorting="true" value="{{ old('incoterms') }}">
+                                        <option value="EXW" {{ old('incoterms') == 'EXW' ? 'selected' : '' }} >EXW</option>
+                                        <option value="FOB" {{ old('incoterms') == 'FOB' ? 'selected' : '' }} >FOB</option>
+                                        <option value="C&P" {{ old('incoterms') == 'C&P' ? 'selected' : '' }} >C&P</option>
+                                        <option value="CIF" {{ old('incoterms') == 'CIF' ? 'selected' : '' }} >CIF</option>
+                                        <option value="CIP" {{ old('incoterms') == 'CIP' ? 'selected' : '' }} >CIP</option>
+                                        <option value="DAP" {{ old('incoterms') == 'DAP' ? 'selected' : '' }} >DAP</option>
+                                        <option value="DPT" {{ old('incoterms') == 'DPT' ? 'selected' : '' }} >DPT</option>
                                     </select>
                                     @error('incoterms') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
                                 </div>
@@ -168,7 +168,10 @@
                                     <select id="currency" name="currency" class="form-select" data-choices="" data-choices-sorting="true" onchange="changeCurrencyLabel(this.value)">
                                         <option value=""> Choose... </option>
                                         @foreach($currencies as $index => $currency)
-                                            <option value="{{ $currency->name }}-{{ $currency->conversion_factor }}"> {{ $currency->name }} ({{ $currency->code }} ) </option>
+                                        <option value="{{ $currency->name }}-{{ $currency->conversion_factor }}" 
+                                            {{ old('currency') == $currency->name . '-' . $currency->conversion_factor ? 'selected' : '' }}>
+                                            {{ $currency->name }} ({{ $currency->code }})
+                                        </option>
                                         @endforeach
                                     </select>
                                     </select>
@@ -185,7 +188,7 @@
                             <div class="col-xxl-3 col-md-6">
                                 <div>
                                     <label for="unitPrice" class="@error('unitPrice') is-invalid @enderror form-label">Unit Price <span id="currency_label" class="font-weight-bold"> (in Dealing Currency)</label>
-                                    <input type="text" class="form-control" id="unitPrice" name="unitPrice" value="{{ old('unitPrice') }}">
+                                    <input type="text" class="form-control" id="unitPrice" name="unitPrice">
                                     @error('unitPrice') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
                                 </div>
                             </div>

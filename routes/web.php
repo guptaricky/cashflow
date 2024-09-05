@@ -17,6 +17,8 @@ Route::get('/cashflow/cashflow-detail-view/{id}', [Cashflow::class, 'detail'])->
 Route::get('/cashflow/create', [Cashflow::class, 'create'])->middleware(['auth', 'verified'])->name('cashflow.create');
 Route::post('/cashflow/store', [Cashflow::class, 'store'])->middleware(['auth', 'verified'])->name('cashflow.store');
 Route::get('/cashflow/search', [Cashflow::class, 'search'])->middleware(['auth', 'verified'])->name('cashflow.search');
+Route::get('/cashflow/export', [Cashflow::class, 'export'])->middleware(['auth', 'verified'])->name('cashflow.export');
+Route::get('/cashflow/exportAll', [Cashflow::class, 'exportAll'])->middleware(['auth', 'verified'])->name('cashflow.exportAll');
 
 Route::get('/cashflow-list-view', function () {
     return view('cashflowList');

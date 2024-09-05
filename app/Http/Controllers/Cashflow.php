@@ -2,14 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ExportCashflow;
+use Excel;
 use App\Models\Cashflow as ModelsCashflow;
 use App\Models\Company;
 use App\Models\Currency;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use App\Services\CashflowService;
+use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 
 class Cashflow extends Controller
 {
+    protected $cashflowService;
+
+    public function __construct(CashflowService $cashflowService)
+    {
+        $this->cashflowService = $cashflowService;
+    }
     public function index()
     {
         $cashflow = ModelsCashflow::orderBy('created_at','DESC')->get();
@@ -116,35 +126,23 @@ class Cashflow extends Controller
 
     public function search(Request $request) {
 
-        $company = $request->input('company');
-        $department = $request->input('department');
-        $fromDate = $request->input('fromDate');
-        $toDate = $request->input('toDate');
-        print_r($company);
-        // if ($company || $department || $fromDate || $toDate) {
-            $results = ModelsCashflow::when($company, function ($query, $company) {
-                return $query->where('company', 'LIKE', "%{$company}%");
-            })
-            ->when($department, function ($query, $department) {
-                return $query->where('department', 'LIKE', "%{$department}%");
-            })
-            ->when($fromDate && $toDate, function ($query) use ($fromDate, $toDate) {
-                return $query->whereBetween('date', [$fromDate, $toDate]);
-            })
-            ->orderBy('created_at', 'DESC')
-            ->get();
-
-            return view('cashflow/searchResult', compact('results'));
-        // }
-
-        return view('cashflow/searchResult', ['results' => collect()]); // Empty collection if no query
-
-        // return view('cashflow/searchResult',[
-        //      'companies' => $companies,
-        //      'currencies' => $currencies,
-        // ]);
+        $filters = $request->only(['company', 'department', 'fromDate', 'toDate']);
+        $results = $this->cashflowService->search($filters);
+        return view('cashflow/searchResult', compact('results'));
+        // return view('cashflow/searchResult', ['results' => collect()]); // Empty collection if no query
     }
 
+    public function export(Request $request) {
+
+        $filters = $request->only(['company', 'department', 'fromDate', 'toDate']);
+        $cashflow = $this->cashflowService->search($filters);
+        return Excel::download(new ExportCashflow($cashflow), 'cashflow.xlsx');
+    }
+
+    public function exportAll() {
+        $cashflow = $this->cashflowService->getResults();
+        return Excel::download(new ExportCashflow($cashflow), 'cashflow.xlsx');
+    }
     public function update() {}
 
     public function delete() {}
