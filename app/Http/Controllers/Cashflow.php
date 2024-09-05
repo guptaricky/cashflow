@@ -22,6 +22,14 @@ class Cashflow extends Controller
         ]);
     }
 
+    public function detail($id)
+    {
+        $cashflowDetail = ModelsCashflow::where('id', $id)->first();
+        return view('cashflow/cashflowDetail',[
+            'cashflowDetail' => $cashflowDetail
+        ]);
+    }
+
     public function create()
     {
         // ini_set('memory_limit', '256M');

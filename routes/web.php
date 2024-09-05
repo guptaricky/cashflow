@@ -13,6 +13,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/cashflow', [Cashflow::class, 'index'])->middleware(['auth', 'verified'])->name('cashflow.index');
+Route::get('/cashflow/cashflow-detail-view/{id}', [Cashflow::class, 'detail'])->middleware(['auth', 'verified'])->name('cashflow.detail');
 Route::get('/cashflow/create', [Cashflow::class, 'create'])->middleware(['auth', 'verified'])->name('cashflow.create');
 Route::post('/cashflow/store', [Cashflow::class, 'store'])->middleware(['auth', 'verified'])->name('cashflow.store');
 Route::get('/cashflow/search', [Cashflow::class, 'search'])->middleware(['auth', 'verified'])->name('cashflow.search');
