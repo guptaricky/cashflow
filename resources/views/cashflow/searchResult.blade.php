@@ -29,7 +29,7 @@
         <td data-column-id="materialprice" class="gridjs-td">{{ $cashflow->totalMaterialPrice }}</td>
         <td data-column-id="othercharges" class="gridjs-td">{{ $cashflow->totalOthercharges }}</td>
         <td data-column-id="freight" class="gridjs-td">{{ $cashflow->totalFreight }}</td>
-        <td data-column-id="handling" class="gridjs-td">{{ $cashflow->totalHandlind }}</td>
+        <td data-column-id="handling" class="gridjs-td">{{ $cashflow->totalHandling }}</td>
         <td data-column-id="customs" class="gridjs-td">{{ $cashflow->totalCustoms }}</td>
         <td data-column-id="bankcomm" class="gridjs-td">{{ $cashflow->totalBankComm }}</td>
         <td data-column-id="companymargin" class="gridjs-td">{{ $cashflow->totalCompanyMargin }}</td>
