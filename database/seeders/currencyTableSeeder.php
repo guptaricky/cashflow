@@ -17,7 +17,7 @@ class currencyTableSeeder extends Seeder
             'name' => 'Dollar',
             'code' => 'USD',
             'isDefault' => '0',
-            'conversion_factor' => '3.22',
+            // 'conversion_factor' => '3.22',
             'isActive' => '1',
         ]);
 
@@ -25,7 +25,7 @@ class currencyTableSeeder extends Seeder
             'name' => 'Rupee',
             'code' => 'INR',
             'isDefault' => '0',
-            'conversion_factor' => '273.87',
+            // 'conversion_factor' => '273.87',
             'isActive' => '1',
         ]);
 
@@ -33,7 +33,7 @@ class currencyTableSeeder extends Seeder
             'name' => 'Kuwaiti Dinar',
             'code' => 'KWD',
             'isDefault' => '1',
-            'conversion_factor' => '1',
+            // 'conversion_factor' => '1',
             'isActive' => '1',
         ]);
     }

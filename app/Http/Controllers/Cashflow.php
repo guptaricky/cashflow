@@ -24,8 +24,8 @@ class Cashflow extends Controller
     public function index()
     {
         $cashflow = ModelsCashflow::orderBy('created_at','DESC')->get();
-        $companies = Company::orderBy('created_at','DESC')->get();
-        $currencies = Currency::orderBy('created_at','DESC')->get();
+        $companies = Company::where('isActive', 1)->orderBy('created_at','DESC')->get();
+        $currencies = Currency::where('isActive', 1)->orderBy('created_at','DESC')->get();
         return view('cashflow/cashflowList',[
             'cashflows' => $cashflow,
             'companies' => $companies,
@@ -44,8 +44,8 @@ class Cashflow extends Controller
     public function create()
     {
         // ini_set('memory_limit', '256M');
-        $companies = Company::orderBy('created_at','DESC')->get();
-        $currencies = Currency::orderBy('created_at','DESC')->get();
+        $companies = Company::where('isActive', 1)->orderBy('created_at','DESC')->get();
+        $currencies = Currency::where('isActive', 1)->where('isDefault', 0)->orderBy('created_at','DESC')->get();
         return view('cashflow/cashflowForm',[
             'companies' => $companies,
             'currencies' => $currencies,

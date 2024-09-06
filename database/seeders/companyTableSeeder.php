@@ -17,13 +17,15 @@ class companyTableSeeder extends Seeder
             'name' => 'Integra Medical',
             'code' => '668d17bde1459',
             'description' => 'Integra Medical',
-            'currency' => 'Dollar'
+            'currency' => 'Dollar',
+            'isActive' => 1
         ]);
         Company::create([
             'name' => 'Intra Trading & Contracting',
             'code' => '668d17dd7bb87',
             'description' => 'Intra Trading & Contracting',
-            'currency' => 'Dollar'
+            'currency' => 'Dollar',
+            'isActive' => 1
         ]);
     }
 }

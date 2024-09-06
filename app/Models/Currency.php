@@ -12,7 +12,6 @@ class Currency extends Model
     protected $fillable = [
         'name',
         'code',
-        'conversion_factor',
         'isDefault',
         'isActive'
     ];

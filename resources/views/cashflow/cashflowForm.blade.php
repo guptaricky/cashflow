@@ -165,11 +165,11 @@
                             <div class="col-xxl-3 col-md-6">
                                 <div>
                                     <label for="currency" class="@error('currency') is-invalid @enderror form-label">Currency</label>
-                                    <select id="currency" name="currency" class="form-select" data-choices="" data-choices-sorting="true" onchange="changeCurrencyLabel(this.value)">
+                                    <select id="currency" name="currency" class="form-select" data-choices="" data-choices-sorting="true" >
                                         <option value=""> Choose... </option>
                                         @foreach($currencies as $index => $currency)
-                                        <option value="{{ $currency->name }}-{{ $currency->conversion_factor }}" 
-                                            {{ old('currency') == $currency->name . '-' . $currency->conversion_factor ? 'selected' : '' }}>
+                                        <option value="{{ $currency->name }}" 
+                                            {{ old('currency') == $currency->name ? 'selected' : '' }}>
                                             {{ $currency->name }} ({{ $currency->code }})
                                         </option>
                                         @endforeach
@@ -609,18 +609,45 @@
 </div>
 <!--end row-->
 <script>
-    function changeCurrencyLabel(str) {
-        parts = str.split("-");
-        // let currency = document.getElementById('currency').value;
-        // document.getElementById("currency_label").textContent= "(in "+ currency + ")";
-        document.getElementById("conversion_factor").value = parts[1];
-    }
+    // function changeCurrencyLabel(str) {
+    //     alert(str);
+    //     parts = str.split("-");
+    //     // let currency = document.getElementById('currency').value;
+    //     // document.getElementById("currency_label").textContent= "(in "+ currency + ")";
+    //     document.getElementById("conversion_factor").value = parts[1];
+    // }
+   
+    document.addEventListener('DOMContentLoaded', function() {
+            var currency = document.getElementById('currency');
+
+            currency.addEventListener('change', function() {
+                var selectedcurrency = this.value;
+                // alert('Selected value: ' + selectedcurrency);
+                fetch(`/conversion/getConversion/${selectedcurrency}`, {
+                    method: 'GET'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    var cf_value= 0;
+                    if (data.length > 0) {
+                        var cf_value = data[0].cf_value;
+                        // alert(cf_value)
+                        document.getElementById("conversion_factor").value = cf_value;
+                    } else {
+                        alert('No Conversion Factor found for the selected Currency');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            });
+        });
+ 
 
     // document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('unitPrice').addEventListener('keyup', function() {
         let unitPrice = this.value;
-        // let conversion_factor = document.getElementById('conversion_factor').value;
-        let conversion_factor = 3.22;
+        let conversion_factor = document.getElementById('conversion_factor').value;
+        // alert(conversion_factor);
+        // let conversion_factor = 3.22;
         // alert(unitPrice);
         let quantity = document.getElementById('quantity').value;
         // let currency = document.getElementById('currency').value;
@@ -629,7 +656,6 @@
         // document.getElementById('unitMaterialPrice').value = unitMaterialPrice;
         document.getElementById("unitMaterialPrice").value = unitMaterialPrice;
         document.getElementById("unitMaterialPrice2").innerHTML = unitMaterialPrice;
-
         // let ManualPrice = document.getElementById('ManualPrice').value;
         // let CostManual = document.getElementById('CostManual').value;
         let ManualPrice = 250;
@@ -637,22 +663,23 @@
 
         if (quantity > 0) {
             let unitOtherCharges = (ManualPrice / quantity).toFixed(2);
+            console.log("unitOtherCharges:",unitOtherCharges);
             let freight = (CostManual / quantity).toFixed(2);
             let unitLocalHandling = (unitMaterialPrice * 0.03).toFixed(2);
             let customDuty = (unitMaterialPrice * 0.06).toFixed(2);
             let bankCharges = (unitMaterialPrice * 0.09).toFixed(2);
             let landedCost = (unitOtherCharges * 0.09).toFixed(2);
             let profitMargin = (unitMaterialPrice * 0.25).toFixed(2);
-            let sellingPrice = (parseFloat(landedCost).toFixed(2) + parseFloat(profitMargin)).toFixed(2);
-            let totalSelling = (parseFloat(sellingPrice).toFixed(2) * parseFloat(quantity)).toFixed(2);
+            let sellingPrice = (parseFloat(landedCost) + parseFloat(profitMargin)).toFixed(2);
+            let totalSelling = (parseFloat(sellingPrice) * parseFloat(quantity)).toFixed(2);
             let qty = parseFloat(quantity);
-            let totalMaterialPrice = (parseFloat(unitMaterialPrice).toFixed(2) * parseFloat(qty)).toFixed(2);
-            let totalOthercharges = (parseFloat(unitOtherCharges).toFixed(2) * parseFloat(qty)).toFixed(2);
+            let totalMaterialPrice = (parseFloat(unitMaterialPrice) * parseFloat(qty)).toFixed(2);
+            let totalOthercharges = (parseFloat(unitOtherCharges) * parseFloat(qty)).toFixed(2);
             let totalFreight = (parseFloat(freight) * parseFloat(qty)).toFixed(2);
-            let totalHandling = (parseFloat(unitLocalHandling).toFixed(2) * parseFloat(qty)).toFixed(2);
-            let totalCustoms = (parseFloat(customDuty).toFixed(2) * parseFloat(qty)).toFixed(2); // Corrected totalCustoms calculation
-            let totalBankComm = (parseFloat(bankCharges).toFixed(2) * parseFloat(qty)).toFixed(2);
-            let totalCompanyMargin = (parseFloat(profitMargin).toFixed(2) * parseFloat(qty)).toFixed(2);
+            let totalHandling = (parseFloat(unitLocalHandling) * parseFloat(qty)).toFixed(2);
+            let totalCustoms = (parseFloat(customDuty) * parseFloat(qty)).toFixed(2); // Corrected totalCustoms calculation
+            let totalBankComm = (parseFloat(bankCharges) * parseFloat(qty)).toFixed(2);
+            let totalCompanyMargin = (parseFloat(profitMargin) * parseFloat(qty)).toFixed(2);
             document.getElementById("qty").value = qty;
             document.getElementById("unitOtherCharges").value = unitOtherCharges;
             document.getElementById("freight").value = freight;
