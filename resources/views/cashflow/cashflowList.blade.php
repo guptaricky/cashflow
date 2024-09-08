@@ -73,7 +73,7 @@
                                     <button onclick="searchContent()" type="button" class="btn btn-success btn-label waves-effect waves-light w-lg "><i class="ri-search-2-line label-icon align-middle fs-16 me-2"></i> Search</button>
                                     <button onclick="resetContent()" type="button" class="btn btn-danger waves-effect waves-light  "> Reset</button>
                                     <button id="exportBtn" type="button" class="btn btn-warning waves-effect waves-light ">Export</button> {{---<a href="{{ route('cashflow.export' )}}"> Export </a>--}}
-                                    <button id="exportBtnXero" type="button" class="btn btn-warning waves-effect waves-light "> Export To XERO format</button>
+                                    <button id="exportBtnXero" type="button" class="btn btn-warning waves-effect waves-light "> Export as XERO Report</button>
                                 </div><!--end col-->
                             </div><!--end row-->
                         </form>

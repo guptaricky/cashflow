@@ -22,7 +22,7 @@
 @foreach($results as $index => $cashflow)
     <tr class="gridjs-tr" id="results">
         <td data-column-id="sno" class="gridjs-td"><span><a href="" class="fw-medium">{{ $index + 1 }}</a></span></td>
-        <td data-column-id="serialno" class="gridjs-td">{{ $cashflow->serialNo }}</td>
+        <td data-column-id="serialno" class="gridjs-td"><a href="{{ route('cashflow.detail', ['id' => $cashflow->id] ) }}"><span class="badge text-bg-secondary">{{ $cashflow->serialNo }}</span></a></td>
         <td data-column-id="date" class="gridjs-td">{{ $cashflow->date }}</td>
         <td data-column-id="clientname" class="gridjs-td">{{ $cashflow->clientName }}</td>
         <td data-column-id="department" class="gridjs-td">{{ $cashflow->department }}</td>
