@@ -175,6 +175,7 @@
                                         @endforeach
                                     </select>
                                     </select>
+                                    <p class='text-info' id="currency_conversion"></p>
                                     @error('currency') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
                                 </div>
                             </div>
@@ -631,8 +632,11 @@
                     var cf_value= 0;
                     if (data.length > 0) {
                         var cf_value = data[0].cf_value;
+                        var conversion_text = `1 KWD = ${cf_value} ${selectedcurrency}`;
+                        document.getElementById("currency_conversion").innerHTML = conversion_text;
                         // alert(cf_value)
                         document.getElementById("conversion_factor").value = cf_value;
+                        conversion_calculation();
                     } else {
                         alert('No Conversion Factor found for the selected Currency');
                     }
@@ -644,7 +648,12 @@
 
     // document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('unitPrice').addEventListener('keyup', function() {
-        let unitPrice = this.value;
+        conversion_calculation();
+    });
+    // });
+
+    function conversion_calculation(){
+        let unitPrice = document.getElementById('unitPrice').value;
         let conversion_factor = document.getElementById('conversion_factor').value;
         // alert(conversion_factor);
         // let conversion_factor = 3.22;
@@ -718,8 +727,7 @@
         } else if (quantity === null || quantity === '') {
             //alert("quantity cannot be empty");
         }
-    });
-    // });
+    }
 </script>
 @endsection
 

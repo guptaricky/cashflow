@@ -22,7 +22,7 @@
 <!-- end page title -->
 
 <div class="row">
-    <div class="col-lg-6">
+    <div class="col-lg-8">
         <div class="card">
 
             @if (session()->has('message'))
@@ -36,67 +36,87 @@
                     <form method="POST" action="{{ route('conversionFactor.store') }}">
                         @csrf
                         <div class="row gy-4">
-                            <div class="col-xxl-4 col-md-6">
-                                <div>
-                                    <label for="fromCurrency" class="@error('fromCurrency') is-invalid @enderror form-label">From Currency</label>
-                                    <select id="fromCurrency" name="fromCurrency" class="form-select" data-choices="" data-choices-sorting="true" >
-                                        @foreach($currencies as $index => $currency)
-                                        @if($currency->isDefault == 1)
-                                        <option value="{{ $currency->name }}" 
-                                            {{ old('fromCurrency') == $currency->name ? 'selected' : '' }}>
-                                            {{ $currency->name }} ({{ $currency->code }})
-                                        </option>
-                                        @endif
-                                        @endforeach
-                                    </select>
-                                    </select>
-                                    @error('fromCurrency') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
+                            <div class="col-xxl-5 col-md-6">
+                                <div class="row gy-4">
+                                    <div class="col-xxl-3 col-md-6">
+                                        <div>
+                                            <label></label><br><br>
+                                            One
+                                        </div>
+                                    </div>
+                                    <div class="col-xxl-7 col-md-6">
+                                        <div>
+                                            <label for="fromCurrency" class="@error('fromCurrency') is-invalid @enderror form-label">From Currency</label>
+                                            <select id="fromCurrency" name="fromCurrency" class="form-select" data-choices="" data-choices-sorting="true">
+                                                @foreach($currencies as $index => $currency)
+                                                @if($currency->isDefault == 1)
+                                                <option value="{{ $currency->name }}"
+                                                    {{ old('fromCurrency') == $currency->name ? 'selected' : '' }}>
+                                                    {{ $currency->name }} ({{ $currency->code }})
+                                                </option>
+                                                @endif
+                                                @endforeach
+                                            </select>
+                                            </select>
+                                            @error('fromCurrency') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-xxl-1 col-md-6">
+                                        <div>
+                                            <label></label><br><br>
+                                            =
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-xxl-4 col-md-6">
-                                <div>
-                                    <label for="toCurrency" class="@error('toCurrency') is-invalid @enderror form-label">To Currency</label>
-                                    <select id="toCurrency" name="toCurrency" class="form-select" data-choices="" data-choices-sorting="true" >
-                                        <option value=""> Choose... </option>
-                                        @foreach($currencies as $index => $currency)
-                                        @if($currency->isDefault != 1)
-                                        <option value="{{ $currency->name }}" 
-                                            {{ old('toCurrency') == $currency->name ? 'selected' : '' }}>
-                                            {{ $currency->name }} ({{ $currency->code }})
-                                        </option>
-                                        @endif
-                                        @endforeach
-                                    </select>
-                                    </select>
-                                    @error('toCurrency') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
+                            <div class="col-xxl-7 col-md-6">
+                                <div class="row gy-4">
+                                    <div class="col-xxl-5 col-md-6">
+                                        <div>
+                                            <label for="toCurrency" class="@error('toCurrency') is-invalid @enderror form-label">To Currency</label>
+                                            <select id="toCurrency" name="toCurrency" class="form-select" data-choices="" data-choices-sorting="true">
+                                                <option value=""> Choose... </option>
+                                                @foreach($currencies as $index => $currency)
+                                                @if($currency->isDefault != 1)
+                                                <option value="{{ $currency->name }}"
+                                                    {{ old('toCurrency') == $currency->name ? 'selected' : '' }}>
+                                                    {{ $currency->name }} ({{ $currency->code }})
+                                                </option>
+                                                @endif
+                                                @endforeach
+                                            </select>
+                                            </select>
+                                            @error('toCurrency') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-xxl-7 col-md-6">
+                                        <div>
+                                            <label for="conversion_factor" class="@error('conversion_factor') is-invalid @enderror form-label">Conversion Factor</label>
+                                            <input type="number" step="any" class="form-control" id="conversion_factor" name="conversion_factor" value="{{ old('conversion_factor') }}">
+                                            @error('conversion_factor') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-xxl-4 col-md-6">
-                                <div>
-                                    <label for="conversion_factor" class="@error('conversion_factor') is-invalid @enderror form-label">Conversion Factor</label>
-                                    <input type="number" step="any" class="form-control" id="conversion_factor" name="conversion_factor" value="{{ old('conversion_factor') }}">
-                                    @error('conversion_factor') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
-                                </div>
-                            </div>
-                                
+
                         </div>
                         <div class="row gy-4">
-                            <div class="col-xxl-3 col-md-6">
-                                <div class="d-flex align-items-start gap-3 mt-4" >
-                                <div class="ms-auto">
-                                    <button type="submit" class="btn btn-success btn-label waves-effect waves-light w-lg"><i class="ri-check-double-line label-icon align-middle fs-16 me-2"></i> Submit</button>
-                                </div>
+                            <div class="col-xxl-12 col-md-12">
+                                <div class="d-flex align-items-start gap-3 mt-4">
+                                    <div class="ms-auto">
+                                        <button type="submit" class="btn btn-success btn-label waves-effect waves-light w-lg pull-right"><i class="ri-check-double-line label-icon align-middle fs-16 me-2"></i> Submit</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        
+
                     </form>
                     <!--end row-->
                 </div>
             </div><!-- end card-body -->
         </div>
     </div>
-    <div class="col-lg-6">
+    <div class="col-lg-4">
         <div class="card">
 
             @if (session()->has('message'))
@@ -108,10 +128,10 @@
             <div class="card-body">
                 <div id="table-pagination">
                     <div role="complementary" class="gridjs gridjs-container" style="width: 100%;">
-                        
+
                         <div class="gridjs-head mt-4"></div>
                         {{-- <div class="gridjs-wrapper" style="height: auto;"> --}}
-                            {{-- <table role="grid" class="gridjs-table" style="height: auto;" id="results">
+                        {{-- <table role="grid" class="gridjs-table" style="height: auto;" id="results">
                                 <thead class="gridjs-thead">
                                     <tr class="gridjs-tr">
                                         <th data-column-id="serialno" class="gridjs-th" style="width: 120px;">Currency Conversions</th>
@@ -122,16 +142,17 @@
                                     <tr class="gridjs-tr" >
                                         <td data-column-id="serialno" class="gridjs-td fs-4">
                                             <b>One</b> <span class="badge text-bg-info">{{ $conversion->fromCurrency }}</span> equals to <b>{{ $conversion->cf_value }}</b> <span class="badge text-bg-danger">{{ $conversion->toCurrency }}</span>
-                                        </td></tr>
-                                    @endforeach
-                                </tbody>
-                            </table> --}}
-                            @foreach($conversions as $index => $conversion)
-                            <blockquote class="blockquote custom-blockquote blockquote-info rounded mb-0">
-                                <p class="text-dark mb-2 fs-5"><b>One</b> <span class="badge text-bg-info">{{ $conversion->fromCurrency }}</span> equals to <b>{{ $conversion->cf_value }}</b> <span class="badge text-bg-danger">{{ $conversion->toCurrency }}</span>
-                                </p>
-                            </blockquote></br>
-                            @endforeach
+                        </td>
+                        </tr>
+                        @endforeach
+                        </tbody>
+                        </table> --}}
+                        @foreach($conversions as $index => $conversion)
+                        <blockquote class="blockquote custom-blockquote blockquote-info rounded mb-0">
+                            <p class="text-dark mb-2 fs-5"><b>One</b> <span class="badge text-bg-info">{{ $conversion->fromCurrency }}</span> equals to <b>{{ $conversion->cf_value }}</b> <span class="badge text-bg-danger">{{ $conversion->toCurrency }}</span>
+                            </p>
+                        </blockquote></br>
+                        @endforeach
                         {{-- </div> --}}
                         <div id="gridjs-temp" class="gridjs-temp"></div>
                     </div>
@@ -142,8 +163,6 @@
     <!--end col-->
 </div>
 <script>
-   
-
     // Handling toggle switch for Active Status
     document.querySelectorAll('.active-switch').forEach(function(switchBtn) {
         switchBtn.addEventListener('change', function() {
@@ -151,18 +170,20 @@
             let isActive = this.checked ? 1 : 0;
 
             fetch(`/company/${companyId}/updateActive`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                body: JSON.stringify({ isActive: isActive })
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Active status updated:', data);
-            })
-            .catch(error => console.error('Error:', error));
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        isActive: isActive
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Active status updated:', data);
+                })
+                .catch(error => console.error('Error:', error));
         });
     });
 </script>
