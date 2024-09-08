@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Cashflow;
+use App\Http\Controllers\currencyController;
+use App\Http\Controllers\companyController;
+use App\Http\Controllers\conversionFactor;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -19,6 +22,20 @@ Route::post('/cashflow/store', [Cashflow::class, 'store'])->middleware(['auth', 
 Route::get('/cashflow/search', [Cashflow::class, 'search'])->middleware(['auth', 'verified'])->name('cashflow.search');
 Route::get('/cashflow/export', [Cashflow::class, 'export'])->middleware(['auth', 'verified'])->name('cashflow.export');
 Route::get('/cashflow/exportXero', [Cashflow::class, 'exportXero'])->middleware(['auth', 'verified'])->name('cashflow.exportXero');
+
+Route::get('/cashflow/currency', [currencyController::class, 'create'])->middleware(['auth', 'verified'])->name('currency.create');
+Route::post('/currency/store', [currencyController::class, 'store'])->middleware(['auth', 'verified'])->name('currency.store');
+Route::post('/currency/{id}/setDefault', [CurrencyController::class, 'setDefault']);
+Route::post('/currency/{id}/updateActive', [CurrencyController::class, 'updateActive']);
+
+Route::get('/cashflow/company', [companyController::class, 'create'])->middleware(['auth', 'verified'])->name('company.create');
+Route::post('/company/store', [companyController::class, 'store'])->middleware(['auth', 'verified'])->name('company.store');
+Route::post('/company/{id}/updateActive', [companyController::class, 'updateActive']);
+
+Route::get('/cashflow/conversion', [conversionFactor::class, 'create'])->middleware(['auth', 'verified'])->name('conversion.create');
+Route::post('/conversionFactor/store', [conversionFactor::class, 'store'])->middleware(['auth', 'verified'])->name('conversionFactor.store');
+Route::get('/conversion/getConversion/{currency}', [conversionFactor::class, 'getConversion']);
+
 
 Route::get('/cashflow-list-view', function () {
     return view('cashflowList');

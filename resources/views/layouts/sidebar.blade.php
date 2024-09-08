@@ -44,24 +44,23 @@
                         <i class="ri-file-list-line"></i> <span data-key="t-widgets">Cashflow Details</span>
                     </a>
                 </li>
-
-                <!-- <li class="nav-item">
-                    <a class="nav-link menu-link" href="{{ route('company') }}">
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="{{ route('currency.create') }}">
+                        <i class="ri-money-dollar-circle-line"></i> <span data-key="t-widgets">Currency</span>
+                    </a>
+                </li> 
+                 <li class="nav-item">
+                    <a class="nav-link menu-link" href="{{ route('company.create') }}">
                         <i class="ri-building-2-line"></i> <span data-key="t-widgets">Company</span>
                     </a>
                 </li>
 
+                
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="{{ route('currency') }}">
-                        <i class="ri-money-dollar-circle-line"></i> <span data-key="t-widgets">Currency</span>
+                    <a class="nav-link menu-link" href="{{ route('conversion.create') }}">
+                        <i class=" ri-settings-4-line"></i> <span data-key="t-widgets">Conversion Factor</span>
                     </a>
-                </li> 
-
-                <li class="nav-item">
-                    <a class="nav-link menu-link" href="{{ route('setting') }}">
-                        <i class=" ri-settings-4-line"></i> <span data-key="t-widgets">Settings</span>
-                    </a>
-                </li>-->
+                </li>
             </ul>
         </div>
 
