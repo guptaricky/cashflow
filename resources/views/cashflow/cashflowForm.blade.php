@@ -164,7 +164,7 @@
                             </div>
                             <div class="col-xxl-3 col-md-6">
                                 <div>
-                                    <label for="currency" class="@error('currency') is-invalid @enderror form-label">Currency <i class="ri-question-line label-icon align-middle fs-16 me-2"></i></label>
+                                    <label for="currency" class="@error('currency') is-invalid @enderror form-label">Currency <!--<i class="ri-question-line label-icon align-middle fs-16 me-2"></i> --></label>
                                     <select id="currency" name="currency" class="form-select" data-choices="" data-choices-sorting="true" >
                                         <option value=""> Choose... </option>
                                         @foreach($currencies as $index => $currency)
