@@ -164,7 +164,14 @@
                             </div>
                             <div class="col-xxl-3 col-md-6">
                                 <div>
-                                    <label for="currency" class="@error('currency') is-invalid @enderror form-label">Currency <!--<i class="ri-question-line label-icon align-middle fs-16 me-2"></i> --></label>
+                                    <label for="currency" class="@error('currency') is-invalid @enderror form-label">Currency <!--<i class="ri-question-line label-icon align-middle fs-16 me-2"></i> -->
+                                        <button type="button" class="btn rounded-pill" style="border 1px solid;padding:0px" 
+                                                id="persistentTooltip"
+                                                data-bs-toggle="tooltip" data-bs-html="true" 
+                                                title="<em>Add New</em> <b>Currency Conversion</b> <a href='{{ route('conversion.create') }}' style='color:#fff'>Click here</a>">
+                                            <i class="ri-question-line label-icon align-middle fs-16 me-2"></i>
+                                        </button>
+                                    </label>
                                     <select id="currency" name="currency" class="form-select" data-choices="" data-choices-sorting="true" >
                                         <option value=""> Choose... </option>
                                         @foreach($currencies as $index => $currency)
@@ -617,11 +624,11 @@
     //     // document.getElementById("currency_label").textContent= "(in "+ currency + ")";
     //     document.getElementById("conversion_factor").value = parts[1];
     // }
-   
+                
     document.addEventListener('DOMContentLoaded', function() {
-            var currency = document.getElementById('currency');
+        var currency = document.getElementById('currency');
 
-            currency.addEventListener('change', function() {
+        currency.addEventListener('change', function() {
                 var selectedcurrency = this.value;
                 // alert('Selected value: ' + selectedcurrency);
                 fetch(`/conversion/getConversion/${selectedcurrency}`, {
@@ -642,8 +649,37 @@
                     }
                 })
                 .catch(error => console.error('Error:', error));
-            });
         });
+
+        var tooltipTriggerEl = document.getElementById('persistentTooltip');
+        var tooltip = new bootstrap.Tooltip(tooltipTriggerEl, {
+            trigger: 'manual' // Disable automatic trigger
+        });
+        var tooltipTimeout;
+        // Show tooltip on mouseenter
+        tooltipTriggerEl.addEventListener('mouseenter', function () {
+            tooltip.show();
+            clearTimeout(tooltipTimeout); // Cancel any previous timeout
+        });
+
+        // Prevent tooltip from closing on mouseleave
+        tooltipTriggerEl.addEventListener('mouseleave', function () {
+            // Optionally, keep the tooltip open for a period or add a condition to close it
+            setTimeout(function () {
+                tooltip.hide();
+            }, 5000); // Keep it open for 5 seconds after mouse leaves
+        });
+        // Hide tooltip if clicked outside
+        document.addEventListener('click', function (event) {
+            var isClickInside = tooltipTriggerEl.contains(event.target);
+
+            if (!isClickInside) {
+                tooltip.hide();
+                clearTimeout(tooltipTimeout); // Cancel any pending timeout if clicked outside
+            }
+        });
+                                        
+        })
  
 
     // document.addEventListener('DOMContentLoaded', function() {

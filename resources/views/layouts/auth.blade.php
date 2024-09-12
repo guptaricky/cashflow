@@ -2,19 +2,19 @@
 <html lang="en" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg" data-sidebar-image="none" data-preloader="disable">
 
 
-<!-- Mirrored from themesbrand.com/velzon/html/default/dashboard-analytics.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 08 Jan 2023 06:11:59 GMT -->
 <head>
 
     <meta charset="utf-8" />
     <title>App Dashboard</title>
     @vite([
-        'resources/assets/libs/gridjs/theme/mermaid.min.css',
-        'resources/assets/libs/jsvectormap/css/jsvectormap.min.css',
+        
         'resources/assets/css/bootstrap.min.css',
         'resources/assets/css/icons.min.css',
         'resources/assets/css/app.min.css',
         'resources/assets/css/custom.min.css',
-
+        // 'resources/assets/js/layout.js'
+        'resources/assets/libs/gridjs/theme/mermaid.min.css',
+        // 'resources/assets/libs/jsvectormap/css/jsvectormap.min.css',
         
     ])
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,10 +23,10 @@
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{ Vite::asset('resources/assets/images/favicon.ico') }}">
 
-    
     <!-- Layout config Js -->
-    <script src="assets/js/layout.js"></script>
-   
+    @vite([
+        'resources/assets/js/layout.js'
+    ])
 
 </head>
 
@@ -215,22 +215,25 @@
         'resources/assets/libs/feather-icons/feather.min.js',
         'resources/assets/js/pages/plugins/lord-icon-2.1.0.js',
         'resources/assets/js/plugins.js',
-        'resources/assets/libs/apexcharts/apexcharts.min.js',
-        'resources/assets/libs/jsvectormap/js/jsvectormap.min.js',
-        'resources/assets/libs/jsvectormap/maps/world-merc.js',
-        'resources/assets/js/pages/dashboard-analytics.init.js',
-        'resources/assets/js/app.js',
-        'resources/js/app.js',
+        // 'resources/assets/libs/apexcharts/apexcharts.min.js',
+        // 'resources/assets/libs/jsvectormap/js/jsvectormap.min.js',
+        // 'resources/assets/libs/jsvectormap/maps/world-merc.js',
+        // 'resources/assets/js/pages/dashboard-analytics.init.js',
+        // 'resources/assets/js/app.js',
+        
         'resources/assets/libs/prismjs/prism.js',
-        'resources/assets/js/pages/notifications.init.js',
-        'resources/assets/libs/gridjs/gridjs.umd.js',
-        'resources/assets/js/pages/gridjs.init.js'
+        'resources/js/app.js',
+        // 'resources/assets/js/pages/notifications.init.js',
+        // 'resources/assets/libs/gridjs/gridjs.umd.js',
+        // 'resources/assets/js/pages/gridjs.init.js'
     ]);
+<!-- JAVASCRIPT -->
 
+<!-- App js -->
+<script src="assets/js/app.js"></script>
     
     
 </body>
 
 
-<!-- Mirrored from themesbrand.com/velzon/html/default/dashboard-analytics.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 08 Jan 2023 06:11:59 GMT -->
 </html>
