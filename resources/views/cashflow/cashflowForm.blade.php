@@ -168,7 +168,7 @@
                                         <button type="button" class="btn rounded-pill" style="border 1px solid;padding:0px" 
                                                 id="persistentTooltip"
                                                 data-bs-toggle="tooltip" data-bs-html="true" 
-                                                title="<em>Add New</em> <b>Currency Conversion</b> <a href='{{ route('conversion.create') }}' style='color:#fff'>Click here</a>">
+                                                title="<em>Add New</em> <b>Currency Conversion</b> <a href='{{ route('conversion.create') }}' target='_blank' style='color:#fff'>Click here</a>">
                                             <i class="ri-question-line label-icon align-middle fs-16 me-2"></i>
                                         </button>
                                     </label>
