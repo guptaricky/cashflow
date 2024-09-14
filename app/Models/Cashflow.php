@@ -12,40 +12,21 @@ class Cashflow extends Model
     protected $fillable = [
         'serialNo',
         'clientName',
-        'clientRef',
         'date',
         'company',
         'department',
-        'description',
         'countryOrigin',
-        'uom',
         'packagingInfo',
         'modeofshipment',
         'availability',
         'goodsTravel',
-        'quantity',
         'incoterms',
-        'unitPrice',
-        'conversion_factor',
-        'unitMaterialPrice',
-        'unitOtherCharges',
-        'freight',
-        'unitLocalHandling',
-        'customDuty',
-        'bankCharges',
-        'landedCost',
-        'companyProfileMargin',
-        'profitMargin',
-        'targetPrice',
-        'sellingPrice',
-        'totalSelling',
-        'qty',
-        'totalMaterialPrice',
-        'totalOthercharges',
-        'totalFreight',
-        'totalHandling',
-        'totalCustoms',
-        'totalBankComm',
-        'totalCompanyMargin'
+        'currency',
+        'conversion_factor'
     ];
+   
+    public function items()
+    {
+        return $this->hasMany(CashflowItems::class);
+    }
 }

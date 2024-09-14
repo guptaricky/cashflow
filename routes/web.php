@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Cashflow;
+use App\Http\Controllers\customerController;
+use App\Http\Controllers\productController;
 use App\Http\Controllers\currencyController;
 use App\Http\Controllers\companyController;
 use App\Http\Controllers\conversionFactor;
@@ -17,11 +19,21 @@ Route::get('/dashboard', function () {
 
 Route::get('/cashflow', [Cashflow::class, 'index'])->middleware(['auth', 'verified'])->name('cashflow.index');
 Route::get('/cashflow/cashflow-detail-view/{id}', [Cashflow::class, 'detail'])->middleware(['auth', 'verified'])->name('cashflow.detail');
+Route::get('/cashflow/createold', [Cashflow::class, 'create'])->middleware(['auth', 'verified'])->name('cashflow.createold');
 Route::get('/cashflow/create', [Cashflow::class, 'create'])->middleware(['auth', 'verified'])->name('cashflow.create');
 Route::post('/cashflow/store', [Cashflow::class, 'store'])->middleware(['auth', 'verified'])->name('cashflow.store');
 Route::get('/cashflow/search', [Cashflow::class, 'search'])->middleware(['auth', 'verified'])->name('cashflow.search');
 Route::get('/cashflow/export', [Cashflow::class, 'export'])->middleware(['auth', 'verified'])->name('cashflow.export');
 Route::get('/cashflow/exportXero', [Cashflow::class, 'exportXero'])->middleware(['auth', 'verified'])->name('cashflow.exportXero');
+
+Route::get('/customer/create', [customerController::class, 'create'])->middleware(['auth', 'verified'])->name('customer.create');
+Route::post('/customer/store', [customerController::class, 'store'])->middleware(['auth', 'verified'])->name('customer.store');
+Route::post('/customer/{id}/updateActive', [customerController::class, 'updateActive']);
+
+
+Route::get('/product/create', [productController::class, 'create'])->middleware(['auth', 'verified'])->name('product.create');
+Route::post('/product/store', [productController::class, 'store'])->middleware(['auth', 'verified'])->name('product.store');
+Route::post('/product/{id}/updateActive', [productController::class, 'updateActive']);
 
 Route::get('/cashflow/currency', [currencyController::class, 'create'])->middleware(['auth', 'verified'])->name('currency.create');
 Route::post('/currency/store', [currencyController::class, 'store'])->middleware(['auth', 'verified'])->name('currency.store');

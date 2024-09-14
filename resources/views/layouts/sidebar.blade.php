@@ -45,6 +45,16 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link menu-link" href="{{ route('customer.create') }}">
+                        <i class=" ri-settings-4-line"></i> <span data-key="t-widgets">Customers</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="{{ route('product.create') }}">
+                        <i class=" ri-settings-4-line"></i> <span data-key="t-widgets">Products</span>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link menu-link" href="{{ route('currency.create') }}">
                         <i class="ri-money-dollar-circle-line"></i> <span data-key="t-widgets">Currency</span>
                     </a>

@@ -20,611 +20,463 @@
     </div>
 </div>
 <!-- end page title -->
-
 <div class="row">
-    <div class="col-lg-12">
+    <div class="col-xl-12">
         <div class="card">
-            
+           
             <div class="card-body">
-                <div class="live-preview">
-                    <form method="POST" action="{{ route('cashflow.store') }}">
-                        @csrf
-                        <div class="row gy-4">
-                            <div class="col-xxl-3 col-md-6">
-                                <div>
-                                    <label for="serialNo" class="@error('serialNo') is-invalid @enderror form-label">Serial Number</label>
-                                    <input type="text" class="form-control" id="serialNo" name="serialNo" value="{{ old('serialNo') }}">
-                                    @error('serialNo') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
-                                </div>
-                            </div>
-                            <div class="col-xxl-3 col-md-6">
-                                <div>
-                                    <label for="clientName" class="@error('clientName') is-invalid @enderror form-label">Client Name</label>
-                                    <input type="text" class="form-control" id="clientName" name="clientName" value="{{ old('clientName') }}">
-                                    @error('clientName') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
-                                </div>
-                            </div>
-                            <div class="col-xxl-3 col-md-6">
-                                <div>
-                                    <label for="Client Reference" class="@error('clientRef') is-invalid @enderror form-label">Client Reference</label>
-                                    <input type="text" class="form-control" id="clientRef" name="clientRef" value="{{ old('clientRef') }}">
-                                    @error('clientRef') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
-                                </div>
-                            </div>
-                            <div class="col-xxl-3 col-md-6">
-                                <div>
-                                    <label for="date" class="@error('date') is-invalid @enderror form-label">Date</label>
-                                    <input type="date" class="form-control" id="date" name="date" value="{{ old('date') }}">
-                                    @error('date') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
-                                </div>
-                            </div>
+                <form method="POST" action="{{ route('cashflow.store') }}" class="form-steps" autocomplete="off">
+                    @csrf
+                    <div class="step-arrow-nav mb-4">
 
-                            <div class="col-xxl-3 col-md-6">
-                                <div>
-                                    <label for="Company" class="@error('serialNo') is-invalid @enderror form-label">Company</label>
-                                    <select id="company" name="company" class="form-select" data-choices="" data-choices-sorting="true" >
+                        <ul class="nav nav-pills custom-nav nav-justified" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="steparrow-gen-info-tab" data-bs-toggle="pill" data-bs-target="#steparrow-gen-info" type="button" role="tab" aria-controls="steparrow-gen-info" aria-selected="true">Customer Info</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link done active" id="steparrow-description-info-tab" data-bs-toggle="pill" data-bs-target="#steparrow-description-info" type="button" role="tab" aria-controls="steparrow-description-info" aria-selected="false">Product Details</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="pills-experience-tab" data-bs-toggle="pill" data-bs-target="#pills-experience" type="button" role="tab" aria-controls="pills-experience" aria-selected="false">Finish</button>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="tab-content">
+                        <div class="tab-pane fade" id="steparrow-gen-info" role="tabpanel" aria-labelledby="steparrow-gen-info-tab">
+                            <div class="row gy-4">
+                                <div class="col-xxl-2 col-md-6">
+                                    <div>
+                                        <label for="serialNo" class="@error('serialNo') is-invalid @enderror form-label">Serial Number</label>
+                                        <input type="text" class="form-control" id="serialNo" name="serialNo" value="{{ old('serialNo') }}">
+                                        @error('serialNo') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
+                                    </div>
+                                </div>
+                                <div class="col-xxl-4 col-md-6">
+                                    <div>
+                                        <label for="clientName" class="@error('clientName') is-invalid @enderror form-label">Client Name</label>
+                                        <select id="clientName" name="clientName" class="form-select" data-choices="" data-choices-sorting="true" >
                                         <option selected="">Choose...</option>
-                                        @foreach($companies as $index => $company)
-                                        <option value="{{ $company->name }}" {{ old('company') == $company->name ? 'selected' : '' }}> {{ $company->name }} </option>
-                                        @endforeach
-                                    </select>
-                                    @error('company') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
+                                        @foreach($customers as $index => $customer)
+                                            <option value="{{ $customer->name }}" {{ old('clientName') == $customer->name ? 'selected' : '' }}> {{ $customer->name }} </option>
+                                            @endforeach
+                                        </select>    
+                                        @error('clientName') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-xxl-3 col-md-6">
-                                <div>
-                                    <label for="department" class="@error('department') is-invalid @enderror form-label">Department</label>
-                                    <select id="department" name="department" class="form-select" data-choices="" data-choices-sorting="true">
-                                        <option selected="">Choose...</option>
-                                        <option value="Division 1" {{ old('department') == 'Division 1' ? 'selected' : '' }} >Division 1</option>
-                                        <option value="Division 2" {{ old('department') == 'Division 2' ? 'selected' : '' }} >Division 2</option>
-                                        <option value="Central 1" {{ old('department') == 'Central 1' ? 'selected' : '' }} >Central 1</option>
-                                        <option value="Central 2" {{ old('department') == 'Central 2' ? 'selected' : '' }} >Central 2</option>
-                                    </select>
-                                    @error('department') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
+                                <div class="col-xxl-3 col-md-6">
+                                    <div>
+                                        <label for="date" class="@error('date') is-invalid @enderror form-label">Date</label>
+                                        <input type="date" class="form-control" id="date" name="date" value="{{ old('date') }}">
+                                        @error('date') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-xxl-3 col-md-6">
-                                <div>
-                                    <label for="description" class="@error('description') is-invalid @enderror form-label">Description</label>
-                                    <input type="text" class="form-control" id="description" name="description" value="{{ old('description') }}">
-                                    @error('description') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
+    
+                                <div class="col-xxl-3 col-md-6">
+                                    <div>
+                                        <label for="Company" class="@error('serialNo') is-invalid @enderror form-label">Company</label>
+                                        <select id="company" name="company" class="form-select" data-choices="" data-choices-sorting="true" >
+                                            <option selected="">Choose...</option>
+                                            @foreach($companies as $index => $company)
+                                            <option value="{{ $company->name }}" {{ old('company') == $company->name ? 'selected' : '' }}> {{ $company->name }} </option>
+                                            @endforeach
+                                        </select>
+                                        @error('company') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-xxl-3 col-md-6">
-                                <div>
-                                    <label for="countryOrigin" class="@error('countryOrigin') is-invalid @enderror form-label">Country of Origin</label>
-                                    <input type="text" class="form-control" id="countryOrigin" name="countryOrigin" value="{{ old('countryOrigin') }}">
-                                    @error('countryOrigin') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
+                                <div class="col-xxl-3 col-md-6">
+                                    <div>
+                                        <label for="department" class="@error('department') is-invalid @enderror form-label">Department</label>
+                                        <select id="department" name="department" class="form-select" data-choices="" data-choices-sorting="true">
+                                            <option selected="">Choose...</option>
+                                            <option value="Division 1" {{ old('department') == 'Division 1' ? 'selected' : '' }} >Division 1</option>
+                                            <option value="Division 2" {{ old('department') == 'Division 2' ? 'selected' : '' }} >Division 2</option>
+                                            <option value="Central 1" {{ old('department') == 'Central 1' ? 'selected' : '' }} >Central 1</option>
+                                            <option value="Central 2" {{ old('department') == 'Central 2' ? 'selected' : '' }} >Central 2</option>
+                                        </select>
+                                        @error('department') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
+                                    </div>
                                 </div>
+                                <div class="col-xxl-3 col-md-6">
+                                    <div>
+                                        <label for="countryOrigin" class="@error('countryOrigin') is-invalid @enderror form-label">Country of Origin</label>
+                                        <input type="text" class="form-control" id="countryOrigin" name="countryOrigin" value="{{ old('countryOrigin') }}">
+                                        @error('countryOrigin') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
+                                    </div>
+                                </div>
+    
+                                <div class="col-xxl-3 col-md-6">
+                                    <div>
+                                        <label for="modeofshipment" class="@error('modeofshipment') is-invalid @enderror form-label">Mode of Shipment</label>
+                                        <select id="modeofshipment" name="modeofshipment" class="form-select" data-choices="" data-choices-sorting="true" value="{{ old('modeofshipment') }}">
+                                            <option value="Air Freight" {{ old('modeofshipment') == 'Air Freight' ? 'selected' : '' }} >Air Freight</option>
+                                            <option value="Sea Freight" {{ old('modeofshipment') == 'Sea Freight' ? 'selected' : '' }} >Sea Freight</option>
+                                            <option value="Land Freight" {{ old('modeofshipment') == 'Land Freight' ? 'selected' : '' }} >Land Freight</option>
+                                        </select>
+                                        @error('modeofshipment') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
+                                    </div>
+                                </div>
+                                <div class="col-xxl-3 col-md-6">
+                                    <div>
+                                        <label for="availability" class="@error('availability') is-invalid @enderror form-label">Availability from Supplier (in Days)</label>
+                                        <input type="text" class="form-control" id="availability" name="availability" value="{{ old('availability') }}">
+                                        @error('availability') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
+                                    </div>
+                                </div>
+    
+                                <div class="col-xxl-3 col-md-6">
+                                    <div>
+                                        <label for="goodsTravel" class="@error('goodsTravel') is-invalid @enderror form-label">Travel of Goods (in Days)</label>
+                                        <input type="text" class="form-control" id="goodsTravel" name="goodsTravel" value="{{ old('goodsTravel') }}">
+                                        @error('goodsTravel') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
+                                    </div>
+                                </div>
+                                <div class="col-xxl-3 col-md-6">
+                                    <div>
+                                        <label for="incoterms" class="@error('incoterms') is-invalid @enderror form-label">INCOTERMS</label>
+                                        <select id="incoterms" name="incoterms" class="form-select" data-choices="" data-choices-sorting="true" value="{{ old('incoterms') }}">
+                                            <option value="EXW" {{ old('incoterms') == 'EXW' ? 'selected' : '' }} >EXW</option>
+                                            <option value="FOB" {{ old('incoterms') == 'FOB' ? 'selected' : '' }} >FOB</option>
+                                            <option value="C&P" {{ old('incoterms') == 'C&P' ? 'selected' : '' }} >C&P</option>
+                                            <option value="CIF" {{ old('incoterms') == 'CIF' ? 'selected' : '' }} >CIF</option>
+                                            <option value="CIP" {{ old('incoterms') == 'CIP' ? 'selected' : '' }} >CIP</option>
+                                            <option value="DAP" {{ old('incoterms') == 'DAP' ? 'selected' : '' }} >DAP</option>
+                                            <option value="DPT" {{ old('incoterms') == 'DPT' ? 'selected' : '' }} >DPT</option>
+                                        </select>
+                                        @error('incoterms') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
+                                    </div>
+                                </div>
+                                <div class="col-xxl-3 col-md-6">
+                                    <div>
+                                        <label for="currency" class="@error('currency') is-invalid @enderror form-label">Currency 
+                                            <button type="button" class="btn rounded-pill" style="border 1px solid;padding:0px" 
+                                                    id="persistentTooltip"
+                                                    data-bs-toggle="tooltip" data-bs-html="true" 
+                                                    title="<em>Add New</em> <b>Currency Conversion</b> <a href='{{ route('conversion.create') }}' style='color:#fff'>Click here</a>">
+                                                <i class="ri-question-line label-icon align-middle fs-16 me-2"></i>
+                                            </button>
+                                        </label>
+                                        <select id="currency" name="currency" class="form-select" data-choices="" data-choices-sorting="true" >
+                                            <option value=""> Choose... </option>
+                                            @foreach($currencies as $index => $currency)
+                                            <option value="{{ $currency->name }}" 
+                                                {{ old('currency') == $currency->name ? 'selected' : '' }}>
+                                                {{ $currency->name }} ({{ $currency->code }})
+                                            </option>
+                                            @endforeach
+                                        </select>
+                                        <p class='text-info inputerror' id="currency_conversion"></p>
+                                        @error('currency') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
+                                    </div>
+                                </div>
+                                <div class="col-xxl-3 col-md-6 d-none">
+                                    <div>
+                                        <label for="conversion_factor" class="@error('conversion_factor') is-invalid @enderror form-label">KWD Equivalent</label>
+                                        <input type="text" class="form-control" id="conversion_factor" name="conversion_factor" value="{{ old('conversion_factor') }}">
+                                        @error('conversion_factor') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
+                                    </div>
+                                </div>
+                                
+                                
+                               
                             </div>
+                            <div class="d-flex align-items-start gap-3 mt-4">
+                                <button type="button" class="btn btn-success btn-label right ms-auto nexttab nexttab" data-nexttab="steparrow-description-info-tab"><i class="ri-arrow-right-line label-icon align-middle fs-16 ms-2"></i>Product Details</button>
+                            </div>
+                        </div>
+                        <!-- end tab pane -->
 
-                            <div class="col-xxl-3 col-md-6">
-                                <div>
-                                    <label for="uom" class="@error('uom') is-invalid @enderror form-label">Unit of Measurement</label>
-                                    <input type="text" class="form-control" id="uom" name="uom" value="{{ old('uom') }}">
-                                    @error('uom') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
+                        <div class="tab-pane fade show active" id="steparrow-description-info" role="tabpanel" aria-labelledby="steparrow-description-info-tab">
+                            <div>
+                                <div class="row g-3">
+                                    
+                                    <div class="col-md-2">
+                                        <label for="country" class="form-label">Product</label>
+                                        <select id="items_1_product" name="items_1_product" class="form-select" data-choices="" data-choices-sorting="true" >
+                                            <option selected="">Choose...</option>
+                                            @foreach($products as $index => $product)
+                                                <option value="{{ $product->name }}" {{ old('product') == $product->name ? 'selected' : '' }}> {{ $product->name }} </option>
+                                                @endforeach
+                                            </select>    
+                                            @error('product') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
+                                        <div class="invalid-feedback">Please select a country</div>
+                                    </div>
+                                    <div class="col-xxl-3 col-md-6">
+                                        <div>
+                                            <label for="unitPrice" class="@error('unitPrice') is-invalid @enderror form-label">Unit Price <span id="currency_label" class="font-weight-bold"> (in Dealing Currency)</span></label>
+                                            <input type="text" class="form-control" id="items_1_unitPrice" name="items_1_unitPrice">
+                                            @error('unitPrice') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-xxl-1 col-md-6">
+                                        <div>
+                                            <label for="quantity" class="@error('quantity') is-invalid @enderror form-label">Quantity </label>
+                                            <input type="number" steps="1" class="form-control" id="items_1_quantity" name="items_1_quantity">
+                                            @error('quantity') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-xxl-3 col-md-6">
+                                        <div>
+                                            <label for="packagingInfo" class="@error('packagingInfo') is-invalid @enderror form-label">Packaging Info </label>
+                                            <input type="text" class="form-control" id="items_1_packagingInfo" name="items_1_packagingInfo">
+                                            @error('packagingInfo') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-xxl-3 col-md-6">
+                                        <div>
+                                           
+                                            <button type="button" id="add-item" class="btn btn-success btn-label right ms-auto nexttab nexttab mt-4" data-nexttab="pills-experience-tab"><i class=" ri-add-line label-icon align-middle fs-16 ms-2"></i>Add Product</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-12 mt-5">
+                                        <div class="card">
+                                            <!-- Hoverable Rows -->
+                                            <table class="table table-hover table-nowrap mb-0" id="items-table">
+                                                <thead class="table-light">
+                                                    <tr>
+                                                        <th scope="col">S No.</th>
+                                                        <th scope="col">Material Price</th>
+                                                        <th scope="col">Other Charges</th>
+                                                        <th scope="col">Freight</th>
+                                                        <th scope="col">Handling & Clearance</th>
+                                                        <th scope="col">Customs Duty</th>
+                                                        <th scope="col">Bank Charges</th>
+                                                        <th scope="col">Landed Cost</th>
+                                                        <th scope="col">Profit Margin</th>
+                                                        <th scope="col">Calculated Selling Price</th>
+                                                        <th scope="col">View</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-xxl-3 col-md-6">
-                                <div>
-                                    <label for="packagingInfo" class="@error('packagingInfo') is-invalid @enderror form-label">Packaging Info</label>
-                                    <input type="text" class="form-control" id="packagingInfo" name="packagingInfo" value="{{ old('packagingInfo') }}">
-                                    @error('packagingInfo') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
-                                </div>
-                            </div>
-                            <div class="col-xxl-3 col-md-6">
-                                <div>
-                                    <label for="modeofshipment" class="@error('modeofshipment') is-invalid @enderror form-label">Mode of Shipment</label>
-                                    <select id="modeofshipment" name="modeofshipment" class="form-select" data-choices="" data-choices-sorting="true" value="{{ old('modeofshipment') }}">
-                                        <option value="Air Freight" {{ old('modeofshipment') == 'Air Freight' ? 'selected' : '' }} >Air Freight</option>
-                                        <option value="Sea Freight" {{ old('modeofshipment') == 'Sea Freight' ? 'selected' : '' }} >Sea Freight</option>
-                                        <option value="Land Freight" {{ old('modeofshipment') == 'Land Freight' ? 'selected' : '' }} >Land Freight</option>
-                                    </select>
-                                    @error('modeofshipment') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
-                                </div>
-                            </div>
-                            <div class="col-xxl-3 col-md-6">
-                                <div>
-                                    <label for="availability" class="@error('availability') is-invalid @enderror form-label">Production/Availability from Supplier (in Days)</label>
-                                    <input type="text" class="form-control" id="availability" name="availability" value="{{ old('availability') }}">
-                                    @error('availability') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
-                                </div>
-                            </div>
 
+                                <hr class="my-4 text-muted">
 
-                            <div class="col-xxl-3 col-md-6">
-                                <div>
-                                    <label for="goodsTravel" class="@error('goodsTravel') is-invalid @enderror form-label">Travel of Goods (in Days)</label>
-                                    <input type="text" class="form-control" id="goodsTravel" name="goodsTravel" value="{{ old('goodsTravel') }}">
-                                    @error('goodsTravel') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
-                                </div>
+                               
                             </div>
-                            <div class="col-xxl-3 col-md-6">
-                                <div>
-                                    <label for="quantity" class="@error('quantity') is-invalid @enderror form-label">Quantity</label>
-                                    <input type="text" class="form-control" id="quantity" name="quantity" value="{{ old('quantity') }}">
-                                    @error('quantity') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
-                                </div>
+                            <div class="d-flex align-items-start gap-3 mt-4">
+                                <button type="button" class="btn btn-light btn-label previestab" data-previous="steparrow-gen-info-tab"><i class="ri-arrow-left-line label-icon align-middle fs-16 me-2"></i> Back to Customer Info</button>
+                                <button type="submit" class="btn btn-success btn-label right ms-auto nexttab nexttab" data-nexttab="steparrow-description-info-tab"><i class="ri-arrow-right-line label-icon align-middle fs-16 ms-2"></i>Submit</button>
                             </div>
-                            <div class="col-xxl-3 col-md-6">
-                                <div>
-                                    <label for="incoterms" class="@error('incoterms') is-invalid @enderror form-label">INCOTERMS</label>
-                                    <select id="incoterms" name="incoterms" class="form-select" data-choices="" data-choices-sorting="true" value="{{ old('incoterms') }}">
-                                        <option value="EXW" {{ old('incoterms') == 'EXW' ? 'selected' : '' }} >EXW</option>
-                                        <option value="FOB" {{ old('incoterms') == 'FOB' ? 'selected' : '' }} >FOB</option>
-                                        <option value="C&P" {{ old('incoterms') == 'C&P' ? 'selected' : '' }} >C&P</option>
-                                        <option value="CIF" {{ old('incoterms') == 'CIF' ? 'selected' : '' }} >CIF</option>
-                                        <option value="CIP" {{ old('incoterms') == 'CIP' ? 'selected' : '' }} >CIP</option>
-                                        <option value="DAP" {{ old('incoterms') == 'DAP' ? 'selected' : '' }} >DAP</option>
-                                        <option value="DPT" {{ old('incoterms') == 'DPT' ? 'selected' : '' }} >DPT</option>
-                                    </select>
-                                    @error('incoterms') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
-                                </div>
-                            </div>
-                            <div class="col-xxl-3 col-md-6">
-                                <div>
-                                    <label for="currency" class="@error('currency') is-invalid @enderror form-label">Currency <!--<i class="ri-question-line label-icon align-middle fs-16 me-2"></i> -->
-                                        <button type="button" class="btn rounded-pill" style="border 1px solid;padding:0px" 
-                                                id="persistentTooltip"
-                                                data-bs-toggle="tooltip" data-bs-html="true" 
-                                                title="<em>Add New</em> <b>Currency Conversion</b> <a href='{{ route('conversion.create') }}' target='_blank' style='color:#fff'>Click here</a>">
-                                            <i class="ri-question-line label-icon align-middle fs-16 me-2"></i>
-                                        </button>
-                                    </label>
-                                    <select id="currency" name="currency" class="form-select" data-choices="" data-choices-sorting="true" >
-                                        <option value=""> Choose... </option>
-                                        @foreach($currencies as $index => $currency)
-                                        <option value="{{ $currency->name }}" 
-                                            {{ old('currency') == $currency->name ? 'selected' : '' }}>
-                                            {{ $currency->name }} ({{ $currency->code }})
-                                        </option>
-                                        @endforeach
-                                    </select>
-                                    </select>
-                                    <p class='text-info' id="currency_conversion"></p>
-                                    @error('currency') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
-                                </div>
-                            </div>
-                            <div class="col-xxl-3 col-md-6 d-none">
-                                <div>
-                                    <label for="conversion_factor" class="@error('conversion_factor') is-invalid @enderror form-label">KWD Equivalent</label>
-                                    <input type="text" class="form-control" id="conversion_factor" name="conversion_factor" value="{{ old('conversion_factor') }}">
-                                    @error('conversion_factor') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
-                                </div>
-                            </div>
-                            <div class="col-xxl-3 col-md-6">
-                                <div>
-                                    <label for="unitPrice" class="@error('unitPrice') is-invalid @enderror form-label">Unit Price <span id="currency_label" class="font-weight-bold"> (in Dealing Currency)</label>
-                                    <input type="text" class="form-control" id="unitPrice" name="unitPrice">
-                                    @error('unitPrice') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
-                                </div>
-                            </div>
-                            <div class="col-xxl-3 col-md-6 d-none" >
-                                <div>
-                                    <label for="unitMaterialPrice" class="@error('unitMaterialPrice') is-invalid @enderror form-label">Unit Material Price KD</label>
-                                    <input type="text" class="form-control" id="unitMaterialPrice" name="unitMaterialPrice" value="{{ old('unitMaterialPrice') }}">
-                                    @error('unitMaterialPrice') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
-                                </div>
-                            </div>
-                            <div class="col-xxl-3 col-md-6 d-none">
-                                <div>
-                                    <label for="unitOtherCharges" class="@error('unitOtherCharges') is-invalid @enderror form-label">Unit Other Charges per Unit (KWD)</label>
-                                    <input type="text" class="form-control" id="unitOtherCharges" name="unitOtherCharges" value="{{ old('unitOtherCharges') }}">
-                                    @error('unitOtherCharges') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
-                                </div>
-                            </div>
-                            <div class="col-xxl-3 col-md-6 d-none">
-                                <div>
-                                    <label for="freight" class="@error('freight') is-invalid @enderror form-label">Freight Per Unit (KWD)</label>
-                                    <input type="text" class="form-control" id="freight" name="freight" value="{{ old('freight') }}">
-                                    @error('freight') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
-                                </div>
-                            </div>
-                            <div class="col-xxl-3 col-md-6 d-none">
-                                <div>
-                                    <label for="unitLocalHandling" class="@error('unitLocalHandling') is-invalid @enderror form-label">Unit Local handling Charges & Clearance (KWD)</label>
-                                    <input type="text" class="form-control" id="unitLocalHandling" name="unitLocalHandling" value="{{ old('unitLocalHandling') }}">
-                                    @error('unitLocalHandling') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
-                                </div>
-                            </div>
-                            <div class="col-xxl-3 col-md-6 d-none">
-                                <div>
-                                    <label for="customDuty" class="@error('customDuty') is-invalid @enderror form-label">Customs Duty 6%</label>
-                                    <input type="text" class="form-control" id="customDuty" name="customDuty" value="{{ old('customDuty') }}">
-                                    @error('customDuty') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
-                                </div>
-                            </div>
-                            <div class="col-xxl-3 col-md-6 d-none">
-                                <div>
-                                    <label for="bankCharges" class="@error('bankCharges') is-invalid @enderror form-label">Bank Charges: LC CHARGE/DIRECT TRANSFER</label>
-                                    <input type="text" class="form-control" id="bankCharges" name="bankCharges" value="{{ old('bankCharges') }}">
-                                    @error('bankCharges') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
-                                </div>
-                            </div>
-                            <div class="col-xxl-3 col-md-6 d-none">
-                                <div>
-                                    <label for="landedCost" class="@error('landedCost') is-invalid @enderror form-label">Landed Cost per Unit (KWD)</label>
-                                    <input type="text" class="form-control" id="landedCost" name="landedCost" value="{{ old('landedCost') }}">
-                                    @error('landedCost') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
-                                </div>
-                            </div>
-                            <div class="col-xxl-3 col-md-6">
-                                <div>
-                                    <label for="companyProfileMargin" class="@error('companyProfileMargin') is-invalid @enderror form-label">Company Profit Margin per Unit in %</label>
-                                    <input type="text" class="form-control" id="companyProfileMargin" name="companyProfileMargin" value="{{ old('companyProfileMargin') }}">
-                                    @error('companyProfileMargin') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
-                                </div>
-                            </div>
-                            <div class="col-xxl-3 col-md-6 d-none">
-                                <div>
-                                    <label for="profitMargin" class="@error('profitMargin') is-invalid @enderror form-label">Profit Margin per unit KD</label>
-                                    <input type="text" class="form-control" id="profitMargin" name="profitMargin" value="{{ old('profitMargin') }}">
-                                    @error('profitMargin') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
-                                </div>
-                            </div>
-                            <div class="col-xxl-3 col-md-6">
-                                <div>
-                                    <label for="targetPrice" class="@error('targetPrice') is-invalid @enderror form-label">Target Price</label>
-                                    <input type="text" class="form-control" id="targetPrice" name="targetPrice" value="{{ old('targetPrice') }}">
-                                    @error('targetPrice') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
-                                </div>
-                            </div>
-                            <div class="col-xxl-3 col-md-6 d-none">
-                                <div>
-                                    <label for="sellingPrice" class="@error('sellingPrice') is-invalid @enderror form-label">Calculated Selling Unit Price KD</label>
-                                    <input type="text" class="form-control" id="sellingPrice" name="sellingPrice" value="{{ old('sellingPrice') }}">
-                                    @error('sellingPrice') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
-                                </div>
-                            </div>
-                            <div class="col-xxl-3 col-md-6 d-none">
-                                <div>
-                                    <label for="totalSelling" class="@error('totalSelling') is-invalid @enderror form-label">Total Selling KD</label>
-                                    <input type="text" class="form-control" id="totalSelling" name="totalSelling" value="{{ old('totalSelling') }}">
-                                    @error('totalSelling') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
-                                </div>
-                            </div>
-                            <div class="col-xxl-3 col-md-6 d-none">
-                                <div>
-                                    <label for="qty" class="@error('qty') is-invalid @enderror form-label">QTY</label>
-                                    <input type="text" class="form-control" id="qty" name="qty" value="{{ old('qty') }}">
-                                    @error('qty') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
-                                </div>
-                            </div>
-                            <div class="col-xxl-3 col-md-6 d-none">
-                                <div>
-                                    <label for="basiInput" class="@error('totalMaterialPrice') is-invalid @enderror form-label">Total Material Price Price KWD</label>
-                                    <input type="text" class="form-control" id="totalMaterialPrice" name="totalMaterialPrice" value="{{ old('totalMaterialPrice') }}">
-                                    @error('totalMaterialPrice') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
-                                </div>
-                            </div>
-                            <div class="col-xxl-3 col-md-6 d-none">
-                                <div>
-                                    <label for="totalOthercharges" class="@error('totalOthercharges') is-invalid @enderror form-label">Total Other Charges (KWD)</label>
-                                    <input type="text" class="form-control" id="totalOthercharges" name="totalOthercharges" value="{{ old('totalOthercharges') }}">
-                                    @error('totalOthercharges') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
-                                </div>
-                            </div>
-                            <div class="col-xxl-3 col-md-6 d-none">
-                                <div>
-                                    <label for="totalFreight" class="@error('totalFreight') is-invalid @enderror form-label">Total Freight (KWD)</label>
-                                    <input type="text" class="form-control" id="totalFreight" name="totalFreight" value="{{ old('totalFreight') }}">
-                                    @error('totalFreight') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
-                                </div>
-                            </div>
-                            <div class="col-xxl-3 col-md-6 d-none">
-                                <div>
-                                    <label for="totalHandling" class="@error('totalHandling') is-invalid @enderror form-label">Total Handling cost (KWD)</label>
-                                    <input type="text" class="form-control" id="totalHandling" name="totalHandling" value="{{ old('totalHandling') }}">
-                                    @error('totalHandling') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
-                                </div>
-                            </div>
-                            <div class="col-xxl-3 col-md-6 d-none">
-                                <div>
-                                    <label for="totalCustoms" class="@error('totalCustoms') is-invalid @enderror form-label">Total Customs 6% (KWD)</label>
-                                    <input type="text" class="form-control" id="totalCustoms" name="totalCustoms" value="{{ old('totalCustoms') }}">
-                                    @error('totalCustoms') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
-                                </div>
-                            </div>
-                            <div class="col-xxl-3 col-md-6 d-none">
-                                <div>
-                                    <label for="totalBankComm" class="@error('totalBankComm') is-invalid @enderror form-label">Total Bank Comm</label>
-                                    <input type="text" class="form-control" id="totalBankComm" name="totalBankComm" value="{{ old('totalBankComm') }}">
-                                    @error('totalBankComm') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
-                                </div>
-                            </div>
-                            <div class="col-xxl-3 col-md-6 d-none">
-                                <div>
-                                    <label for="totalCompanyMargin" class="@error('totalCompanyMargin') is-invalid @enderror form-label">Total Company Margin (KWD)</label>
-                                    <input type="text" class="form-control" id="totalCompanyMargin" name="totalCompanyMargin" value="{{ old('totalCompanyMargin') }}">
-                                    @error('totalCompanyMargin') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
-                                </div>
-                            </div>
-                            <div class="col-xxl-3 col-md-6">
-                                <div class="d-flex align-items-start gap-3 mt-4" >
-                                <div class="ms-auto">
-                                    <button type="submit" class="btn btn-success btn-label waves-effect waves-light w-lg"><i class="ri-check-double-line label-icon align-middle fs-16 me-2"></i> Submit</button>
-                                </div>
-                                </div>
-                            </div>
+                        </div>
+                        <!-- end tab pane -->
 
-                           
+                        <div class="tab-pane fade" id="pills-experience" role="tabpanel">
+                            <div class="text-center">
+
+                                <div class="avatar-md mt-5 mb-4 mx-auto">
+                                    <div class="avatar-title bg-light text-success display-4 rounded-circle">
+                                        <i class="ri-checkbox-circle-fill"></i>
+                                    </div>
+                                </div>
+                                <h5>Well Done !</h5>
+                                <p class="text-muted">You have Successfully Signed Up</p>
+                            </div>
+                        </div>
+                        <!-- end tab pane -->
+                    </div>
+                    <!-- end tab content -->
+                </form>
+                
+            </div>
+            
+            <!-- end card body -->
+        </div>
+        <!-- end card -->
+        <div class="modal fade" id="showModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header bg-light p-3">
+                        <h5 class="modal-title" id="exampleModalLabel">Total Charges</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                    </div>
+                    <form class="tablelist-form" autocomplete="off">
+                        <div class="modal-body">
+                            <table class="table table-borderless table-nowrap align-middle mb-0">
+                                <tbody>
+                                    <tr>
+                                        <td class="d-flex">
+                                            <!-- <img src="http://[::1]:5173/resources/assets/images/users/avatar-1.jpg" alt="" class="avatar-xs rounded-3 me-2"> -->
+                                            <div>
+                                                <h5 class="fs-13 mb-0">Total Selling KD</h5>
+                                                <p class="fs-12 mb-0 text-muted">in KWD</p>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <h6 class="mb-0" id="totalSelling2">- </h6>
+                                        </td>
+                                    </tr><!-- end tr -->
+                                    <tr>
+                                        <td class="d-flex">
+                                            <!-- <img src="http://[::1]:5173/resources/assets/images/users/avatar-2.jpg" alt="" class="avatar-xs rounded-3 me-2"> -->
+                                            <div>
+                                                <h5 class="fs-13 mb-0">Quantity</h5>
+                                                <p class="fs-12 mb-0 text-muted"></p>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <h6 class="mb-0" id="qty2">- </h6>
+                                        </td>
+                                    </tr><!-- end tr -->
+                                    <tr>
+                                        <td class="d-flex">
+                                            <!-- <img src="http://[::1]:5173/resources/assets/images/users/avatar-7.jpg" alt="" class="avatar-xs rounded-3 me-2"> -->
+                                            <div>
+                                                <h5 class="fs-13 mb-0">Total Material Price Price </h5>
+                                                <p class="fs-12 mb-0 text-muted">in KWD</p>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <h6 class="mb-0" id="totalMaterialPrice2">- </h6>
+                                        </td>
+                                    </tr><!-- end tr -->
+                                    <tr>
+                                        <td class="d-flex">
+                                            <!-- <img src="http://[::1]:5173/resources/assets/images/users/avatar-4.jpg" alt="" class="avatar-xs rounded-3 me-2"> -->
+                                            <div>
+                                                <h5 class="fs-13 mb-0">Total Other Charges</h5>
+                                                <p class="fs-12 mb-0 text-muted">in KWD</p>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <h6 class="mb-0" id="totalOthercharges2">- </h6>
+                                        </td>
+                                    </tr><!-- end tr -->
+                                    <tr>
+                                        <td class="d-flex">
+                                            <!-- <img src="http://[::1]:5173/resources/assets/images/users/avatar-6.jpg" alt="" class="avatar-xs rounded-3 me-2"> -->
+                                            <div>
+                                                <h5 class="fs-13 mb-0">Total Freight</h5>
+                                                <p class="fs-12 mb-0 text-muted">in KWD</p>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <h6 class="mb-0" id="totalFreight2">- </h6>
+                                        </td>
+                                    </tr><!-- end tr -->
+                                    <tr>
+                                        <td class="d-flex">
+                                            <!-- <img src="http://[::1]:5173/resources/assets/images/users/avatar-5.jpg" alt="" class="avatar-xs rounded-3 me-2"> -->
+                                            <div>
+                                                <h5 class="fs-13 mb-0">Total Handling cost</h5>
+                                                <p class="fs-12 mb-0 text-muted">in KWD</p>
+                                            </div>
+                                        </td>
+        
+                                        <td>
+                                            <h6 class="mb-0" id="totalHandling2">- </h6>
+                                        </td>
+                                    </tr><!-- end tr -->
+                                    <tr>
+                                        <td class="d-flex">
+                                            <!-- <img src="http://[::1]:5173/resources/assets/images/users/avatar-3.jpg" alt="" class="avatar-xs rounded-3 me-2"> -->
+                                            <div>
+                                                <h5 class="fs-13 mb-0">Total Customs 6%</h5>
+                                                <p class="fs-12 mb-0 text-muted">in KWD</p>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <h6 class="mb-0" id="totalCustoms2">- </h6>
+                                        </td>
+                                    </tr><!-- end tr -->
+                                    <tr>
+                                        <td class="d-flex">
+                                            <!-- <img src="http://[::1]:5173/resources/assets/images/users/avatar-3.jpg" alt="" class="avatar-xs rounded-3 me-2"> -->
+                                            <div>
+                                                <h5 class="fs-13 mb-0">Total Bank Comm</h5>
+                                                <p class="fs-12 mb-0 text-muted"></p>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <h6 class="mb-0" id="totalBankComm2">- </h6>
+                                        </td>
+                                    </tr><!-- end tr -->
+                                    <tr>
+                                        <td class="d-flex">
+                                            <!-- <img src="http://[::1]:5173/resources/assets/images/users/avatar-3.jpg" alt="" class="avatar-xs rounded-3 me-2"> -->
+                                            <div>
+                                                <h5 class="fs-13 mb-0">Total Company Margin</h5>
+                                                <p class="fs-12 mb-0 text-muted">in KWD</p>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <h6 class="mb-0" id="totalCompanyMargin2">- </h6>
+                                        </td>
+                                    </tr><!-- end tr -->
+                                </tbody><!-- end tbody -->
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="hstack gap-2 justify-content-end">
+                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
                     </form>
-                    <!--end row-->
                 </div>
-
             </div>
         </div>
+
+        <!-- Modal -->
+        
+        <!--end modal -->
     </div>
-    <!--end col-->
+    <!-- end col -->
 </div>
-<div class="row">
-    <div class="col-xxl-5">
-        <div class="card">
-            <div class="card-header align-items-center d-flex">
-                <h4 class="card-title mb-0 flex-grow-1">Unit Charges</h4>
-            </div><!-- end card header -->
 
-            <div class="card-body">
-
-                <div class="table-responsive table-card">
-                    <table class="table table-borderless table-nowrap align-middle mb-0">
-                        
-                        <tbody>
-                            <tr>
-                                <td class="d-flex">
-                                    <!-- <img src="{{ Vite::asset('resources/assets/images/users/avatar-1.jpg') }}" alt="" class="avatar-xs rounded-3 me-2"> -->
-                                    <div>
-                                        <h5 class="fs-13 mb-0">Unit Material Price</h5>
-                                        <p class="fs-12 mb-0 text-muted">in KWD</p>
-                                    </div>
-                                </td>
-                                <td>
-                                    <h6 class="mb-0" id="unitMaterialPrice2" >- </h6>
-                                </td>
-                            </tr><!-- end tr -->
-                            <tr>
-                                <td class="d-flex">
-                                    <!-- <img src="{{ Vite::asset('resources/assets/images/users/avatar-2.jpg') }}" alt="" class="avatar-xs rounded-3 me-2"> -->
-                                    <div>
-                                        <h5 class="fs-13 mb-0">Unit Other Charges per Unit</h5>
-                                        <p class="fs-12 mb-0 text-muted">in KWD</p>
-                                    </div>
-                                </td>
-                                <td>
-                                    <h6 class="mb-0" id="unitOtherCharges2" >- </h6>
-                                </td>
-                            </tr><!-- end tr -->
-                            <tr>
-                                <td class="d-flex">
-                                    <!-- <img src="{{ Vite::asset('resources/assets/images/users/avatar-7.jpg') }}" alt="" class="avatar-xs rounded-3 me-2"> -->
-                                    <div>
-                                        <h5 class="fs-13 mb-0">Freight Per Unit</h5>
-                                        <p class="fs-12 mb-0 text-muted">in KWD</p>
-                                    </div>
-                                </td>
-                                <td>
-                                    <h6 class="mb-0" id="freight2" >- </h6>
-                                </td>
-                            </tr><!-- end tr -->
-                            <tr>
-                                <td class="d-flex">
-                                    <!-- <img src="{{ Vite::asset('resources/assets/images/users/avatar-4.jpg') }}" alt="" class="avatar-xs rounded-3 me-2"> -->
-                                    <div>
-                                        <h5 class="fs-13 mb-0">Unit Local handling Charges & Clearance</h5>
-                                        <p class="fs-12 mb-0 text-muted">in KWD</p>
-                                    </div>
-                                </td>
-                                <td>
-                                    <h6 class="mb-0" id="unitLocalHandling2" >- </h6>
-                                </td>
-                            </tr><!-- end tr -->
-                            <tr>
-                                <td class="d-flex">
-                                    <!-- <img src="{{ Vite::asset('resources/assets/images/users/avatar-6.jpg') }}" alt="" class="avatar-xs rounded-3 me-2"> -->
-                                    <div>
-                                        <h5 class="fs-13 mb-0">Customs Duty 6%</h5>
-                                        <p class="fs-12 mb-0 text-muted"></p>
-                                    </div>
-                                </td>
-                                <td>
-                                    <h6 class="mb-0" id="customDuty2" >- </h6>
-                                </td>
-                            </tr><!-- end tr -->
-                            <tr>
-                                <td class="d-flex">
-                                    <!-- <img src="{{ Vite::asset('resources/assets/images/users/avatar-5.jpg') }}" alt="" class="avatar-xs rounded-3 me-2"> -->
-                                    <div>
-                                        <h5 class="fs-13 mb-0">Bank Charges: LC CHARGE/DIRECT TRANSFER</h5>
-                                        <p class="fs-12 mb-0 text-muted"></p>
-                                    </div>
-                                </td>
-
-                                <td>
-                                    <h6 class="mb-0" id="bankCharges2" >- </h6>
-                                </td>
-                            </tr><!-- end tr -->
-                            <tr>
-                                <td class="d-flex">
-                                    <!-- <img src="{{ Vite::asset('resources/assets/images/users/avatar-3.jpg') }}" alt="" class="avatar-xs rounded-3 me-2"> -->
-                                    <div>
-                                        <h5 class="fs-13 mb-0">Landed Cost per Unit</h5>
-                                        <p class="fs-12 mb-0 text-muted">in KWD</p>
-                                    </div>
-                                </td>
-                                <td>
-                                    <h6 class="mb-0" id="landedCost2" >- </h6>
-                                </td>
-                            </tr><!-- end tr -->
-                            <tr>
-                                <td class="d-flex">
-                                    <!-- <img src="{{ Vite::asset('resources/assets/images/users/avatar-3.jpg') }}" alt="" class="avatar-xs rounded-3 me-2"> -->
-                                    <div>
-                                        <h5 class="fs-13 mb-0">Profit Margin per unit</h5>
-                                        <p class="fs-12 mb-0 text-muted">in KWD</p>
-                                    </div>
-                                </td>
-                                <td>
-                                    <h6 class="mb-0" id="profitMargin2" >- </h6>
-                                </td>
-                            </tr><!-- end tr -->
-                            <tr>
-                                <td class="d-flex">
-                                    <!-- <img src="{{ Vite::asset('resources/assets/images/users/avatar-3.jpg') }}" alt="" class="avatar-xs rounded-3 me-2"> -->
-                                    <div>
-                                        <h5 class="fs-13 mb-0">Calculated Selling Unit Price</h5>
-                                        <p class="fs-12 mb-0 text-muted">in KWD</p>
-                                    </div>
-                                </td>
-                                <td>
-                                    <h6 class="mb-0" id="sellingPrice2" >- </h6>
-                                </td>
-                            </tr><!-- end tr -->
-                        </tbody><!-- end tbody -->
-                    </table><!-- end table -->
-                </div>
-            </div><!-- end cardbody -->
-        </div><!-- end card -->
-    </div><!-- end col -->
-    <div class="col-xxl-5">
-        <div class="card">
-            <div class="card-header align-items-center d-flex">
-                <h4 class="card-title mb-0 flex-grow-1">Total Charges</h4>
-            </div><!-- end card header -->
-
-            <div class="card-body">
-
-                <div class="table-responsive table-card">
-                    <table class="table table-borderless table-nowrap align-middle mb-0">
-                        
-                        <tbody>
-                            <tr>
-                                <td class="d-flex">
-                                    <!-- <img src="{{ Vite::asset('resources/assets/images/users/avatar-1.jpg') }}" alt="" class="avatar-xs rounded-3 me-2"> -->
-                                    <div>
-                                        <h5 class="fs-13 mb-0">Total Selling KD</h5>
-                                        <p class="fs-12 mb-0 text-muted">in KWD</p>
-                                    </div>
-                                </td>
-                                <td>
-                                    <h6 class="mb-0" id="totalSelling2" >- </h6>
-                                </td>
-                            </tr><!-- end tr -->
-                            <tr>
-                                <td class="d-flex">
-                                    <!-- <img src="{{ Vite::asset('resources/assets/images/users/avatar-2.jpg') }}" alt="" class="avatar-xs rounded-3 me-2"> -->
-                                    <div>
-                                        <h5 class="fs-13 mb-0">Quantity</h5>
-                                        <p class="fs-12 mb-0 text-muted"></p>
-                                    </div>
-                                </td>
-                                <td>
-                                    <h6 class="mb-0" id="qty2" >- </h6>
-                                </td>
-                            </tr><!-- end tr -->
-                            <tr>
-                                <td class="d-flex">
-                                    <!-- <img src="{{ Vite::asset('resources/assets/images/users/avatar-7.jpg') }}" alt="" class="avatar-xs rounded-3 me-2"> -->
-                                    <div>
-                                        <h5 class="fs-13 mb-0">Total Material Price Price </h5>
-                                        <p class="fs-12 mb-0 text-muted">in KWD</p>
-                                    </div>
-                                </td>
-                                <td>
-                                    <h6 class="mb-0" id="totalMaterialPrice2" >- </h6>
-                                </td>
-                            </tr><!-- end tr -->
-                            <tr>
-                                <td class="d-flex">
-                                    <!-- <img src="{{ Vite::asset('resources/assets/images/users/avatar-4.jpg') }}" alt="" class="avatar-xs rounded-3 me-2"> -->
-                                    <div>
-                                        <h5 class="fs-13 mb-0">Total Other Charges</h5>
-                                        <p class="fs-12 mb-0 text-muted">in KWD</p>
-                                    </div>
-                                </td>
-                                <td>
-                                    <h6 class="mb-0" id="totalOthercharges2" >- </h6>
-                                </td>
-                            </tr><!-- end tr -->
-                            <tr>
-                                <td class="d-flex">
-                                    <!-- <img src="{{ Vite::asset('resources/assets/images/users/avatar-6.jpg') }}" alt="" class="avatar-xs rounded-3 me-2"> -->
-                                    <div>
-                                        <h5 class="fs-13 mb-0">Total Freight</h5>
-                                        <p class="fs-12 mb-0 text-muted">in KWD</p>
-                                    </div>
-                                </td>
-                                <td>
-                                    <h6 class="mb-0" id="totalFreight2" >- </h6>
-                                </td>
-                            </tr><!-- end tr -->
-                            <tr>
-                                <td class="d-flex">
-                                    <!-- <img src="{{ Vite::asset('resources/assets/images/users/avatar-5.jpg') }}" alt="" class="avatar-xs rounded-3 me-2"> -->
-                                    <div>
-                                        <h5 class="fs-13 mb-0">Total Handling cost</h5>
-                                        <p class="fs-12 mb-0 text-muted">in KWD</p>
-                                    </div>
-                                </td>
-
-                                <td>
-                                    <h6 class="mb-0" id="totalHandling2" >- </h6>
-                                </td>
-                            </tr><!-- end tr -->
-                            <tr>
-                                <td class="d-flex">
-                                    <!-- <img src="{{ Vite::asset('resources/assets/images/users/avatar-3.jpg') }}" alt="" class="avatar-xs rounded-3 me-2"> -->
-                                    <div>
-                                        <h5 class="fs-13 mb-0">Total Customs 6%</h5>
-                                        <p class="fs-12 mb-0 text-muted">in KWD</p>
-                                    </div>
-                                </td>
-                                <td>
-                                    <h6 class="mb-0" id="totalCustoms2" >- </h6>
-                                </td>
-                            </tr><!-- end tr -->
-                            <tr>
-                                <td class="d-flex">
-                                    <!-- <img src="{{ Vite::asset('resources/assets/images/users/avatar-3.jpg') }}" alt="" class="avatar-xs rounded-3 me-2"> -->
-                                    <div>
-                                        <h5 class="fs-13 mb-0">Total Bank Comm</h5>
-                                        <p class="fs-12 mb-0 text-muted"></p>
-                                    </div>
-                                </td>
-                                <td>
-                                    <h6 class="mb-0" id="totalBankComm2" >- </h6>
-                                </td>
-                            </tr><!-- end tr -->
-                            <tr>
-                                <td class="d-flex">
-                                    <!-- <img src="{{ Vite::asset('resources/assets/images/users/avatar-3.jpg') }}" alt="" class="avatar-xs rounded-3 me-2"> -->
-                                    <div>
-                                        <h5 class="fs-13 mb-0">Total Company Margin</h5>
-                                        <p class="fs-12 mb-0 text-muted">in KWD</p>
-                                    </div>
-                                </td>
-                                <td>
-                                    <h6 class="mb-0" id="totalCompanyMargin2" >- </h6>
-                                </td>
-                            </tr><!-- end tr -->
-                        </tbody><!-- end tbody -->
-                    </table><!-- end table -->
-                </div>
-            </div><!-- end cardbody -->
-        </div><!-- end card -->
-    </div><!-- end col -->
-
-</div>
 <!--end row-->
 <script>
-    // function changeCurrencyLabel(str) {
-    //     alert(str);
-    //     parts = str.split("-");
-    //     // let currency = document.getElementById('currency').value;
-    //     // document.getElementById("currency_label").textContent= "(in "+ currency + ")";
-    //     document.getElementById("conversion_factor").value = parts[1];
-    // }
-                
+    // document.getElementById('next-step').addEventListener('click', function () {
+    //     document.querySelector('.step-1').style.display = 'none';
+    //     document.querySelector('.step-2').style.display = 'block';
+    // });
+    
+    document.getElementById('add-item').addEventListener('click', function () {
+        const tableBody = document.querySelector('#items-table tbody');
+        const rowCount = tableBody.rows.length + 1;
+        // alert(rowCount)
+        let quantity = document.getElementById(`items_${rowCount}_quantity`).value || 0;
+        // alert("quantity"+quantity)
+        if (quantity > 0) {
+        const newRow = `
+            <tr>
+                <td scope="col">${rowCount}</td>
+                <td scope="col"><input type="text" id="items_${rowCount}_unitMaterialPrice" name="items[${rowCount}][unitMaterialPrice]"</td>
+                <td scope="col"><input type="text" id="items_${rowCount}_unitOtherCharges" name="items[${rowCount}][unitOtherCharges]"</td>
+                <td scope="col"><input type="text" id="items_${rowCount}_freight" name="items[${rowCount}][freight]"</td>
+                <td scope="col"><input type="text" id="items_${rowCount}_unitLocalHandling" name="items[${rowCount}][unitLocalHandling]"</td>
+                <td scope="col"><input type="text" id="items_${rowCount}_customDuty" name="items[${rowCount}][customDuty]"</td>
+                <td scope="col"><input type="text" id="items_${rowCount}_bankCharges" name="items[${rowCount}][bankCharges]"</td>
+                <td scope="col"><input type="text" id="items_${rowCount}_landedCost" name="items[${rowCount}][landedCost]"</td>
+                <td scope="col"><input type="text" id="items_${rowCount}_companyProfileMargin" name="items[${rowCount}][companyProfileMargin]"</td>
+                <td scope="col"><input type="text" id="items_${rowCount}_sellingPrice" name="items[${rowCount}][sellingPrice]"</td>
+                <td scope="col"><div class="edit">
+                    <button class="btn btn-sm btn-success edit-item-btn" data-bs-toggle="modal" data-bs-target="#showModal">View More</button>
+                </div>
+                <div class="remove">
+                    <button class="btn btn-sm btn-danger remove-item-btn"><i class="ri-delete-bin-2-line"></i></button>
+                </div></td>
+            </tr>`;
+
+            
+        tableBody.insertAdjacentHTML('beforeend', newRow);
+        
+        conversion_calculation(rowCount);
+        }
+    });
+
+    document.getElementById('items-table').addEventListener('click', function (e) {
+        if (e.target.classList.contains('remove-item-btn')) {
+            e.target.closest('tr').remove();
+        }
+    });
+</script>
+<script>
+      
     document.addEventListener('DOMContentLoaded', function() {
         var currency = document.getElementById('currency');
 
@@ -643,7 +495,8 @@
                         document.getElementById("currency_conversion").innerHTML = conversion_text;
                         // alert(cf_value)
                         document.getElementById("conversion_factor").value = cf_value;
-                        conversion_calculation();
+                        document.getElementById('currency_label').innerHTML = `(in ${selectedcurrency})`;
+                        // conversion_calculation();
                     } else {
                         alert('No Conversion Factor found for the selected Currency');
                     }
@@ -679,28 +532,28 @@
             }
         });
                                         
-        })
+    })
  
 
     // document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('unitPrice').addEventListener('keyup', function() {
-        conversion_calculation();
-    });
+    // document.getElementById('add-item').addEventListener('click', function() {
+    //     conversion_calculation();
     // });
 
-    function conversion_calculation(){
-        let unitPrice = document.getElementById('unitPrice').value;
-        let conversion_factor = document.getElementById('conversion_factor').value;
-        // alert(conversion_factor);
-        // let conversion_factor = 3.22;
-        // alert(unitPrice);
-        let quantity = document.getElementById('quantity').value;
+    function conversion_calculation(rowCount){
+        // alert(rowCount)
+        let conversion_factor = 3.22
+        let unitPrice = document.getElementById(`items_${rowCount}_unitPrice`).value;
+        // let conversion_factor = document.getElementById(`items_${rowCount}_conversion_factor`).value;
+        let quantity = document.getElementById(`items_${rowCount}_quantity`).value || 0;
         // let currency = document.getElementById('currency').value;
-
+    
+       
         let unitMaterialPrice = (unitPrice / conversion_factor).toFixed(2);
         // document.getElementById('unitMaterialPrice').value = unitMaterialPrice;
-        document.getElementById("unitMaterialPrice").value = unitMaterialPrice;
-        document.getElementById("unitMaterialPrice2").innerHTML = unitMaterialPrice;
+        // alert("unitMaterialPrice: "+unitMaterialPrice)
+        document.getElementById(`items_${rowCount}_unitMaterialPrice`).value = unitMaterialPrice;
+        // document.getElementById("unitMaterialPrice2").innerHTML = unitMaterialPrice;
         // let ManualPrice = document.getElementById('ManualPrice').value;
         // let CostManual = document.getElementById('CostManual').value;
         let ManualPrice = 250;
@@ -708,7 +561,6 @@
 
         if (quantity > 0) {
             let unitOtherCharges = (ManualPrice / quantity).toFixed(2);
-            console.log("unitOtherCharges:",unitOtherCharges);
             let freight = (CostManual / quantity).toFixed(2);
             let unitLocalHandling = (unitMaterialPrice * 0.03).toFixed(2);
             let customDuty = (unitMaterialPrice * 0.06).toFixed(2);
@@ -725,45 +577,31 @@
             let totalCustoms = (parseFloat(customDuty) * parseFloat(qty)).toFixed(2); // Corrected totalCustoms calculation
             let totalBankComm = (parseFloat(bankCharges) * parseFloat(qty)).toFixed(2);
             let totalCompanyMargin = (parseFloat(profitMargin) * parseFloat(qty)).toFixed(2);
-            document.getElementById("qty").value = qty;
-            document.getElementById("unitOtherCharges").value = unitOtherCharges;
-            document.getElementById("freight").value = freight;
-            document.getElementById("unitLocalHandling").value = unitLocalHandling;
-            document.getElementById("customDuty").value = customDuty;
-            document.getElementById("bankCharges").value = bankCharges;
-            document.getElementById("landedCost").value = landedCost;
-            document.getElementById("profitMargin").value = profitMargin;
-            document.getElementById("sellingPrice").value = sellingPrice;
-            document.getElementById("totalSelling").value = totalSelling;
-            document.getElementById("totalMaterialPrice").value = totalMaterialPrice;
-            document.getElementById("totalOthercharges").value = totalOthercharges;
-            document.getElementById("totalFreight").value = totalFreight;
-            document.getElementById("totalHandling").value = totalHandling;
-            document.getElementById("totalCustoms").value = totalCustoms;
-            document.getElementById("totalBankComm").value = totalBankComm;
-            document.getElementById("totalCompanyMargin").value = totalCompanyMargin;
 
-            document.getElementById("qty2").innerHTML = qty;
-            document.getElementById("unitOtherCharges2").innerHTML = unitOtherCharges;
-            document.getElementById("freight2").innerHTML = freight;
-            document.getElementById("unitLocalHandling2").innerHTML = unitLocalHandling;
-            document.getElementById("customDuty2").innerHTML = customDuty;
-            document.getElementById("bankCharges2").innerHTML = bankCharges;
-            document.getElementById("landedCost2").innerHTML = landedCost;
-            document.getElementById("profitMargin2").innerHTML = profitMargin;
-            document.getElementById("sellingPrice2").innerHTML = sellingPrice;
-            document.getElementById("totalSelling2").innerHTML = totalSelling;
-            document.getElementById("totalMaterialPrice2").innerHTML = totalMaterialPrice;
-            document.getElementById("totalOthercharges2").innerHTML = totalOthercharges;
-            document.getElementById("totalFreight2").innerHTML = totalFreight;
-            document.getElementById("totalHandling2").innerHTML = totalHandling;
-            document.getElementById("totalCustoms2").innerHTML = totalCustoms;
-            document.getElementById("totalBankComm2").innerHTML = totalBankComm;
-            document.getElementById("totalCompanyMargin2").innerHTML = totalCompanyMargin;
-        } else if (quantity === null || quantity === '') {
-            //alert("quantity cannot be empty");
+            document.getElementById(`items_${rowCount}_unitOtherCharges`).value = unitOtherCharges;
+            document.getElementById(`items_${rowCount}_freight`).value = freight;
+            document.getElementById(`items_${rowCount}_unitLocalHandling`).value = unitLocalHandling;
+            document.getElementById(`items_${rowCount}_customDuty`).value = customDuty;
+            document.getElementById(`items_${rowCount}_bankCharges`).value = bankCharges;
+            document.getElementById(`items_${rowCount}_landedCost`).value = landedCost;
+            document.getElementById(`items_${rowCount}_profitMargin`).value = profitMargin;
+            document.getElementById(`items_${rowCount}_sellingPrice`).value = sellingPrice;
+            // document.getElementById("totalSelling").value = totalSelling;
+            // document.getElementById("totalMaterialPrice").value = totalMaterialPrice;
+            // document.getElementById("totalOthercharges").value = totalOthercharges;
+            // document.getElementById("totalFreight").value = totalFreight;
+            // document.getElementById("totalHandling").value = totalHandling;
+            // document.getElementById("totalCustoms").value = totalCustoms;
+            // document.getElementById("totalBankComm").value = totalBankComm;
+            // document.getElementById("totalCompanyMargin").value = totalCompanyMargin;
+
+        } else if (quantity == 0) {
+            alert("quantity cannot be empty");
         }
     }
+    // });
+
+    
 </script>
 @endsection
 
