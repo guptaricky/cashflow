@@ -58,7 +58,7 @@
                                         <select id="clientName" name="clientName" class="form-select" data-choices="" data-choices-sorting="true" >
                                         <option selected="">Choose...</option>
                                         @foreach($customers as $index => $customer)
-                                            <option value="{{ $customer->name }}" {{ old('clientName') == $customer->name ? 'selected' : '' }}> {{ $customer->name }} </option>
+                                            <option value="{{ $customer->id }}" {{ old('clientName') == $customer->name ? 'selected' : '' }}> {{ $customer->name }} </option>
                                             @endforeach
                                         </select>    
                                         @error('clientName') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
@@ -148,6 +148,20 @@
                                 </div>
                                 <div class="col-xxl-3 col-md-6">
                                     <div>
+                                        <label for="profitMargin" class="@error('profitMargin') is-invalid @enderror form-label">Profit Margin per unit (%)</label>
+                                        <input type="text" class="form-control" id="profitMargin" name="profitMargin" value="25">
+                                        @error('profitMargin') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
+                                    </div>
+                                </div>
+                                <div class="col-xxl-3 col-md-6">
+                                    <div>
+                                        <label for="targetPrice" class="@error('targetPrice') is-invalid @enderror form-label">Target Price</label>
+                                        <input type="text" class="form-control" id="targetPrice" name="targetPrice" value="{{ old('targetPrice') }}">
+                                        @error('targetPrice') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
+                                    </div>
+                                </div>
+                                <div class="col-xxl-3 col-md-6">
+                                    <div>
                                         <label for="currency" class="@error('currency') is-invalid @enderror form-label">Currency 
                                             <button type="button" class="btn rounded-pill" style="border 1px solid;padding:0px" 
                                                     id="persistentTooltip"
@@ -165,7 +179,7 @@
                                             </option>
                                             @endforeach
                                         </select>
-                                        <p class='text-info inputerror' id="currency_conversion"></p>
+                                        <p class='text-info inputerror' id="currency_conversion1"></p>
                                         @error('currency') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
                                     </div>
                                 </div>
@@ -192,10 +206,10 @@
                                     
                                     <div class="col-md-2">
                                         <label for="country" class="form-label">Product</label>
-                                        <select id="items_1_product" name="items_1_product" class="form-select" data-choices="" data-choices-sorting="true" >
+                                        <select id="product" name="product" class="form-select" data-choices="" data-choices-sorting="true" >
                                             <option selected="">Choose...</option>
                                             @foreach($products as $index => $product)
-                                                <option value="{{ $product->name }}" {{ old('product') == $product->name ? 'selected' : '' }}> {{ $product->name }} </option>
+                                                <option value="{{ $product->id }}" {{ old('product') == $product->name ? 'selected' : '' }}> {{ $product->name }} </option>
                                                 @endforeach
                                             </select>    
                                             @error('product') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
@@ -204,21 +218,22 @@
                                     <div class="col-xxl-3 col-md-6">
                                         <div>
                                             <label for="unitPrice" class="@error('unitPrice') is-invalid @enderror form-label">Unit Price <span id="currency_label" class="font-weight-bold"> (in Dealing Currency)</span></label>
-                                            <input type="text" class="form-control" id="items_1_unitPrice" name="items_1_unitPrice">
+                                            <input type="text" class="form-control" id="unitPrice" name="unitPrice">
+                                            <p class='text-info inputerror' id="currency_conversion2"></p>
                                             @error('unitPrice') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
                                         </div>
                                     </div>
                                     <div class="col-xxl-1 col-md-6">
                                         <div>
                                             <label for="quantity" class="@error('quantity') is-invalid @enderror form-label">Quantity </label>
-                                            <input type="number" steps="1" class="form-control" id="items_1_quantity" name="items_1_quantity">
+                                            <input type="number" steps="1" class="form-control" id="quantity" name="quantity">
                                             @error('quantity') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
                                         </div>
                                     </div>
                                     <div class="col-xxl-3 col-md-6">
                                         <div>
                                             <label for="packagingInfo" class="@error('packagingInfo') is-invalid @enderror form-label">Packaging Info </label>
-                                            <input type="text" class="form-control" id="items_1_packagingInfo" name="items_1_packagingInfo">
+                                            <input type="text" class="form-control" id="packagingInfo" name="packagingInfo">
                                             @error('packagingInfo') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
                                         </div>
                                     </div>
@@ -439,34 +454,54 @@
         const tableBody = document.querySelector('#items-table tbody');
         const rowCount = tableBody.rows.length + 1;
         // alert(rowCount)
-        let quantity = document.getElementById(`items_${rowCount}_quantity`).value || 0;
+        var quantity = document.getElementById(`quantity`).value || 0;
         // alert("quantity"+quantity)
         if (quantity > 0) {
         const newRow = `
             <tr>
                 <td scope="col">${rowCount}</td>
-                <td scope="col"><input type="text" id="items_${rowCount}_unitMaterialPrice" name="items[${rowCount}][unitMaterialPrice]"</td>
-                <td scope="col"><input type="text" id="items_${rowCount}_unitOtherCharges" name="items[${rowCount}][unitOtherCharges]"</td>
-                <td scope="col"><input type="text" id="items_${rowCount}_freight" name="items[${rowCount}][freight]"</td>
-                <td scope="col"><input type="text" id="items_${rowCount}_unitLocalHandling" name="items[${rowCount}][unitLocalHandling]"</td>
-                <td scope="col"><input type="text" id="items_${rowCount}_customDuty" name="items[${rowCount}][customDuty]"</td>
-                <td scope="col"><input type="text" id="items_${rowCount}_bankCharges" name="items[${rowCount}][bankCharges]"</td>
-                <td scope="col"><input type="text" id="items_${rowCount}_landedCost" name="items[${rowCount}][landedCost]"</td>
-                <td scope="col"><input type="text" id="items_${rowCount}_companyProfileMargin" name="items[${rowCount}][companyProfileMargin]"</td>
-                <td scope="col"><input type="text" id="items_${rowCount}_sellingPrice" name="items[${rowCount}][sellingPrice]"</td>
+                <td scope="col">
+                    <span id="label_items_${rowCount}_unitMaterialPrice"></span>
+                    <input type="hidden" id="items_${rowCount}_unitMaterialPrice" name="items[${rowCount}][unitMaterialPrice]"/>
+                    <input type="hidden" name="items[${rowCount}][product]" id="items_${rowCount}_product" />
+                    <input type="hidden" name="items[${rowCount}][unitPrice]" id="items_${rowCount}_unitPrice" />
+                    <input type="hidden" name="items[${rowCount}][quantity]" id="items_${rowCount}_quantity" />
+                    <input type="hidden" name="items[${rowCount}][packagingInfo]" id="items_${rowCount}_packagingInfo" />
+
+                    <input type="hidden" id="items_${rowCount}_totalSelling" name="items[${rowCount}][totalSelling]"/>
+                    <input type="hidden" id="items_${rowCount}_totalMaterialPrice" name="items[${rowCount}][totalMaterialPrice]"/>
+                    <input type="hidden" id="items_${rowCount}_totalOthercharges" name="items[${rowCount}][totalOthercharges]"/>
+                    <input type="hidden" id="items_${rowCount}_totalFreight" name="items[${rowCount}][totalFreight]"/>
+                    <input type="hidden" id="items_${rowCount}_totalHandling" name="items[${rowCount}][totalHandling]"/>
+                    <input type="hidden" id="items_${rowCount}_totalCustoms" name="items[${rowCount}][totalCustoms]"/>
+                    <input type="hidden" id="items_${rowCount}_totalBankComm" name="items[${rowCount}][totalBankComm]"/>
+                    <input type="hidden" id="items_${rowCount}_totalCompanyMargin" name="items[${rowCount}][totalCompanyMargin]"/>
+
+                </td>
+                <td scope="col"><span id="label_items_${rowCount}_unitOtherCharges"></span><input type="hidden" id="items_${rowCount}_unitOtherCharges" name="items[${rowCount}][unitOtherCharges]"/></td>
+                <td scope="col"><span id="label_items_${rowCount}_freight"></span><input type="hidden" id="items_${rowCount}_freight" name="items[${rowCount}][freight]"/></td>
+                <td scope="col"><span id="label_items_${rowCount}_unitLocalHandling"></span><input type="hidden" id="items_${rowCount}_unitLocalHandling" name="items[${rowCount}][unitLocalHandling]"/></td>
+                <td scope="col"><span id="label_items_${rowCount}_customDuty"></span><input type="hidden" id="items_${rowCount}_customDuty" name="items[${rowCount}][customDuty]"/></td>
+                <td scope="col"><span id="label_items_${rowCount}_bankCharges"></span><input type="hidden" id="items_${rowCount}_bankCharges" name="items[${rowCount}][bankCharges]"/></td>
+                <td scope="col"><span id="label_items_${rowCount}_landedCost"></span><input type="hidden" id="items_${rowCount}_landedCost" name="items[${rowCount}][landedCost]"/></td>
+                <td scope="col"><span id="label_items_${rowCount}_profitMargin"></span><input type="hidden" id="items_${rowCount}_profitMargin" name="items[${rowCount}][profitMargin]"/></td>
+                <td scope="col"><span id="label_items_${rowCount}_sellingPrice"></span><input type="hidden" id="items_${rowCount}_sellingPrice" name="items[${rowCount}][sellingPrice]"/></td>
                 <td scope="col"><div class="edit">
-                    <button class="btn btn-sm btn-success edit-item-btn" data-bs-toggle="modal" data-bs-target="#showModal">View More</button>
+                    <button type="button" class="btn btn-sm btn-success edit-item-btn" data-bs-toggle="modal" data-bs-target="#showModal">View More</button>
                 </div>
                 <div class="remove">
-                    <button class="btn btn-sm btn-danger remove-item-btn"><i class="ri-delete-bin-2-line"></i></button>
+                    <button type="button" class="btn btn-sm btn-danger remove-item-btn"><i class="ri-delete-bin-2-line"></i></button>
                 </div></td>
             </tr>`;
 
             
         tableBody.insertAdjacentHTML('beforeend', newRow);
-        
         conversion_calculation(rowCount);
+        }else if (quantity == 0) {
+            alert("quantity cannot be empty");
         }
+        
+        
     });
 
     document.getElementById('items-table').addEventListener('click', function (e) {
@@ -474,6 +509,79 @@
             e.target.closest('tr').remove();
         }
     });
+    function conversion_calculation(rowCount){
+        let ManualPrice = 250;
+        let CostManual = 530;
+        let quantity = document.getElementById(`quantity`).value;
+        let conversion_factor = document.getElementById("conversion_factor").value;
+        let unitPrice = document.getElementById(`unitPrice`).value;
+        let profitMargin_percent = document.getElementById(`profitMargin`).value;
+        let modeofshipment = document.getElementById(`modeofshipment`).value;
+
+        document.getElementById(`items_${rowCount}_product`).value = document.getElementById(`product`).value;
+        document.getElementById(`items_${rowCount}_unitPrice`).value = unitPrice;
+        document.getElementById(`items_${rowCount}_quantity`).value = quantity;
+        document.getElementById(`items_${rowCount}_packagingInfo`).value = document.getElementById(`packagingInfo`).value;
+        
+        let unitMaterialPrice = (unitPrice / conversion_factor).toFixed(2);
+        document.getElementById(`items_${rowCount}_unitMaterialPrice`).value = unitMaterialPrice;
+        document.getElementById(`label_items_${rowCount}_unitMaterialPrice`).innerHTML = unitMaterialPrice;
+      
+
+            let unitOtherCharges = (ManualPrice / quantity).toFixed(2);
+            let freight = (CostManual / quantity).toFixed(2);
+            if(modeofshipment == 'Air Freight'){
+                var freight_percent = 0.03;
+            }else if(modeofshipment == 'Sea Freight'){
+                var freight_percent = 0.04;
+            }
+            let unitLocalHandling = (unitMaterialPrice * parseFloat(freight_percent)).toFixed(2);
+            let customDuty = (unitMaterialPrice * 0.06).toFixed(2);
+            let bankCharges = (unitMaterialPrice * 0.09).toFixed(2);
+            let landedCost = (unitOtherCharges * 0.09).toFixed(2);
+            
+            let profitMargin = ((unitMaterialPrice * (profitMargin_percent/100))).toFixed(2);
+            let sellingPrice = (parseFloat(landedCost) + parseFloat(profitMargin)).toFixed(2);
+            
+            document.getElementById(`items_${rowCount}_unitOtherCharges`).value = unitOtherCharges;
+            document.getElementById(`items_${rowCount}_freight`).value = freight;
+            document.getElementById(`items_${rowCount}_unitLocalHandling`).value = unitLocalHandling;
+            document.getElementById(`items_${rowCount}_customDuty`).value = customDuty;
+            document.getElementById(`items_${rowCount}_bankCharges`).value = bankCharges;
+            document.getElementById(`items_${rowCount}_landedCost`).value = landedCost;
+            document.getElementById(`items_${rowCount}_profitMargin`).value = profitMargin;
+            document.getElementById(`items_${rowCount}_sellingPrice`).value = sellingPrice;
+            
+            document.getElementById(`label_items_${rowCount}_unitOtherCharges`).innerHTML = unitOtherCharges;
+            document.getElementById(`label_items_${rowCount}_freight`).innerHTML = freight;
+            document.getElementById(`label_items_${rowCount}_unitLocalHandling`).innerHTML = unitLocalHandling;
+            document.getElementById(`label_items_${rowCount}_customDuty`).innerHTML = customDuty;
+            document.getElementById(`label_items_${rowCount}_bankCharges`).innerHTML = bankCharges;
+            document.getElementById(`label_items_${rowCount}_landedCost`).innerHTML = landedCost;
+            document.getElementById(`label_items_${rowCount}_profitMargin`).innerHTML = profitMargin;
+            document.getElementById(`label_items_${rowCount}_sellingPrice`).innerHTML = sellingPrice;
+            
+            let totalSelling = (parseFloat(sellingPrice) * parseFloat(quantity)).toFixed(2); 
+            let totalMaterialPrice = (parseFloat(unitMaterialPrice) * parseFloat(quantity)).toFixed(2);
+            let totalOthercharges = (parseFloat(unitOtherCharges) * parseFloat(quantity)).toFixed(2);
+            let totalFreight = (parseFloat(freight) * parseFloat(quantity)).toFixed(2);
+            let totalHandling = (parseFloat(unitLocalHandling) * parseFloat(quantity)).toFixed(2);
+            let totalCustoms = (parseFloat(customDuty) * parseFloat(quantity)).toFixed(2); // Corrected totalCustoms calculation
+            let totalBankComm = (parseFloat(bankCharges) * parseFloat(quantity)).toFixed(2);
+            let totalCompanyMargin = (parseFloat(profitMargin) * parseFloat(quantity)).toFixed(2);
+
+            document.getElementById(`items_${rowCount}_totalSelling`).value = totalSelling;
+            document.getElementById(`items_${rowCount}_totalMaterialPrice`).value = totalMaterialPrice;
+            document.getElementById(`items_${rowCount}_totalOthercharges`).value = totalOthercharges;
+            document.getElementById(`items_${rowCount}_totalFreight`).value = totalFreight;
+            document.getElementById(`items_${rowCount}_totalHandling`).value = totalHandling;
+            document.getElementById(`items_${rowCount}_totalCustoms`).value = totalCustoms;
+            document.getElementById(`items_${rowCount}_totalBankComm`).value = totalBankComm;
+            document.getElementById(`items_${rowCount}_totalCompanyMargin`).value = totalCompanyMargin;
+            
+        
+    }
+
 </script>
 <script>
       
@@ -492,7 +600,8 @@
                     if (data.length > 0) {
                         var cf_value = data[0].cf_value;
                         var conversion_text = `1 KWD = ${cf_value} ${selectedcurrency}`;
-                        document.getElementById("currency_conversion").innerHTML = conversion_text;
+                        document.getElementById("currency_conversion1").innerHTML = conversion_text;
+                        document.getElementById("currency_conversion2").innerHTML = conversion_text;
                         // alert(cf_value)
                         document.getElementById("conversion_factor").value = cf_value;
                         document.getElementById('currency_label').innerHTML = `(in ${selectedcurrency})`;
@@ -540,65 +649,7 @@
     //     conversion_calculation();
     // });
 
-    function conversion_calculation(rowCount){
-        // alert(rowCount)
-        let conversion_factor = 3.22
-        let unitPrice = document.getElementById(`items_${rowCount}_unitPrice`).value;
-        // let conversion_factor = document.getElementById(`items_${rowCount}_conversion_factor`).value;
-        let quantity = document.getElementById(`items_${rowCount}_quantity`).value || 0;
-        // let currency = document.getElementById('currency').value;
-    
-       
-        let unitMaterialPrice = (unitPrice / conversion_factor).toFixed(2);
-        // document.getElementById('unitMaterialPrice').value = unitMaterialPrice;
-        // alert("unitMaterialPrice: "+unitMaterialPrice)
-        document.getElementById(`items_${rowCount}_unitMaterialPrice`).value = unitMaterialPrice;
-        // document.getElementById("unitMaterialPrice2").innerHTML = unitMaterialPrice;
-        // let ManualPrice = document.getElementById('ManualPrice').value;
-        // let CostManual = document.getElementById('CostManual').value;
-        let ManualPrice = 250;
-        let CostManual = 530;
-
-        if (quantity > 0) {
-            let unitOtherCharges = (ManualPrice / quantity).toFixed(2);
-            let freight = (CostManual / quantity).toFixed(2);
-            let unitLocalHandling = (unitMaterialPrice * 0.03).toFixed(2);
-            let customDuty = (unitMaterialPrice * 0.06).toFixed(2);
-            let bankCharges = (unitMaterialPrice * 0.09).toFixed(2);
-            let landedCost = (unitOtherCharges * 0.09).toFixed(2);
-            let profitMargin = (unitMaterialPrice * 0.25).toFixed(2);
-            let sellingPrice = (parseFloat(landedCost) + parseFloat(profitMargin)).toFixed(2);
-            let totalSelling = (parseFloat(sellingPrice) * parseFloat(quantity)).toFixed(2);
-            let qty = parseFloat(quantity);
-            let totalMaterialPrice = (parseFloat(unitMaterialPrice) * parseFloat(qty)).toFixed(2);
-            let totalOthercharges = (parseFloat(unitOtherCharges) * parseFloat(qty)).toFixed(2);
-            let totalFreight = (parseFloat(freight) * parseFloat(qty)).toFixed(2);
-            let totalHandling = (parseFloat(unitLocalHandling) * parseFloat(qty)).toFixed(2);
-            let totalCustoms = (parseFloat(customDuty) * parseFloat(qty)).toFixed(2); // Corrected totalCustoms calculation
-            let totalBankComm = (parseFloat(bankCharges) * parseFloat(qty)).toFixed(2);
-            let totalCompanyMargin = (parseFloat(profitMargin) * parseFloat(qty)).toFixed(2);
-
-            document.getElementById(`items_${rowCount}_unitOtherCharges`).value = unitOtherCharges;
-            document.getElementById(`items_${rowCount}_freight`).value = freight;
-            document.getElementById(`items_${rowCount}_unitLocalHandling`).value = unitLocalHandling;
-            document.getElementById(`items_${rowCount}_customDuty`).value = customDuty;
-            document.getElementById(`items_${rowCount}_bankCharges`).value = bankCharges;
-            document.getElementById(`items_${rowCount}_landedCost`).value = landedCost;
-            document.getElementById(`items_${rowCount}_profitMargin`).value = profitMargin;
-            document.getElementById(`items_${rowCount}_sellingPrice`).value = sellingPrice;
-            // document.getElementById("totalSelling").value = totalSelling;
-            // document.getElementById("totalMaterialPrice").value = totalMaterialPrice;
-            // document.getElementById("totalOthercharges").value = totalOthercharges;
-            // document.getElementById("totalFreight").value = totalFreight;
-            // document.getElementById("totalHandling").value = totalHandling;
-            // document.getElementById("totalCustoms").value = totalCustoms;
-            // document.getElementById("totalBankComm").value = totalBankComm;
-            // document.getElementById("totalCompanyMargin").value = totalCompanyMargin;
-
-        } else if (quantity == 0) {
-            alert("quantity cannot be empty");
-        }
-    }
+  
     // });
 
     

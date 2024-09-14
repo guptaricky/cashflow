@@ -20,9 +20,8 @@ class productController extends Controller
 
         $rules = [
             'name' => 'required|min:3',
-            'ref_no' => 'required|min:3',
+            'description' => 'required|min:3',
             'uom' => 'required|min:2',
-            'isActive' => 'required|min:1'
         ];
 
         $validator = Validator::make($request->all(), $rules);

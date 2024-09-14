@@ -30,7 +30,7 @@
                 {{ session('message') }}
             </div>
             @endif
-
+            
             <div class="card-body">
                 <div class="live-preview">
                     <form method="POST" action="{{ route('product.store') }}">
@@ -52,7 +52,7 @@
                             </div>
                             <div class="col-xxl-4 col-md-6">
                                 <div>
-                                    <label for="uom" class="@error('uom') is-invalid @enderror form-label">uom</label>
+                                    <label for="uom" class="@error('uom') is-invalid @enderror form-label">Unit of Measurement</label>
                                     <input type="text" class="form-control" id="uom" name="uom" value="{{ old('uom') }}">
                                     @error('uom') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
                                 </div>

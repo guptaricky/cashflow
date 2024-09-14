@@ -172,13 +172,12 @@ class Cashflow extends Controller
             DB::commit();
 
             // Redirect or return success response
-            // return redirect()->route('cashflow.index')->with('success', 'Cashflow and items added successfully.');
+            return redirect()->route('cashflow.index')->with('success', 'Cashflow and items added successfully.');
         
         } catch (\Exception $e) {
             // Rollback the transaction in case of error
             DB::rollBack();
-            dd($e);
-            // return back()->withErrors(['error' => 'An error occurred while saving the data: ' . $e->getMessage()]);
+            return back()->withErrors(['error' => 'An error occurred while saving the data: ' . $e->getMessage()]);
         }
     }
 

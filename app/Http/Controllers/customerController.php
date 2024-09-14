@@ -19,9 +19,8 @@ class customerController extends Controller
     public function store(Request $request){
 
         $rules = [
-            'name' => 'required|min:5',
+            'name' => 'required|min:3',
             'ref_no' => 'required|min:3',
-            'isActive' => 'required|min:1'
         ];
 
         $validator = Validator::make($request->all(), $rules);
