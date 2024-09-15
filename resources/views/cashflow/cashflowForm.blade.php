@@ -484,7 +484,7 @@
                 <td scope="col"><span id="label_items_${rowCount}_customDuty"></span><input type="hidden" id="items_${rowCount}_customDuty" name="items[${rowCount}][customDuty]"/></td>
                 <td scope="col"><span id="label_items_${rowCount}_bankCharges"></span><input type="hidden" id="items_${rowCount}_bankCharges" name="items[${rowCount}][bankCharges]"/></td>
                 <td scope="col"><span id="label_items_${rowCount}_landedCost"></span><input type="hidden" id="items_${rowCount}_landedCost" name="items[${rowCount}][landedCost]"/></td>
-                <td scope="col"><span id="label_items_${rowCount}_profitMargin"></span><input type="hidden" id="items_${rowCount}_profitMargin" name="items[${rowCount}][profitMargin]"/></td>
+                <td scope="col"><span id="label_items_${rowCount}_companyProfitMargin"></span><input type="hidden" id="items_${rowCount}_companyProfitMargin" name="items[${rowCount}][companyProfitMargin]"/></td>
                 <td scope="col"><span id="label_items_${rowCount}_sellingPrice"></span><input type="hidden" id="items_${rowCount}_sellingPrice" name="items[${rowCount}][sellingPrice]"/></td>
                 <td scope="col"><div class="edit">
                     <button type="button" class="btn btn-sm btn-success edit-item-btn" data-bs-toggle="modal" data-bs-target="#showModal">View More</button>
@@ -540,8 +540,8 @@
             let bankCharges = (unitMaterialPrice * 0.09).toFixed(2);
             let landedCost = (unitOtherCharges * 0.09).toFixed(2);
             
-            let profitMargin = ((unitMaterialPrice * (profitMargin_percent/100))).toFixed(2);
-            let sellingPrice = (parseFloat(landedCost) + parseFloat(profitMargin)).toFixed(2);
+            let companyProfitMargin = ((unitMaterialPrice * (profitMargin_percent/100))).toFixed(2);
+            let sellingPrice = (parseFloat(landedCost) + parseFloat(companyProfitMargin)).toFixed(2);
             
             document.getElementById(`items_${rowCount}_unitOtherCharges`).value = unitOtherCharges;
             document.getElementById(`items_${rowCount}_freight`).value = freight;
@@ -549,7 +549,7 @@
             document.getElementById(`items_${rowCount}_customDuty`).value = customDuty;
             document.getElementById(`items_${rowCount}_bankCharges`).value = bankCharges;
             document.getElementById(`items_${rowCount}_landedCost`).value = landedCost;
-            document.getElementById(`items_${rowCount}_profitMargin`).value = profitMargin;
+            document.getElementById(`items_${rowCount}_companyProfitMargin`).value = companyProfitMargin;
             document.getElementById(`items_${rowCount}_sellingPrice`).value = sellingPrice;
             
             document.getElementById(`label_items_${rowCount}_unitOtherCharges`).innerHTML = unitOtherCharges;
@@ -558,7 +558,7 @@
             document.getElementById(`label_items_${rowCount}_customDuty`).innerHTML = customDuty;
             document.getElementById(`label_items_${rowCount}_bankCharges`).innerHTML = bankCharges;
             document.getElementById(`label_items_${rowCount}_landedCost`).innerHTML = landedCost;
-            document.getElementById(`label_items_${rowCount}_profitMargin`).innerHTML = profitMargin;
+            document.getElementById(`label_items_${rowCount}_companyProfitMargin`).innerHTML = companyProfitMargin;
             document.getElementById(`label_items_${rowCount}_sellingPrice`).innerHTML = sellingPrice;
             
             let totalSelling = (parseFloat(sellingPrice) * parseFloat(quantity)).toFixed(2); 
@@ -568,7 +568,7 @@
             let totalHandling = (parseFloat(unitLocalHandling) * parseFloat(quantity)).toFixed(2);
             let totalCustoms = (parseFloat(customDuty) * parseFloat(quantity)).toFixed(2); // Corrected totalCustoms calculation
             let totalBankComm = (parseFloat(bankCharges) * parseFloat(quantity)).toFixed(2);
-            let totalCompanyMargin = (parseFloat(profitMargin) * parseFloat(quantity)).toFixed(2);
+            let totalCompanyMargin = (parseFloat(companyProfitMargin) * parseFloat(quantity)).toFixed(2);
 
             document.getElementById(`items_${rowCount}_totalSelling`).value = totalSelling;
             document.getElementById(`items_${rowCount}_totalMaterialPrice`).value = totalMaterialPrice;

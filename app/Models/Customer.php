@@ -14,4 +14,9 @@ class Customer extends Model
         'ref_no',
         'isActive'
     ];
+
+    public function Cashflow()
+    {
+        return $this->hasMany(Cashflow::class, 'clientName');
+    }
 }

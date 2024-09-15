@@ -22,11 +22,18 @@ class Cashflow extends Model
         'goodsTravel',
         'incoterms',
         'currency',
-        'conversion_factor'
+        'conversion_factor',
+        'profitMargin',
+        'targetPrice'
     ];
    
-    public function items()
+    public function CashflowItems()
     {
         return $this->hasMany(CashflowItems::class);
+    }
+    
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class, 'clientName');
     }
 }

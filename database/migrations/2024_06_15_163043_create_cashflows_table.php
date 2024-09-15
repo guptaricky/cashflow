@@ -25,6 +25,8 @@ return new class extends Migration
             $table->string('incoterms');
             $table->string('currency');
             $table->string('conversion_factor');
+            $table->string('profitMargin');
+            $table->string('targetPrice');
             $table->timestamps();
         });
     }

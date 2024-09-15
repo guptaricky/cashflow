@@ -28,7 +28,7 @@ class Cashflow extends Controller
     }
     public function index()
     {
-        $cashflow = ModelsCashflow::orderBy('created_at','DESC')->get();
+        $cashflow = ModelsCashflow::with('CashflowItems')->orderBy('created_at','DESC')->get();
         $companies = Company::where('isActive', 1)->orderBy('created_at','DESC')->get();
         $currencies = Currency::where('isActive', 1)->orderBy('created_at','DESC')->get();
         return view('cashflow/cashflowList',[
@@ -76,7 +76,7 @@ class Cashflow extends Controller
     public function store(Request $request)
     {
         
-        $request->validate([
+        $rules = [
             'serialNo' => 'required|string|max:255',
             'clientName' => 'required|string|max:255',
             'date' => 'required|date',
@@ -89,33 +89,41 @@ class Cashflow extends Controller
             'incoterms' => 'required|string|max:255',
             'currency' => 'required|string|min:1',
             'conversion_factor' => 'required|numeric|min:0',
-            // 'items' => 'required|array',
-            // 'items.*.product' => 'required|numeric|min:0',
-            // 'items.*.quantity' => 'required|numeric|min:0',
-            // 'items.*.unitPrice' => 'required|numeric|min:0',
-            // 'items.*.packagingInfo' => 'required|numeric|min:0',
+            'profitMargin' => 'required|numeric|min:0',
+            'targetPrice' => 'required|numeric|min:0',
 
-            // 'items.*.unitMaterialPrice' => 'required|numeric|min:0',
-            // 'items.*.unitOtherCharges' => 'nullable|numeric|min:0',
-            // 'items.*.freight' => 'nullable|numeric|min:0',
-            // 'items.*.unitLocalHandling' => 'nullable|numeric|min:0',
-            // 'items.*.customDuty' => 'nullable|numeric|min:0',
-            // 'items.*.bankCharges' => 'nullable|numeric|min:0',
-            // 'items.*.landedCost' => 'nullable|numeric|min:0',
-            // 'items.*.companyProfileMargin' => 'nullable|numeric|min:0',
-            // 'items.*.profitMargin' => 'nullable|numeric|min:0',
-            // 'items.*.targetPrice' => 'nullable|numeric|min:0',
-            // 'items.*.sellingPrice' => 'required|numeric|min:0',
-            // 'items.*.totalSelling' => 'required|numeric|min:0',
-            // 'items.*.totalMaterialPrice' => 'nullable|numeric|min:0',
-            // 'items.*.totalOtherCharges' => 'nullable|numeric|min:0',
-            // 'items.*.totalFreight' => 'nullable|numeric|min:0',
-            // 'items.*.totalHandling' => 'nullable|numeric|min:0',
-            // 'items.*.totalCustoms' => 'nullable|numeric|min:0',
-            // 'items.*.totalBankComm' => 'nullable|numeric|min:0',
-            // 'items.*.totalCompanyMargin' => 'nullable|numeric|min:0',
-        ]);
+            'items' => 'required|array',
+            'items.*.product' => 'required|numeric|min:0',
+            'items.*.unitPrice' => 'required|numeric|min:0',
+            'items.*.quantity' => 'required|numeric|min:0',
+            'items.*.packagingInfo' => 'required|string|min:0',
+            'items.*.unitMaterialPrice' => 'required|numeric|min:0',
+            'items.*.unitOtherCharges' => 'nullable|numeric|min:0',
+            'items.*.freight' => 'nullable|numeric|min:0',
+            'items.*.unitLocalHandling' => 'nullable|numeric|min:0',
+            'items.*.customDuty' => 'nullable|numeric|min:0',
+            'items.*.bankCharges' => 'nullable|numeric|min:0',
+            'items.*.landedCost' => 'nullable|numeric|min:0',
+            'items.*.companyProfitMargin' => 'nullable|numeric|min:0',
+            'items.*.sellingPrice' => 'required|string|min:0',
+            'items.*.totalSelling' => 'nullable|numeric|min:0',
+            'items.*.totalMaterialPrice' => 'nullable|numeric|min:0',
+            'items.*.totalOtherCharges' => 'nullable|numeric|min:0',
+            'items.*.totalFreight' => 'nullable|numeric|min:0',
+            'items.*.totalHandling' => 'nullable|numeric|min:0',
+            'items.*.totalCustoms' => 'nullable|numeric|min:0',
+            'items.*.totalBankComm' => 'nullable|numeric|min:0',
+            'items.*.totalCompanyMargin' => 'nullable|string|min:0',
+        ];
 
+        $validator = Validator::make($request->all(), $rules);
+        
+        if ($validator->fails()) {
+            dd($validator->errors());
+            return redirect()->route('cashflow.create')->withInput()->withErrors($validator);
+        }
+
+        
         // Start a database transaction
         DB::beginTransaction();
         
@@ -134,6 +142,8 @@ class Cashflow extends Controller
                 'incoterms' => $request->incoterms,
                 'currency' => $request->currency,
                 'conversion_factor' => $request->conversion_factor,
+                'profitMargin' => $request->profitMargin,
+                'targetPrice' => $request->targetPrice,
             ]);
             // dd($request->items);
             // Step 2: Insert associated items into the CashflowItems (child) table
@@ -146,25 +156,23 @@ class Cashflow extends Controller
                     'quantity' => $item['quantity'],
                     'packagingInfo' => $item['packagingInfo'],
 
-                    // 'unitMaterialPrice' => $item['unitMaterialPrice'],
-                    // 'unitOtherCharges' => $item['unitOtherCharges'] ?? 0,
-                    // 'freight' => $item['freight'] ?? 0,
-                    // 'unitLocalHandling' => $item['unitLocalHandling'] ?? 0,
-                    // 'customDuty' => $item['customDuty'] ?? 0,
-                    // 'bankCharges' => $item['bankCharges'] ?? 0,
-                    // 'landedCost' => $item['landedCost'] ?? 0,
-                    // 'companyProfileMargin' => $item['companyProfileMargin'] ?? 0,
-                    // 'profitMargin' => $item['profitMargin'] ?? 0,
-                    // 'targetPrice' => $item['targetPrice'] ?? 0,
-                    // 'sellingPrice' => $item['sellingPrice'],
-                    // 'totalSelling' => $item['totalSelling'],
-                    // 'totalMaterialPrice' => $item['totalMaterialPrice'] ?? 0,
-                    // 'totalOtherCharges' => $item['totalOtherCharges'] ?? 0,
-                    // 'totalFreight' => $item['totalFreight'] ?? 0,
-                    // 'totalHandling' => $item['totalHandling'] ?? 0,
-                    // 'totalCustoms' => $item['totalCustoms'] ?? 0,
-                    // 'totalBankComm' => $item['totalBankComm'] ?? 0,
-                    // 'totalCompanyMargin' => $item['totalCompanyMargin'] ?? 0,
+                    'unitMaterialPrice' => $item['unitMaterialPrice'],
+                    'unitOtherCharges' => $item['unitOtherCharges'] ?? 0,
+                    'freight' => $item['freight'] ?? 0,
+                    'unitLocalHandling' => $item['unitLocalHandling'] ?? 0,
+                    'customDuty' => $item['customDuty'] ?? 0,
+                    'bankCharges' => $item['bankCharges'] ?? 0,
+                    'landedCost' => $item['landedCost'] ?? 0,
+                    'companyProfitMargin' => $item['companyProfitMargin'] ?? 0,
+                    'sellingPrice' => $item['sellingPrice'],
+                    'totalSelling' => $item['totalSelling'],
+                    'totalMaterialPrice' => $item['totalMaterialPrice'] ?? 0,
+                    'totalOtherCharges' => $item['totalOtherCharges'] ?? 0,
+                    'totalFreight' => $item['totalFreight'] ?? 0,
+                    'totalHandling' => $item['totalHandling'] ?? 0,
+                    'totalCustoms' => $item['totalCustoms'] ?? 0,
+                    'totalBankComm' => $item['totalBankComm'] ?? 0,
+                    'totalCompanyMargin' => $item['totalCompanyMargin'] ?? 0,
                 ]);
             }
 
@@ -176,6 +184,7 @@ class Cashflow extends Controller
         
         } catch (\Exception $e) {
             // Rollback the transaction in case of error
+            dd($e);
             DB::rollBack();
             return back()->withErrors(['error' => 'An error occurred while saving the data: ' . $e->getMessage()]);
         }

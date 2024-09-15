@@ -25,9 +25,7 @@ return new class extends Migration
             $table->float('customDuty', 8, 2);
             $table->float('bankCharges', 8, 2);
             $table->float('landedCost', 8, 2);
-            $table->float('companyProfileMargin', 8, 2);
-            $table->float('profitMargin', 8, 2);
-            $table->float('targetPrice', 8, 2);
+            $table->float('companyProfitMargin', 8, 2);
             $table->float('sellingPrice', 8, 2);
             $table->float('totalSelling', 8, 2);
             $table->float('totalMaterialPrice', 8, 2);
