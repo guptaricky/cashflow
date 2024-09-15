@@ -102,8 +102,8 @@
                                     <tr class="gridjs-tr" >
                                         <td data-column-id="sno" class="gridjs-td"><span><a href="" class="fw-medium">{{ $index + 1 }}</a></span></td>
                                         <td data-column-id="serialno" class="gridjs-td"><a href="{{ route('cashflow.detail', ['id' => $cashflow->id] ) }}"><span class="badge text-bg-secondary">{{ $cashflow->serialNo }}</span></a></td>
-                                        <td data-column-id="date" class="gridjs-td">{{ $cashflow->date }}</td>
-                                        <td data-column-id="clientname" class="gridjs-td">{{ $cashflow->customer }}</td>
+                                        <td data-column-id="date" class="gridjs-td">{{ date("d-m-Y",strtotime($cashflow->date)) }}</td>
+                                        <td data-column-id="clientname" class="gridjs-td">{{ $cashflow->customer->name }}<p class="text-muted">{{ $cashflow->customer->ref_no }}</p></td>
                                         <td data-column-id="department" class="gridjs-td">{{ $cashflow->department }}</td>
                                         <td data-column-id="materialprice" class="gridjs-td">{{ $cashflow->totalMaterialPrice }}</td>
                                         <td data-column-id="othercharges" class="gridjs-td">{{ $cashflow->totalOthercharges }}</td>

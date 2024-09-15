@@ -32,7 +32,7 @@ class Cashflow extends Model
         return $this->hasMany(CashflowItems::class);
     }
     
-    public function customer()
+    public function Customer()
     {
         return $this->belongsTo(Customer::class, 'clientName');
     }
