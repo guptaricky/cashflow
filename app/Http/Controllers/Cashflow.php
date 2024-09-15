@@ -28,7 +28,11 @@ class Cashflow extends Controller
     }
     public function index()
     {
-        $cashflow = ModelsCashflow::with('Customer')->with('CashflowItems')->orderBy('created_at','DESC')->get();
+        // $cashflow = ModelsCashflow::with('Customer')->with('CashflowItems','CashflowItems.Product')->orderBy('created_at','DESC')->get();
+        $cashflow = ModelsCashflow::with(['customer', 'cashflowItems'])
+                          ->orderBy('created_at', 'DESC')
+                          ->get();
+                        //   dd($cashflow);
         $companies = Company::where('isActive', 1)->orderBy('created_at','DESC')->get();
         $currencies = Currency::where('isActive', 1)->orderBy('created_at','DESC')->get();
         return view('cashflow/cashflowList',[

@@ -15,4 +15,9 @@ class Product extends Model
         'uom',
         'isActive'
     ];
+
+    public function cashflowItems()
+    {
+        return $this->hasMany(CashflowItems::class, 'product');
+    }
 }

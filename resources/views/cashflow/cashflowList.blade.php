@@ -84,6 +84,7 @@
                                     <tr class="gridjs-tr">
                                         <th data-column-id="id" class="gridjs-th" style="width: 50px;">#</th>
                                         <th data-column-id="serialno" class="gridjs-th" style="width: 120px;">Serial No</th>
+                                        {{-- <th data-column-id="product" class="gridjs-th" style="width: 120px;">Product</th> --}}
                                         <th data-column-id="date" class="gridjs-th" style="width: 120px;">Date</th>
                                         <th data-column-id="clientname" class="gridjs-th" style="width: 200px;">client Name / Ref</th>
                                         <th data-column-id="department" class="gridjs-th" style="width: 200px;">Department</th>
@@ -99,20 +100,56 @@
                                 </thead>
                                 <tbody class="gridjs-tbody">
                                     @foreach($cashflows as $index => $cashflow)
-                                    <tr class="gridjs-tr" >
+                                    <tr class="gridjs-tr">
                                         <td data-column-id="sno" class="gridjs-td"><span><a href="" class="fw-medium">{{ $index + 1 }}</a></span></td>
                                         <td data-column-id="serialno" class="gridjs-td"><a href="{{ route('cashflow.detail', ['id' => $cashflow->id] ) }}"><span class="badge text-bg-secondary">{{ $cashflow->serialNo }}</span></a></td>
+                                        {{-- <td data-column-id="date" class="gridjs-td">
+                                        @foreach ($cashflow->cashflowItems as $item)
+                                            {{ $item->product }}
+                                        @endforeach</td> --}}
                                         <td data-column-id="date" class="gridjs-td">{{ date("d-m-Y",strtotime($cashflow->date)) }}</td>
                                         <td data-column-id="clientname" class="gridjs-td">{{ $cashflow->customer->name }}<p class="text-muted">{{ $cashflow->customer->ref_no }}</p></td>
                                         <td data-column-id="department" class="gridjs-td">{{ $cashflow->department }}</td>
-                                        <td data-column-id="materialprice" class="gridjs-td">{{ $cashflow->totalMaterialPrice }}</td>
-                                        <td data-column-id="othercharges" class="gridjs-td">{{ $cashflow->totalOthercharges }}</td>
-                                        <td data-column-id="freight" class="gridjs-td">{{ $cashflow->totalFreight }}</td>
-                                        <td data-column-id="handling" class="gridjs-td">{{ $cashflow->totalHandling }}</td>
-                                        <td data-column-id="customs" class="gridjs-td">{{ $cashflow->totalCustoms }}</td>
-                                        <td data-column-id="bankcomm" class="gridjs-td">{{ $cashflow->totalBankComm }}</td>
-                                        <td data-column-id="companymargin" class="gridjs-td">{{ $cashflow->totalCompanyMargin }}</td>
-                                        <td data-column-id="sellingcost" class="gridjs-td">{{ $cashflow->totalOthercharges + $cashflow->totalCompanyMargin }}</td>
+                                        <td data-column-id="materialprice" class="gridjs-td">
+                                            @foreach ($cashflow->cashflowItems as $item)
+                                                {{ $item->totalMaterialPrice }}</br>
+                                            @endforeach
+                                        </td>
+                                        <td data-column-id="othercharges" class="gridjs-td">
+                                            @foreach ($cashflow->cashflowItems as $item)
+                                            {{ $item->totalOthercharges }}</br>
+                                        @endforeach
+                                        </td>
+                                        <td data-column-id="freight" class="gridjs-td">
+                                            @foreach ($cashflow->cashflowItems as $item)
+                                            {{ $item->totalFreight }}</br>
+                                        @endforeach
+                                        </td>
+                                        <td data-column-id="handling" class="gridjs-td">
+                                            @foreach ($cashflow->cashflowItems as $item)
+                                            {{ $item->totalHandling }}</br>
+                                        @endforeach
+                                        </td>
+                                        <td data-column-id="customs" class="gridjs-td">
+                                            @foreach ($cashflow->cashflowItems as $item)
+                                            {{ $item->totalCustoms }}</br>
+                                        @endforeach
+                                        </td>
+                                        <td data-column-id="bankcomm" class="gridjs-td">
+                                            @foreach ($cashflow->cashflowItems as $item)
+                                            {{ $item->totalBankComm }}</br>
+                                        @endforeach
+                                        </td>
+                                        <td data-column-id="companymargin" class="gridjs-td">
+                                            @foreach ($cashflow->cashflowItems as $item)
+                                            {{ $item->totalCompanyMargin }}</br>
+                                        @endforeach
+                                        </td>
+                                        <td data-column-id="sellingcost" class="gridjs-td">
+                                            @foreach ($cashflow->cashflowItems as $item)
+                                            {{ $cashflow->totalOthercharges + $cashflow->totalCompanyMargin }}</br>
+                                        @endforeach
+                                        </td>
                                     </tr>
                                     @endforeach
                                 </tbody>

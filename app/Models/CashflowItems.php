@@ -38,4 +38,9 @@ class CashflowItems extends Model
     {
         return $this->belongsTo(Cashflow::class);
     }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class, 'id');
+    }
 }
