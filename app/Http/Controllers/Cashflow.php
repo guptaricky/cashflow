@@ -123,7 +123,7 @@ class Cashflow extends Controller
         $validator = Validator::make($request->all(), $rules);
         
         if ($validator->fails()) {
-            dd($validator->errors());
+            // dd($validator->errors());
             return redirect()->route('cashflow.create')->withInput()->withErrors($validator);
         }
 
@@ -188,7 +188,7 @@ class Cashflow extends Controller
         
         } catch (\Exception $e) {
             // Rollback the transaction in case of error
-            dd($e);
+            // dd($e);
             DB::rollBack();
             return back()->withErrors(['error' => 'An error occurred while saving the data: ' . $e->getMessage()]);
         }

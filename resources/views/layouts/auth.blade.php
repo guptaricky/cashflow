@@ -6,15 +6,17 @@
 
     <meta charset="utf-8" />
     <title>App Dashboard</title>
+    <!-- Layout config Js -->
+    @vite([
+        'resources/assets/js/layout.js'
+    ])
     @vite([
         
         'resources/assets/css/bootstrap.min.css',
         'resources/assets/css/icons.min.css',
         'resources/assets/css/app.min.css',
         'resources/assets/css/custom.min.css',
-        // 'resources/assets/js/layout.js'
         'resources/assets/libs/gridjs/theme/mermaid.min.css',
-        // 'resources/assets/libs/jsvectormap/css/jsvectormap.min.css',
         
     ])
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,10 +25,7 @@
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{ Vite::asset('resources/assets/images/favicon.ico') }}">
 
-    <!-- Layout config Js -->
-    @vite([
-        'resources/assets/js/layout.js'
-    ])
+    
 
 </head>
 
@@ -215,17 +214,8 @@
         'resources/assets/libs/feather-icons/feather.min.js',
         'resources/assets/js/pages/plugins/lord-icon-2.1.0.js',
         'resources/assets/js/plugins.js',
-        // 'resources/assets/libs/apexcharts/apexcharts.min.js',
-        // 'resources/assets/libs/jsvectormap/js/jsvectormap.min.js',
-        // 'resources/assets/libs/jsvectormap/maps/world-merc.js',
-        // 'resources/assets/js/pages/dashboard-analytics.init.js',
-        // 'resources/assets/js/app.js',
-        
-        'resources/assets/libs/prismjs/prism.js',
-        'resources/js/app.js',
-        // 'resources/assets/js/pages/notifications.init.js',
-        // 'resources/assets/libs/gridjs/gridjs.umd.js',
-        // 'resources/assets/js/pages/gridjs.init.js'
+        'resources/assets/js/pages/form-wizard.init.js',
+        'resources/js/app.js'
     ]);
 <!-- JAVASCRIPT -->
 

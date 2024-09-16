@@ -25,40 +25,38 @@
         <div class="card">
            
             <div class="card-body">
+               
                 <form method="POST" action="{{ route('cashflow.store') }}" class="form-steps" autocomplete="off">
                     @csrf
                     <div class="step-arrow-nav mb-4">
 
                         <ul class="nav nav-pills custom-nav nav-justified" role="tablist">
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="steparrow-gen-info-tab" data-bs-toggle="pill" data-bs-target="#steparrow-gen-info" type="button" role="tab" aria-controls="steparrow-gen-info" aria-selected="true">Customer Info</button>
+                                <button class="nav-link done active" id="steparrow-gen-info-tab" data-bs-toggle="pill" data-bs-target="#steparrow-gen-info" type="button" role="tab" aria-controls="steparrow-gen-info" aria-selected="true">Customer Info</button>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link done active" id="steparrow-description-info-tab" data-bs-toggle="pill" data-bs-target="#steparrow-description-info" type="button" role="tab" aria-controls="steparrow-description-info" aria-selected="false">Product Details</button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="pills-experience-tab" data-bs-toggle="pill" data-bs-target="#pills-experience" type="button" role="tab" aria-controls="pills-experience" aria-selected="false">Finish</button>
+                                <button class="nav-link" id="steparrow-description-info-tab" data-bs-toggle="pill" data-bs-target="#steparrow-description-info" type="button" role="tab" aria-controls="steparrow-description-info" aria-selected="false">Product Details</button>
                             </li>
                         </ul>
                     </div>
 
                     <div class="tab-content">
-                        <div class="tab-pane fade" id="steparrow-gen-info" role="tabpanel" aria-labelledby="steparrow-gen-info-tab">
+                        <div class="tab-pane fade show active" id="steparrow-gen-info" role="tabpanel" aria-labelledby="steparrow-gen-info-tab">
                             <div class="row gy-4">
                                 <div class="col-xxl-2 col-md-6">
                                     <div>
                                         <label for="serialNo" class="@error('serialNo') is-invalid @enderror form-label">Serial Number</label>
-                                        <input type="text" class="form-control" id="serialNo" name="serialNo" value="{{ old('serialNo') }}">
+                                        <input type="text" class="form-control" id="serialNo" name="serialNo" value="{{ old('serialNo') }}" required="">
                                         @error('serialNo') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
                                     </div>
                                 </div>
                                 <div class="col-xxl-4 col-md-6">
                                     <div>
                                         <label for="clientName" class="@error('clientName') is-invalid @enderror form-label">Client Name</label>
-                                        <select id="clientName" name="clientName" class="form-select" data-choices="" data-choices-sorting="true" >
-                                        <option selected="">Choose...</option>
+                                        <select id="clientName" name="clientName" class="form-select" data-choices="" data-choices-sorting="true" required="">
+                                        <option selected=""></option>
                                         @foreach($customers as $index => $customer)
-                                            <option value="{{ $customer->id }}" {{ old('clientName') == $customer->name ? 'selected' : '' }}> {{ $customer->name }} </option>
+                                            <option value="{{ $customer->id }}" {{ old('clientName') == $customer->id ? 'selected' : '' }}> {{ $customer->name }} </option>
                                             @endforeach
                                         </select>    
                                         @error('clientName') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
@@ -67,7 +65,7 @@
                                 <div class="col-xxl-3 col-md-6">
                                     <div>
                                         <label for="date" class="@error('date') is-invalid @enderror form-label">Date</label>
-                                        <input type="date" class="form-control" id="date" name="date" value="{{ old('date') }}">
+                                        <input type="date" class="form-control" id="date" name="date" value="{{ old('date') }}" required="">
                                         @error('date') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
                                     </div>
                                 </div>
@@ -75,8 +73,8 @@
                                 <div class="col-xxl-3 col-md-6">
                                     <div>
                                         <label for="Company" class="@error('serialNo') is-invalid @enderror form-label">Company</label>
-                                        <select id="company" name="company" class="form-select" data-choices="" data-choices-sorting="true" >
-                                            <option selected="">Choose...</option>
+                                        <select id="company" name="company" class="form-select" data-choices="" data-choices-sorting="true" required="">
+                                            <option selected=""></option>
                                             @foreach($companies as $index => $company)
                                             <option value="{{ $company->name }}" {{ old('company') == $company->name ? 'selected' : '' }}> {{ $company->name }} </option>
                                             @endforeach
@@ -87,8 +85,8 @@
                                 <div class="col-xxl-3 col-md-6">
                                     <div>
                                         <label for="department" class="@error('department') is-invalid @enderror form-label">Department</label>
-                                        <select id="department" name="department" class="form-select" data-choices="" data-choices-sorting="true">
-                                            <option selected="">Choose...</option>
+                                        <select id="department" name="department" class="form-select" data-choices="" data-choices-sorting="true" required="">
+                                            <option selected=""></option>
                                             <option value="Division 1" {{ old('department') == 'Division 1' ? 'selected' : '' }} >Division 1</option>
                                             <option value="Division 2" {{ old('department') == 'Division 2' ? 'selected' : '' }} >Division 2</option>
                                             <option value="Central 1" {{ old('department') == 'Central 1' ? 'selected' : '' }} >Central 1</option>
@@ -100,7 +98,7 @@
                                 <div class="col-xxl-3 col-md-6">
                                     <div>
                                         <label for="countryOrigin" class="@error('countryOrigin') is-invalid @enderror form-label">Country of Origin</label>
-                                        <input type="text" class="form-control" id="countryOrigin" name="countryOrigin" value="{{ old('countryOrigin') }}">
+                                        <input type="text" class="form-control" id="countryOrigin" name="countryOrigin" value="{{ old('countryOrigin') }}" required="">
                                         @error('countryOrigin') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
                                     </div>
                                 </div>
@@ -108,7 +106,8 @@
                                 <div class="col-xxl-3 col-md-6">
                                     <div>
                                         <label for="modeofshipment" class="@error('modeofshipment') is-invalid @enderror form-label">Mode of Shipment</label>
-                                        <select id="modeofshipment" name="modeofshipment" class="form-select" data-choices="" data-choices-sorting="true" value="{{ old('modeofshipment') }}">
+                                        <select id="modeofshipment" name="modeofshipment" class="form-select" data-choices="" data-choices-sorting="true" value="{{ old('modeofshipment') }}" required="">
+                                            <option selected=""></option>
                                             <option value="Air Freight" {{ old('modeofshipment') == 'Air Freight' ? 'selected' : '' }} >Air Freight</option>
                                             <option value="Sea Freight" {{ old('modeofshipment') == 'Sea Freight' ? 'selected' : '' }} >Sea Freight</option>
                                             <option value="Land Freight" {{ old('modeofshipment') == 'Land Freight' ? 'selected' : '' }} >Land Freight</option>
@@ -119,7 +118,7 @@
                                 <div class="col-xxl-3 col-md-6">
                                     <div>
                                         <label for="availability" class="@error('availability') is-invalid @enderror form-label">Availability from Supplier (in Days)</label>
-                                        <input type="text" class="form-control" id="availability" name="availability" value="{{ old('availability') }}">
+                                        <input type="text" class="form-control" id="availability" name="availability" value="{{ old('availability') }}" required="">
                                         @error('availability') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
                                     </div>
                                 </div>
@@ -127,14 +126,15 @@
                                 <div class="col-xxl-3 col-md-6">
                                     <div>
                                         <label for="goodsTravel" class="@error('goodsTravel') is-invalid @enderror form-label">Travel of Goods (in Days)</label>
-                                        <input type="text" class="form-control" id="goodsTravel" name="goodsTravel" value="{{ old('goodsTravel') }}">
+                                        <input type="text" class="form-control" id="goodsTravel" name="goodsTravel" value="{{ old('goodsTravel') }}" required="">
                                         @error('goodsTravel') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
                                     </div>
                                 </div>
                                 <div class="col-xxl-3 col-md-6">
                                     <div>
                                         <label for="incoterms" class="@error('incoterms') is-invalid @enderror form-label">INCOTERMS</label>
-                                        <select id="incoterms" name="incoterms" class="form-select" data-choices="" data-choices-sorting="true" value="{{ old('incoterms') }}">
+                                        <select id="incoterms" name="incoterms" class="form-select" data-choices="" data-choices-sorting="true" value="{{ old('incoterms') }}" required="">
+                                            <option selected=""></option>
                                             <option value="EXW" {{ old('incoterms') == 'EXW' ? 'selected' : '' }} >EXW</option>
                                             <option value="FOB" {{ old('incoterms') == 'FOB' ? 'selected' : '' }} >FOB</option>
                                             <option value="C&P" {{ old('incoterms') == 'C&P' ? 'selected' : '' }} >C&P</option>
@@ -149,14 +149,14 @@
                                 <div class="col-xxl-3 col-md-6">
                                     <div>
                                         <label for="profitMargin" class="@error('profitMargin') is-invalid @enderror form-label">Profit Margin per unit (%)</label>
-                                        <input type="text" class="form-control" id="profitMargin" name="profitMargin" value="25">
+                                        <input type="text" class="form-control" id="profitMargin" name="profitMargin" value="{{ old('profitMargin')}}" required="">
                                         @error('profitMargin') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
                                     </div>
                                 </div>
                                 <div class="col-xxl-3 col-md-6">
                                     <div>
                                         <label for="targetPrice" class="@error('targetPrice') is-invalid @enderror form-label">Target Price</label>
-                                        <input type="text" class="form-control" id="targetPrice" name="targetPrice" value="{{ old('targetPrice') }}">
+                                        <input type="text" class="form-control" id="targetPrice" name="targetPrice" value="{{ old('targetPrice') }}" required="">
                                         @error('targetPrice') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
                                     </div>
                                 </div>
@@ -170,8 +170,8 @@
                                                 <i class="ri-question-line label-icon align-middle fs-16 me-2"></i>
                                             </button>
                                         </label>
-                                        <select id="currency" name="currency" class="form-select" data-choices="" data-choices-sorting="true" >
-                                            <option value=""> Choose... </option>
+                                        <select id="currency" name="currency" class="form-select" data-choices="" data-choices-sorting="true" required="">
+                                            <option value=""> </option>
                                             @foreach($currencies as $index => $currency)
                                             <option value="{{ $currency->name }}" 
                                                 {{ old('currency') == $currency->name ? 'selected' : '' }}>
@@ -186,7 +186,7 @@
                                 <div class="col-xxl-3 col-md-6 d-none">
                                     <div>
                                         <label for="conversion_factor" class="@error('conversion_factor') is-invalid @enderror form-label">KWD Equivalent</label>
-                                        <input type="text" class="form-control" id="conversion_factor" name="conversion_factor" value="{{ old('conversion_factor') }}">
+                                        <input type="text" class="form-control" id="conversion_factor" name="conversion_factor" value="{{ old('conversion_factor') }}" required="">
                                         @error('conversion_factor') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
                                     </div>
                                 </div>
@@ -195,18 +195,18 @@
                                
                             </div>
                             <div class="d-flex align-items-start gap-3 mt-4">
-                                <button type="button" class="btn btn-success btn-label right ms-auto nexttab nexttab" data-nexttab="steparrow-description-info-tab"><i class="ri-arrow-right-line label-icon align-middle fs-16 ms-2"></i>Product Details</button>
+                                <button type="button" class="btn btn-success btn-label right ms-auto nexttab nexttab" data-nexttab="steparrow-description-info-tab"><i class="ri-arrow-right-line label-icon align-middle fs-16 ms-2"></i>Go to more info</button>
                             </div>
                         </div>
                         <!-- end tab pane -->
 
-                        <div class="tab-pane fade show active" id="steparrow-description-info" role="tabpanel" aria-labelledby="steparrow-description-info-tab">
+                        <div class="tab-pane fade" id="steparrow-description-info" role="tabpanel" aria-labelledby="steparrow-description-info-tab">
                             <div>
                                 <div class="row g-3">
                                     
                                     <div class="col-md-2">
                                         <label for="country" class="form-label">Product</label>
-                                        <select id="product" name="product" class="form-select" data-choices="" data-choices-sorting="true" >
+                                        <select id="product" name="product" class="form-select product-details" data-choices="" data-choices-sorting="true" >
                                             <option selected="">Choose...</option>
                                             @foreach($products as $index => $product)
                                                 <option value="{{ $product->id }}" {{ old('product') == $product->name ? 'selected' : '' }}> {{ $product->name }} </option>
@@ -218,7 +218,7 @@
                                     <div class="col-xxl-3 col-md-6">
                                         <div>
                                             <label for="unitPrice" class="@error('unitPrice') is-invalid @enderror form-label">Unit Price <span id="currency_label" class="font-weight-bold"> (in Dealing Currency)</span></label>
-                                            <input type="text" class="form-control" id="unitPrice" name="unitPrice">
+                                            <input type="text" class="form-control product-details" id="unitPrice" name="unitPrice">
                                             <p class='text-info inputerror' id="currency_conversion2"></p>
                                             @error('unitPrice') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
                                         </div>
@@ -226,14 +226,14 @@
                                     <div class="col-xxl-1 col-md-6">
                                         <div>
                                             <label for="quantity" class="@error('quantity') is-invalid @enderror form-label">Quantity </label>
-                                            <input type="number" steps="1" class="form-control" id="quantity" name="quantity">
+                                            <input type="number" steps="1" class="form-control product-details" id="quantity" name="quantity">
                                             @error('quantity') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
                                         </div>
                                     </div>
                                     <div class="col-xxl-3 col-md-6">
                                         <div>
                                             <label for="packagingInfo" class="@error('packagingInfo') is-invalid @enderror form-label">Packaging Info </label>
-                                            <input type="text" class="form-control" id="packagingInfo" name="packagingInfo">
+                                            <input type="text" class="form-control product-details" id="packagingInfo" name="packagingInfo">
                                             @error('packagingInfo') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
                                         </div>
                                     </div>
@@ -258,8 +258,8 @@
                                                         <th scope="col">Bank Charges</th>
                                                         <th scope="col">Landed Cost</th>
                                                         <th scope="col">Profit Margin</th>
-                                                        <th scope="col">Calculated Selling Price</th>
-                                                        <th scope="col">View</th>
+                                                        <th scope="col">Selling Price</th>
+                                                        <th scope="col">Remove</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -276,24 +276,11 @@
                             </div>
                             <div class="d-flex align-items-start gap-3 mt-4">
                                 <button type="button" class="btn btn-light btn-label previestab" data-previous="steparrow-gen-info-tab"><i class="ri-arrow-left-line label-icon align-middle fs-16 me-2"></i> Back to Customer Info</button>
-                                <button type="submit" class="btn btn-success btn-label right ms-auto nexttab nexttab" data-nexttab="steparrow-description-info-tab"><i class="ri-arrow-right-line label-icon align-middle fs-16 ms-2"></i>Submit</button>
+                                <button type="submit" class="btn btn-primary waves-effect waves-light ms-auto" >Submit</button>
                             </div>
                         </div>
                         <!-- end tab pane -->
 
-                        <div class="tab-pane fade" id="pills-experience" role="tabpanel">
-                            <div class="text-center">
-
-                                <div class="avatar-md mt-5 mb-4 mx-auto">
-                                    <div class="avatar-title bg-light text-success display-4 rounded-circle">
-                                        <i class="ri-checkbox-circle-fill"></i>
-                                    </div>
-                                </div>
-                                <h5>Well Done !</h5>
-                                <p class="text-muted">You have Successfully Signed Up</p>
-                            </div>
-                        </div>
-                        <!-- end tab pane -->
                     </div>
                     <!-- end tab content -->
                 </form>
@@ -453,11 +440,36 @@
     document.getElementById('add-item').addEventListener('click', function () {
         const tableBody = document.querySelector('#items-table tbody');
         const rowCount = tableBody.rows.length + 1;
-        // alert(rowCount)
+        let errorMessage = '';
         var quantity = document.getElementById(`quantity`).value || 0;
-        // alert("quantity"+quantity)
-        if (quantity > 0) {
-        const newRow = `
+        var currency = document.getElementById(`currency`).value || 0;
+        var product = document.getElementById(`product`).value || 0;
+        var unitPrice = document.getElementById(`unitPrice`).value || 0;
+        var profitMargin = document.getElementById(`profitMargin`).value || 0;
+        var packagingInfo = document.getElementById(`packagingInfo`).value || 0;
+        // alert(product);
+        if (quantity == 0) {
+            errorMessage += "Quantity cannot be empty... \n";
+        }
+        if (currency == 0) {
+            errorMessage += "Please select the currency... \n";
+        }
+        if (product == "Choose...") {
+            errorMessage += "Please select the Product... \n";
+        }
+        if (unitPrice == 0) {
+            errorMessage += "Unit Price cannot be Empty... \n";
+        }
+        if (profitMargin == 0) {
+            errorMessage += "Profit Margin cannot be empty... \n";
+        }
+        if (packagingInfo == 0) {
+            errorMessage += "Packaging Info cannot be empty... \n";
+        }
+        if (errorMessage) {
+            alert(errorMessage);
+        } else {
+            const newRow = `
             <tr>
                 <td scope="col">${rowCount}</td>
                 <td scope="col">
@@ -486,19 +498,31 @@
                 <td scope="col"><span id="label_items_${rowCount}_landedCost"></span><input type="hidden" id="items_${rowCount}_landedCost" name="items[${rowCount}][landedCost]"/></td>
                 <td scope="col"><span id="label_items_${rowCount}_companyProfitMargin"></span><input type="hidden" id="items_${rowCount}_companyProfitMargin" name="items[${rowCount}][companyProfitMargin]"/></td>
                 <td scope="col"><span id="label_items_${rowCount}_sellingPrice"></span><input type="hidden" id="items_${rowCount}_sellingPrice" name="items[${rowCount}][sellingPrice]"/></td>
-                <td scope="col"><div class="edit">
-                    <button type="button" class="btn btn-sm btn-success edit-item-btn" data-bs-toggle="modal" data-bs-target="#showModal">View More</button>
-                </div>
+                <td scope="col">
                 <div class="remove">
                     <button type="button" class="btn btn-sm btn-danger remove-item-btn"><i class="ri-delete-bin-2-line"></i></button>
                 </div></td>
             </tr>`;
-
+           
             
-        tableBody.insertAdjacentHTML('beforeend', newRow);
-        conversion_calculation(rowCount);
-        }else if (quantity == 0) {
-            alert("quantity cannot be empty");
+            tableBody.insertAdjacentHTML('beforeend', newRow);
+
+            conversion_calculation(rowCount);
+
+            document.getElementById(`quantity`).value = '';
+            document.getElementById(`product`).value = '';
+            document.getElementById(`unitPrice`).value = '';
+            document.getElementById(`packagingInfo`).value = '';
+
+            // var forms = document.querySelectorAll('.product-details');
+            // console.log(forms);
+            // forms.forEach(function(form) {
+            //     setTimeout(()=>{
+            //         form.classList.remove('was-validated');
+            //     },500)
+                
+            // });
+                    
         }
         
         
@@ -579,7 +603,7 @@
             document.getElementById(`items_${rowCount}_totalBankComm`).value = totalBankComm;
             document.getElementById(`items_${rowCount}_totalCompanyMargin`).value = totalCompanyMargin;
             
-        
+           
     }
 
 </script>
@@ -640,7 +664,7 @@
                 clearTimeout(tooltipTimeout); // Cancel any pending timeout if clicked outside
             }
         });
-                                        
+      
     })
  
 
