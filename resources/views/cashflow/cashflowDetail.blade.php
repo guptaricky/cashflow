@@ -52,7 +52,7 @@
                                     <th class="gridjs-th" style="width: 50%;text-align:center;text-transform: uppercase;" colspan="2"><u>{{ $cashflowDetail->description }}</u></th>
                                 </tr>
                                 <tr class="gridjs-tr">
-                                    <th class="gridjs-th text-center" style="width: 50%">INTEGRA REFERENCE <span style="color: red;"> ({{ $cashflowDetail->clientRef }})</span></th>
+                                    <th class="gridjs-th text-center" style="width: 50%">INTEGRA REFERENCE <span style="color: red;"> ({{ $cashflowDetail->ref_no }})</span></th>
                                     <th class="gridjs-th text-center" style="width: 50%;">{{ number_format($cashflowDetail->totalSelling, 2, '.', ',') }} </th>
                                 </tr>
                                 <tr class="gridjs-tr">
@@ -83,7 +83,7 @@
                                 </tr>
                                 <tr>
                                     <td class="gridjs-td">Other Charges</td>
-                                    <td class="gridjs-td text-right">{{ number_format($cashflowDetail->totalOthercharges, 2, '.', ',') }}</td>
+                                    <td class="gridjs-td text-right">{{ number_format($cashflowDetail->totalOtherCharges, 2, '.', ',') }}</td>
                                 </tr>
                                 <tr>
                                     <td class="gridjs-td">Bank Comm. Etc. Below 10K; 7%; Above 10K 9%; TT: 3%</td>

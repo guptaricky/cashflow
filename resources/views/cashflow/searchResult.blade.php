@@ -24,16 +24,16 @@
         <td data-column-id="sno" class="gridjs-td"><span><a href="" class="fw-medium">{{ $index + 1 }}</a></span></td>
         <td data-column-id="serialno" class="gridjs-td"><a href="{{ route('cashflow.detail', ['id' => $cashflow->id] ) }}"><span class="badge text-bg-secondary">{{ $cashflow->serialNo }}</span></a></td>
         <td data-column-id="date" class="gridjs-td">{{ $cashflow->date }}</td>
-        <td data-column-id="clientname" class="gridjs-td">{{ $cashflow->clientName }}</td>
+        <td data-column-id="clientname" class="gridjs-td">{{ $cashflow->customer_name }}</td>
         <td data-column-id="department" class="gridjs-td">{{ $cashflow->department }}</td>
         <td data-column-id="materialprice" class="gridjs-td">{{ $cashflow->totalMaterialPrice }}</td>
-        <td data-column-id="othercharges" class="gridjs-td">{{ $cashflow->totalOthercharges }}</td>
+        <td data-column-id="othercharges" class="gridjs-td">{{ $cashflow->totalOtherCharges }}</td>
         <td data-column-id="freight" class="gridjs-td">{{ $cashflow->totalFreight }}</td>
         <td data-column-id="handling" class="gridjs-td">{{ $cashflow->totalHandling }}</td>
         <td data-column-id="customs" class="gridjs-td">{{ $cashflow->totalCustoms }}</td>
         <td data-column-id="bankcomm" class="gridjs-td">{{ $cashflow->totalBankComm }}</td>
         <td data-column-id="companymargin" class="gridjs-td">{{ $cashflow->totalCompanyMargin }}</td>
-        <td data-column-id="sellingcost" class="gridjs-td">{{ $cashflow->totalOthercharges + $cashflow->totalCompanyMargin }}</td>
+        <td data-column-id="sellingcost" class="gridjs-td">{{ $cashflow->totalOtherCharges + $cashflow->totalCompanyMargin }}</td>
     </tr>    
 @endforeach
 </tbody>

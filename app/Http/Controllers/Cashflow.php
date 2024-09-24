@@ -29,9 +29,16 @@ class Cashflow extends Controller
     public function index()
     {
         // $cashflow = ModelsCashflow::with('Customer')->with('CashflowItems','CashflowItems.Product')->orderBy('created_at','DESC')->get();
-        $cashflow = ModelsCashflow::with(['customer', 'cashflowItems'])
-                          ->orderBy('created_at', 'DESC')
-                          ->get();
+        // $cashflow = ModelsCashflowItems::with(['cashflow','customer'])
+        //                   ->orderBy('created_at', 'DESC')
+        //                   ->get();
+                          $cashflow = DB::table('cashflow_items as cfi')
+                          ->select('*', 'c.name as customer_name', 'p.name as product_name', 'cfi.id as cashflow_items_id')
+                        ->leftjoin('cashflows as cf', 'cf.id', '=', 'cfi.cashflow_id')
+                        ->leftjoin('customers as c', 'c.id', '=', 'cf.clientName')
+                        ->leftjoin('products as p', 'p.id', '=', 'cfi.product')
+                        ->orderBy('cfi.created_at', 'DESC')
+                        ->get();
                         //   dd($cashflow);
         $companies = Company::where('isActive', 1)->orderBy('created_at','DESC')->get();
         $currencies = Currency::where('isActive', 1)->orderBy('created_at','DESC')->get();
@@ -44,7 +51,12 @@ class Cashflow extends Controller
 
     public function detail($id)
     {
-        $cashflowDetail = ModelsCashflow::where('id', $id)->first();
+        $cashflowDetail = DB::table('cashflow_items as cfi')
+        ->select('*', 'c.name as customer_name', 'p.name as product_name')
+        ->leftjoin('cashflows as cf', 'cf.id', '=', 'cfi.cashflow_id')
+        ->leftjoin('customers as c', 'c.id', '=', 'cf.clientName')
+        ->leftjoin('products as p', 'p.id', '=', 'cfi.product')
+        ->where('cfi.id', $id)->first();
         return view('cashflow/cashflowDetail',[
             'cashflowDetail' => $cashflowDetail
         ]);
@@ -152,14 +164,13 @@ class Cashflow extends Controller
             // dd($request->items);
             // Step 2: Insert associated items into the CashflowItems (child) table
             foreach ($request->items as $item) {
-                // dd($item['product']);
+                // dd($item['totalOtherCharges']);
                 CashflowItems::create([
                     'cashflow_id' => $cashflow->id,
                     'product' => $item['product'],
                     'unitPrice' => $item['unitPrice'],
                     'quantity' => $item['quantity'],
                     'packagingInfo' => $item['packagingInfo'],
-
                     'unitMaterialPrice' => $item['unitMaterialPrice'],
                     'unitOtherCharges' => $item['unitOtherCharges'] ?? 0,
                     'freight' => $item['freight'] ?? 0,
@@ -171,7 +182,7 @@ class Cashflow extends Controller
                     'sellingPrice' => $item['sellingPrice'],
                     'totalSelling' => $item['totalSelling'],
                     'totalMaterialPrice' => $item['totalMaterialPrice'] ?? 0,
-                    'totalOtherCharges' => $item['totalOtherCharges'] ?? 0,
+                    'totalOtherCharges' => $item['totalOthercharges'] ?? 0,
                     'totalFreight' => $item['totalFreight'] ?? 0,
                     'totalHandling' => $item['totalHandling'] ?? 0,
                     'totalCustoms' => $item['totalCustoms'] ?? 0,
@@ -269,7 +280,7 @@ class Cashflow extends Controller
 
     public function search(Request $request) {
 
-        $filters = $request->only(['company', 'department', 'fromDate', 'toDate']);
+        $filters = $request->only(['company', 'department', 'fromDate', 'toDate', 'serialNo']);
         $results = $this->cashflowService->search($filters);
         return view('cashflow/searchResult', compact('results'));
         // return view('cashflow/searchResult', ['results' => collect()]); // Empty collection if no query
@@ -277,14 +288,14 @@ class Cashflow extends Controller
 
     public function export(Request $request) {
 
-        $filters = $request->only(['company', 'department', 'fromDate', 'toDate']);
+        $filters = $request->only(['company', 'department', 'fromDate', 'toDate', 'serialNo']);
         $cashflow = $this->cashflowService->search($filters);
         return Excel::download(new ExportCashflow($cashflow), 'cashflow.xlsx');
     }
 
     public function exportXero(Request $request) {
-        $filters = $request->only(['company', 'department', 'fromDate', 'toDate']);
-        $cashflow = $this->cashflowService->getResults();
+        $filters = $request->only(['company', 'department', 'fromDate', 'toDate', 'serialNo']);
+        $cashflow = $this->cashflowService->getResults($filters);
         return Excel::download(new ExportXero($cashflow), 'cashflow.xlsx');
     }
     public function update() {}

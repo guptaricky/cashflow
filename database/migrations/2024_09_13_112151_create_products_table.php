@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name',100);
             $table->string('description',255);
             $table->string('uom',10);
+            $table->integer('isActive');
             $table->timestamps();
         });
     }

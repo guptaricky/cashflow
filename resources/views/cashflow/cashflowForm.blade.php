@@ -23,9 +23,9 @@
 <div class="row">
     <div class="col-xl-12">
         <div class="card">
-           
+
             <div class="card-body">
-               
+
                 <form method="POST" action="{{ route('cashflow.store') }}" class="form-steps" autocomplete="off">
                     @csrf
                     <div class="step-arrow-nav mb-4">
@@ -54,11 +54,11 @@
                                     <div>
                                         <label for="clientName" class="@error('clientName') is-invalid @enderror form-label">Client Name</label>
                                         <select id="clientName" name="clientName" class="form-select" data-choices="" data-choices-sorting="true" required="">
-                                        <option selected=""></option>
-                                        @foreach($customers as $index => $customer)
+                                            <option selected=""></option>
+                                            @foreach($customers as $index => $customer)
                                             <option value="{{ $customer->id }}" {{ old('clientName') == $customer->id ? 'selected' : '' }}> {{ $customer->name }} </option>
                                             @endforeach
-                                        </select>    
+                                        </select>
                                         @error('clientName') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
                                     </div>
                                 </div>
@@ -69,7 +69,7 @@
                                         @error('date') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
                                     </div>
                                 </div>
-    
+
                                 <div class="col-xxl-3 col-md-6">
                                     <div>
                                         <label for="Company" class="@error('serialNo') is-invalid @enderror form-label">Company</label>
@@ -87,10 +87,10 @@
                                         <label for="department" class="@error('department') is-invalid @enderror form-label">Department</label>
                                         <select id="department" name="department" class="form-select" data-choices="" data-choices-sorting="true" required="">
                                             <option selected=""></option>
-                                            <option value="Division 1" {{ old('department') == 'Division 1' ? 'selected' : '' }} >Division 1</option>
-                                            <option value="Division 2" {{ old('department') == 'Division 2' ? 'selected' : '' }} >Division 2</option>
-                                            <option value="Central 1" {{ old('department') == 'Central 1' ? 'selected' : '' }} >Central 1</option>
-                                            <option value="Central 2" {{ old('department') == 'Central 2' ? 'selected' : '' }} >Central 2</option>
+                                            <option value="Division 1" {{ old('department') == 'Division 1' ? 'selected' : '' }}>Division 1</option>
+                                            <option value="Division 2" {{ old('department') == 'Division 2' ? 'selected' : '' }}>Division 2</option>
+                                            <option value="Central 1" {{ old('department') == 'Central 1' ? 'selected' : '' }}>Central 1</option>
+                                            <option value="Central 2" {{ old('department') == 'Central 2' ? 'selected' : '' }}>Central 2</option>
                                         </select>
                                         @error('department') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
                                     </div>
@@ -102,15 +102,15 @@
                                         @error('countryOrigin') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
                                     </div>
                                 </div>
-    
+
                                 <div class="col-xxl-3 col-md-6">
                                     <div>
                                         <label for="modeofshipment" class="@error('modeofshipment') is-invalid @enderror form-label">Mode of Shipment</label>
                                         <select id="modeofshipment" name="modeofshipment" class="form-select" data-choices="" data-choices-sorting="true" value="{{ old('modeofshipment') }}" required="">
                                             <option selected=""></option>
-                                            <option value="Air Freight" {{ old('modeofshipment') == 'Air Freight' ? 'selected' : '' }} >Air Freight</option>
-                                            <option value="Sea Freight" {{ old('modeofshipment') == 'Sea Freight' ? 'selected' : '' }} >Sea Freight</option>
-                                            <option value="Land Freight" {{ old('modeofshipment') == 'Land Freight' ? 'selected' : '' }} >Land Freight</option>
+                                            <option value="Air Freight" {{ old('modeofshipment') == 'Air Freight' ? 'selected' : '' }}>Air Freight</option>
+                                            <option value="Sea Freight" {{ old('modeofshipment') == 'Sea Freight' ? 'selected' : '' }}>Sea Freight</option>
+                                            <option value="Land Freight" {{ old('modeofshipment') == 'Land Freight' ? 'selected' : '' }}>Land Freight</option>
                                         </select>
                                         @error('modeofshipment') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
                                     </div>
@@ -122,7 +122,7 @@
                                         @error('availability') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
                                     </div>
                                 </div>
-    
+
                                 <div class="col-xxl-3 col-md-6">
                                     <div>
                                         <label for="goodsTravel" class="@error('goodsTravel') is-invalid @enderror form-label">Travel of Goods (in Days)</label>
@@ -135,13 +135,13 @@
                                         <label for="incoterms" class="@error('incoterms') is-invalid @enderror form-label">INCOTERMS</label>
                                         <select id="incoterms" name="incoterms" class="form-select" data-choices="" data-choices-sorting="true" value="{{ old('incoterms') }}" required="">
                                             <option selected=""></option>
-                                            <option value="EXW" {{ old('incoterms') == 'EXW' ? 'selected' : '' }} >EXW</option>
-                                            <option value="FOB" {{ old('incoterms') == 'FOB' ? 'selected' : '' }} >FOB</option>
-                                            <option value="C&P" {{ old('incoterms') == 'C&P' ? 'selected' : '' }} >C&P</option>
-                                            <option value="CIF" {{ old('incoterms') == 'CIF' ? 'selected' : '' }} >CIF</option>
-                                            <option value="CIP" {{ old('incoterms') == 'CIP' ? 'selected' : '' }} >CIP</option>
-                                            <option value="DAP" {{ old('incoterms') == 'DAP' ? 'selected' : '' }} >DAP</option>
-                                            <option value="DPT" {{ old('incoterms') == 'DPT' ? 'selected' : '' }} >DPT</option>
+                                            <option value="EXW" {{ old('incoterms') == 'EXW' ? 'selected' : '' }}>EXW</option>
+                                            <option value="FOB" {{ old('incoterms') == 'FOB' ? 'selected' : '' }}>FOB</option>
+                                            <option value="C&P" {{ old('incoterms') == 'C&P' ? 'selected' : '' }}>C&P</option>
+                                            <option value="CIF" {{ old('incoterms') == 'CIF' ? 'selected' : '' }}>CIF</option>
+                                            <option value="CIP" {{ old('incoterms') == 'CIP' ? 'selected' : '' }}>CIP</option>
+                                            <option value="DAP" {{ old('incoterms') == 'DAP' ? 'selected' : '' }}>DAP</option>
+                                            <option value="DPT" {{ old('incoterms') == 'DPT' ? 'selected' : '' }}>DPT</option>
                                         </select>
                                         @error('incoterms') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
                                     </div>
@@ -162,18 +162,18 @@
                                 </div>
                                 <div class="col-xxl-3 col-md-6">
                                     <div>
-                                        <label for="currency" class="@error('currency') is-invalid @enderror form-label">Currency 
-                                            <button type="button" class="btn rounded-pill" style="border 1px solid;padding:0px" 
-                                                    id="persistentTooltip"
-                                                    data-bs-toggle="tooltip" data-bs-html="true" 
-                                                    title="<em>Add New</em> <b>Currency Conversion</b> <a href='{{ route('conversion.create') }}' style='color:#fff'>Click here</a>">
+                                        <label for="currency" class="@error('currency') is-invalid @enderror form-label">Currency
+                                            <button type="button" class="btn rounded-pill" style="border 1px solid;padding:0px"
+                                                id="persistentTooltip"
+                                                data-bs-toggle="tooltip" data-bs-html="true"
+                                                title="<em>Add New</em> <b>Currency Conversion</b> <a href='{{ route('conversion.create') }}' style='color:#fff'>Click here</a>">
                                                 <i class="ri-question-line label-icon align-middle fs-16 me-2"></i>
                                             </button>
                                         </label>
                                         <select id="currency" name="currency" class="form-select" data-choices="" data-choices-sorting="true" required="">
                                             <option value=""> </option>
                                             @foreach($currencies as $index => $currency)
-                                            <option value="{{ $currency->name }}" 
+                                            <option value="{{ $currency->name }}"
                                                 {{ old('currency') == $currency->name ? 'selected' : '' }}>
                                                 {{ $currency->name }} ({{ $currency->code }})
                                             </option>
@@ -190,9 +190,9 @@
                                         @error('conversion_factor') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
                                     </div>
                                 </div>
-                                
-                                
-                               
+
+
+
                             </div>
                             <div class="d-flex align-items-start gap-3 mt-4">
                                 <button type="button" class="btn btn-success btn-label right ms-auto nexttab nexttab" data-nexttab="steparrow-description-info-tab"><i class="ri-arrow-right-line label-icon align-middle fs-16 ms-2"></i>Go to more info</button>
@@ -203,16 +203,16 @@
                         <div class="tab-pane fade" id="steparrow-description-info" role="tabpanel" aria-labelledby="steparrow-description-info-tab">
                             <div>
                                 <div class="row g-3">
-                                    
+
                                     <div class="col-md-2">
                                         <label for="country" class="form-label">Product</label>
-                                        <select id="product" name="product" class="form-select product-details" data-choices="" data-choices-sorting="true" >
+                                        <select id="product" name="product" class="form-select product-details" data-choices="" data-choices-sorting="true">
                                             <option selected="">Choose...</option>
                                             @foreach($products as $index => $product)
-                                                <option value="{{ $product->id }}" {{ old('product') == $product->name ? 'selected' : '' }}> {{ $product->name }} </option>
-                                                @endforeach
-                                            </select>    
-                                            @error('product') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
+                                            <option value="{{ $product->id }}" {{ old('product') == $product->name ? 'selected' : '' }}> {{ $product->name }} </option>
+                                            @endforeach
+                                        </select>
+                                        @error('product') <p class='text-danger inputerror'>{{ $message }} </p> @enderror
                                         <div class="invalid-feedback">Please select a country</div>
                                     </div>
                                     <div class="col-xxl-3 col-md-6">
@@ -239,7 +239,7 @@
                                     </div>
                                     <div class="col-xxl-3 col-md-6">
                                         <div>
-                                           
+
                                             <button type="button" id="add-item" class="btn btn-success btn-label right ms-auto nexttab nexttab mt-4" data-nexttab="pills-experience-tab"><i class=" ri-add-line label-icon align-middle fs-16 ms-2"></i>Add Product</button>
                                         </div>
                                     </div>
@@ -263,7 +263,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    
+
                                                 </tbody>
                                             </table>
                                         </div>
@@ -272,11 +272,11 @@
 
                                 <hr class="my-4 text-muted">
 
-                               
+
                             </div>
                             <div class="d-flex align-items-start gap-3 mt-4">
                                 <button type="button" class="btn btn-light btn-label previestab" data-previous="steparrow-gen-info-tab"><i class="ri-arrow-left-line label-icon align-middle fs-16 me-2"></i> Back to Customer Info</button>
-                                <button type="submit" class="btn btn-primary waves-effect waves-light ms-auto" >Submit</button>
+                                <button type="submit" class="btn btn-primary waves-effect waves-light ms-auto">Submit</button>
                             </div>
                         </div>
                         <!-- end tab pane -->
@@ -284,9 +284,9 @@
                     </div>
                     <!-- end tab content -->
                 </form>
-                
+
             </div>
-            
+
             <!-- end card body -->
         </div>
         <!-- end card -->
@@ -369,7 +369,7 @@
                                                 <p class="fs-12 mb-0 text-muted">in KWD</p>
                                             </div>
                                         </td>
-        
+
                                         <td>
                                             <h6 class="mb-0" id="totalHandling2">- </h6>
                                         </td>
@@ -424,7 +424,7 @@
         </div>
 
         <!-- Modal -->
-        
+
         <!--end modal -->
     </div>
     <!-- end col -->
@@ -436,8 +436,8 @@
     //     document.querySelector('.step-1').style.display = 'none';
     //     document.querySelector('.step-2').style.display = 'block';
     // });
-    
-    document.getElementById('add-item').addEventListener('click', function () {
+
+    document.getElementById('add-item').addEventListener('click', function() {
         const tableBody = document.querySelector('#items-table tbody');
         const rowCount = tableBody.rows.length + 1;
         let errorMessage = '';
@@ -503,8 +503,8 @@
                     <button type="button" class="btn btn-sm btn-danger remove-item-btn"><i class="ri-delete-bin-2-line"></i></button>
                 </div></td>
             </tr>`;
-           
-            
+
+
             tableBody.insertAdjacentHTML('beforeend', newRow);
 
             conversion_calculation(rowCount);
@@ -520,20 +520,21 @@
             //     setTimeout(()=>{
             //         form.classList.remove('was-validated');
             //     },500)
-                
+
             // });
-                    
+
         }
-        
-        
+
+
     });
 
-    document.getElementById('items-table').addEventListener('click', function (e) {
+    document.getElementById('items-table').addEventListener('click', function(e) {
         if (e.target.classList.contains('remove-item-btn')) {
             e.target.closest('tr').remove();
         }
     });
-    function conversion_calculation(rowCount){
+
+    function conversion_calculation(rowCount) {
         let ManualPrice = 250;
         let CostManual = 530;
         let quantity = document.getElementById(`quantity`).value;
@@ -546,81 +547,83 @@
         document.getElementById(`items_${rowCount}_unitPrice`).value = unitPrice;
         document.getElementById(`items_${rowCount}_quantity`).value = quantity;
         document.getElementById(`items_${rowCount}_packagingInfo`).value = document.getElementById(`packagingInfo`).value;
-        
-        let unitMaterialPrice = (unitPrice / conversion_factor).toFixed(2);
+
+        let unitMaterialPrice = roundTo((unitPrice * conversion_factor), 3);
         document.getElementById(`items_${rowCount}_unitMaterialPrice`).value = unitMaterialPrice;
         document.getElementById(`label_items_${rowCount}_unitMaterialPrice`).innerHTML = unitMaterialPrice;
-      
 
-            let unitOtherCharges = (ManualPrice / quantity).toFixed(2);
-            let freight = (CostManual / quantity).toFixed(2);
-            if(modeofshipment == 'Air Freight'){
-                var freight_percent = 0.03;
-            }else if(modeofshipment == 'Sea Freight'){
-                var freight_percent = 0.04;
-            }
-            let unitLocalHandling = (unitMaterialPrice * parseFloat(freight_percent)).toFixed(2);
-            let customDuty = (unitMaterialPrice * 0.06).toFixed(2);
-            let bankCharges = (unitMaterialPrice * 0.09).toFixed(2);
-            let landedCost = (unitOtherCharges * 0.09).toFixed(2);
-            
-            let companyProfitMargin = ((unitMaterialPrice * (profitMargin_percent/100))).toFixed(2);
-            let sellingPrice = (parseFloat(landedCost) + parseFloat(companyProfitMargin)).toFixed(2);
-            
-            document.getElementById(`items_${rowCount}_unitOtherCharges`).value = unitOtherCharges;
-            document.getElementById(`items_${rowCount}_freight`).value = freight;
-            document.getElementById(`items_${rowCount}_unitLocalHandling`).value = unitLocalHandling;
-            document.getElementById(`items_${rowCount}_customDuty`).value = customDuty;
-            document.getElementById(`items_${rowCount}_bankCharges`).value = bankCharges;
-            document.getElementById(`items_${rowCount}_landedCost`).value = landedCost;
-            document.getElementById(`items_${rowCount}_companyProfitMargin`).value = companyProfitMargin;
-            document.getElementById(`items_${rowCount}_sellingPrice`).value = sellingPrice;
-            
-            document.getElementById(`label_items_${rowCount}_unitOtherCharges`).innerHTML = unitOtherCharges;
-            document.getElementById(`label_items_${rowCount}_freight`).innerHTML = freight;
-            document.getElementById(`label_items_${rowCount}_unitLocalHandling`).innerHTML = unitLocalHandling;
-            document.getElementById(`label_items_${rowCount}_customDuty`).innerHTML = customDuty;
-            document.getElementById(`label_items_${rowCount}_bankCharges`).innerHTML = bankCharges;
-            document.getElementById(`label_items_${rowCount}_landedCost`).innerHTML = landedCost;
-            document.getElementById(`label_items_${rowCount}_companyProfitMargin`).innerHTML = companyProfitMargin;
-            document.getElementById(`label_items_${rowCount}_sellingPrice`).innerHTML = sellingPrice;
-            
-            let totalSelling = (parseFloat(sellingPrice) * parseFloat(quantity)).toFixed(2); 
-            let totalMaterialPrice = (parseFloat(unitMaterialPrice) * parseFloat(quantity)).toFixed(2);
-            let totalOthercharges = (parseFloat(unitOtherCharges) * parseFloat(quantity)).toFixed(2);
-            let totalFreight = (parseFloat(freight) * parseFloat(quantity)).toFixed(2);
-            let totalHandling = (parseFloat(unitLocalHandling) * parseFloat(quantity)).toFixed(2);
-            let totalCustoms = (parseFloat(customDuty) * parseFloat(quantity)).toFixed(2); // Corrected totalCustoms calculation
-            let totalBankComm = (parseFloat(bankCharges) * parseFloat(quantity)).toFixed(2);
-            let totalCompanyMargin = (parseFloat(companyProfitMargin) * parseFloat(quantity)).toFixed(2);
 
-            document.getElementById(`items_${rowCount}_totalSelling`).value = totalSelling;
-            document.getElementById(`items_${rowCount}_totalMaterialPrice`).value = totalMaterialPrice;
-            document.getElementById(`items_${rowCount}_totalOthercharges`).value = totalOthercharges;
-            document.getElementById(`items_${rowCount}_totalFreight`).value = totalFreight;
-            document.getElementById(`items_${rowCount}_totalHandling`).value = totalHandling;
-            document.getElementById(`items_${rowCount}_totalCustoms`).value = totalCustoms;
-            document.getElementById(`items_${rowCount}_totalBankComm`).value = totalBankComm;
-            document.getElementById(`items_${rowCount}_totalCompanyMargin`).value = totalCompanyMargin;
-            
-           
+        let unitOtherCharges = roundTo((ManualPrice / quantity), 3);
+        let freight = roundTo((CostManual / quantity), 3);
+        if (modeofshipment == 'Air Freight') {
+            var freight_percent = 0.03;
+        } else if (modeofshipment == 'Sea Freight') {
+            var freight_percent = 0.04;
+        }
+        let unitLocalHandling = roundTo((unitMaterialPrice * parseFloat(freight_percent)), 3);
+        let customDuty = roundTo((unitMaterialPrice * 0.06), 3);
+        let bankCharges = roundTo((unitMaterialPrice * 0.09), 3);
+        let landedCost = (parseFloat(unitMaterialPrice) + parseFloat(unitOtherCharges) + parseFloat(freight) + parseFloat(unitLocalHandling) + parseFloat(customDuty) + parseFloat(bankCharges)).toFixed(3);
+        let companyProfitMargin = roundTo(((unitMaterialPrice * (profitMargin_percent / 100))), 3);
+        let sellingPrice = roundTo((parseFloat(landedCost) + parseFloat(companyProfitMargin)), 3);
+
+        document.getElementById(`items_${rowCount}_unitOtherCharges`).value = unitOtherCharges;
+        document.getElementById(`items_${rowCount}_freight`).value = freight;
+        document.getElementById(`items_${rowCount}_unitLocalHandling`).value = unitLocalHandling;
+        document.getElementById(`items_${rowCount}_customDuty`).value = customDuty;
+        document.getElementById(`items_${rowCount}_bankCharges`).value = bankCharges;
+        document.getElementById(`items_${rowCount}_landedCost`).value = landedCost;
+        document.getElementById(`items_${rowCount}_companyProfitMargin`).value = companyProfitMargin;
+        document.getElementById(`items_${rowCount}_sellingPrice`).value = sellingPrice;
+
+        document.getElementById(`label_items_${rowCount}_unitOtherCharges`).innerHTML = unitOtherCharges;
+        document.getElementById(`label_items_${rowCount}_freight`).innerHTML = freight;
+        document.getElementById(`label_items_${rowCount}_unitLocalHandling`).innerHTML = unitLocalHandling;
+        document.getElementById(`label_items_${rowCount}_customDuty`).innerHTML = customDuty;
+        document.getElementById(`label_items_${rowCount}_bankCharges`).innerHTML = bankCharges;
+        document.getElementById(`label_items_${rowCount}_landedCost`).innerHTML = landedCost;
+        document.getElementById(`label_items_${rowCount}_companyProfitMargin`).innerHTML = companyProfitMargin;
+        document.getElementById(`label_items_${rowCount}_sellingPrice`).innerHTML = sellingPrice;
+
+        let totalSelling = roundTo((parseFloat(sellingPrice) * parseFloat(quantity)), 3);
+        let totalMaterialPrice = roundTo((parseFloat(unitMaterialPrice) * parseFloat(quantity)), 3);
+        let totalOthercharges = roundTo((parseFloat(unitOtherCharges) * parseFloat(quantity)), 3);
+        let totalFreight = roundTo((parseFloat(freight) * parseFloat(quantity)), 3);
+        let totalHandling = roundTo((parseFloat(unitLocalHandling) * parseFloat(quantity)), 3);
+        let totalCustoms = roundTo((parseFloat(customDuty) * parseFloat(quantity)), 3); // Corrected totalCustoms calculation
+        let totalBankComm = roundTo((parseFloat(bankCharges) * parseFloat(quantity)), 3);
+        let totalCompanyMargin = roundTo((parseFloat(companyProfitMargin) * parseFloat(quantity)), 3);
+
+        document.getElementById(`items_${rowCount}_totalSelling`).value = totalSelling;
+        document.getElementById(`items_${rowCount}_totalMaterialPrice`).value = totalMaterialPrice;
+        document.getElementById(`items_${rowCount}_totalOthercharges`).value = totalOthercharges;
+        document.getElementById(`items_${rowCount}_totalFreight`).value = totalFreight;
+        document.getElementById(`items_${rowCount}_totalHandling`).value = totalHandling;
+        document.getElementById(`items_${rowCount}_totalCustoms`).value = totalCustoms;
+        document.getElementById(`items_${rowCount}_totalBankComm`).value = totalBankComm;
+        document.getElementById(`items_${rowCount}_totalCompanyMargin`).value = totalCompanyMargin;
+
+
     }
 
+    function roundTo(num, decimals) {
+        const factor = Math.pow(10, decimals); // Calculate the factor based on the desired decimals
+        return Math.round((num + Number.EPSILON) * factor) / factor;
+    }
 </script>
 <script>
-      
     document.addEventListener('DOMContentLoaded', function() {
         var currency = document.getElementById('currency');
 
         currency.addEventListener('change', function() {
-                var selectedcurrency = this.value;
-                // alert('Selected value: ' + selectedcurrency);
-                fetch(`/conversion/getConversion/${selectedcurrency}`, {
+            var selectedcurrency = this.value;
+            // alert('Selected value: ' + selectedcurrency);
+            fetch(`/conversion/getConversion/${selectedcurrency}`, {
                     method: 'GET'
                 })
                 .then(response => response.json())
                 .then(data => {
-                    var cf_value= 0;
+                    var cf_value = 0;
                     if (data.length > 0) {
                         var cf_value = data[0].cf_value;
                         var conversion_text = `1 KWD = ${cf_value} ${selectedcurrency}`;
@@ -643,20 +646,20 @@
         });
         var tooltipTimeout;
         // Show tooltip on mouseenter
-        tooltipTriggerEl.addEventListener('mouseenter', function () {
+        tooltipTriggerEl.addEventListener('mouseenter', function() {
             tooltip.show();
             clearTimeout(tooltipTimeout); // Cancel any previous timeout
         });
 
         // Prevent tooltip from closing on mouseleave
-        tooltipTriggerEl.addEventListener('mouseleave', function () {
+        tooltipTriggerEl.addEventListener('mouseleave', function() {
             // Optionally, keep the tooltip open for a period or add a condition to close it
-            setTimeout(function () {
+            setTimeout(function() {
                 tooltip.hide();
             }, 5000); // Keep it open for 5 seconds after mouse leaves
         });
         // Hide tooltip if clicked outside
-        document.addEventListener('click', function (event) {
+        document.addEventListener('click', function(event) {
             var isClickInside = tooltipTriggerEl.contains(event.target);
 
             if (!isClickInside) {
@@ -664,19 +667,17 @@
                 clearTimeout(tooltipTimeout); // Cancel any pending timeout if clicked outside
             }
         });
-      
+
     })
- 
+
 
     // document.addEventListener('DOMContentLoaded', function() {
     // document.getElementById('add-item').addEventListener('click', function() {
     //     conversion_calculation();
     // });
 
-  
-    // });
 
-    
+    // });
 </script>
 @endsection
 

@@ -25,15 +25,15 @@ class ExportXero implements FromCollection, WithHeadings, WithMapping
     {
         return [
             $cashflow->serialNo,
+            $cashflow->product_name,
             $cashflow->description,
-            $cashflow->description,
-            $cashflow->unitPrice,
+            $cashflow->unitMaterialPrice,
             "",
-            $cashflow->totalFreight,
+            $cashflow->freight,
             $cashflow->description,
-            $cashflow->unitPrice,
+            $cashflow->sellingPrice,
             "",
-            $cashflow->totalFreight,
+            $cashflow->freight,
             "",			
             ""		
         ];

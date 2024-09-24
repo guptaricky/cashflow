@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Cashflow;
+use Illuminate\Support\Facades\DB;
 
 class CashflowService
 {
@@ -10,23 +11,51 @@ class CashflowService
 
     public function search($filters)
     {
-            $this->results = Cashflow::when($filters['company'], function ($query, $company) {
-                return $query->where('company', 'LIKE', "%{$company}%");
+        $this->results = DB::table('cashflow_items as cfi')
+            ->select('*', 'c.name as customer_name', 'p.name as product_name')
+            ->leftjoin('cashflows as cf', 'cf.id', '=', 'cfi.cashflow_id')
+            ->leftjoin('customers as c', 'c.id', '=', 'cf.clientName')
+            ->leftjoin('products as p', 'p.id', '=', 'cfi.product')
+            ->when($filters['company'], function ($query, $company) {
+                return $query->where('cf.company', 'LIKE', "%{$company}%");
             })
             ->when($filters['department'], function ($query, $department) {
-                return $query->where('department', 'LIKE', "%{$department}%");
+                return $query->where('cf.department', 'LIKE', "%{$department}%");
             })
             ->when($filters['fromDate'] && $filters['toDate'], function ($query) use ($filters) {
-                return $query->whereBetween('date', [$filters['fromDate'], $filters['toDate']]);
+                return $query->whereBetween('cf.date', [$filters['fromDate'], $filters['toDate']]);
             })
-            ->orderBy('created_at', 'DESC')
+            ->when($filters['serialNo'], function ($query, $serialNo) {
+                return $query->where('cf.serialNo', '=', "{$serialNo}");
+            })
+            ->orderBy('cfi.created_at', 'DESC')
             ->get();
-       
+
         return $this->results;
     }
 
-    public function getResults()
+    public function getResults($filters)
     {
-        return $this->results = Cashflow::get();
+        $this->results = DB::table('cashflow_items as cfi')
+            ->select('*', 'c.name as customer_name', 'p.name as product_name')
+            ->leftjoin('cashflows as cf', 'cf.id', '=', 'cfi.cashflow_id')
+            ->leftjoin('customers as c', 'c.id', '=', 'cf.clientName')
+            ->leftjoin('products as p', 'p.id', '=', 'cfi.product')
+            ->when($filters['company'], function ($query, $company) {
+                return $query->where('cf.company', 'LIKE', "%{$company}%");
+            })
+            ->when($filters['department'], function ($query, $department) {
+                return $query->where('cf.department', 'LIKE', "%{$department}%");
+            })
+            ->when($filters['fromDate'] && $filters['toDate'], function ($query) use ($filters) {
+                return $query->whereBetween('cf.date', [$filters['fromDate'], $filters['toDate']]);
+            })
+            ->when($filters['serialNo'], function ($query, $serialNo) {
+                return $query->where('cf.serialNo', '=', "{$serialNo}");
+            })
+            ->orderBy('cfi.created_at', 'DESC')
+            ->get();
+
+        return $this->results;
     }
 }

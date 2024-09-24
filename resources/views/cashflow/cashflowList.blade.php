@@ -36,21 +36,28 @@
                     <div role="complementary" class="gridjs gridjs-container" style="width: 100%;">
                         <form action="javascript:void(0);">
                             <div class="row row-cols-lg-auto g-5 align-items-center">
-                                <div class="col-12">
+                            <div class="col-lg-2">
+                                    <label class="visually-hidden" for="serialNo">Serial No.</label>
+                                    <div class="input-group">
+                                        <!-- <div class="input-group-text">Serial No.</div> -->
+                                        <input type="text" class="form-control" id="serialNo" placeholder="Serial Number">
+                                    </div>
+                                </div><!--end col-->
+                                <div class="col-lg-3">
                                     <label class="visually-hidden" for="fromDate">From Date</label>
                                     <div class="input-group">
                                         <div class="input-group-text">From Date</div>
                                         <input type="date" class="form-control" id="fromDate">
                                     </div>
                                 </div><!--end col-->
-                                <div class="col-12">
+                                <div class="col-lg-3">
                                     <label class="visually-hidden" for="toDate">To Date</label>
                                     <div class="input-group">
                                         <div class="input-group-text">To Date</div>
                                         <input type="date" class="form-control" id="toDate">
                                     </div>
                                 </div><!--end col-->
-                                <div class="col-12">
+                                <div class="col-lg-2">
                                     <label class="visually-hidden" for="comapny">Company</label>
                                     <select class="form-select" id="company" >
                                         <option selected value="">Company</option>
@@ -59,7 +66,7 @@
                                         @endforeach
                                     </select>
                                 </div><!--end col-->
-                                <div class="col-12">
+                                <div class="col-lg-2">
                                     <label class="visually-hidden" for="department">Department</label>
                                     <select class="form-select" id="department">
                                         <option selected value="">Department</option>
@@ -84,8 +91,8 @@
                                     <tr class="gridjs-tr">
                                         <th data-column-id="id" class="gridjs-th" style="width: 50px;">#</th>
                                         <th data-column-id="serialno" class="gridjs-th" style="width: 120px;">Serial No</th>
-                                        {{-- <th data-column-id="product" class="gridjs-th" style="width: 120px;">Product</th> --}}
-                                        <th data-column-id="date" class="gridjs-th" style="width: 120px;">Date</th>
+                                        <th data-column-id="product" class="gridjs-th" style="width: 120px;">Product</th>
+                                        <th data-column-id="date" class="gridjs-th" style="width: 130px;">Date</th>
                                         <th data-column-id="clientname" class="gridjs-th" style="width: 200px;">client Name / Ref</th>
                                         <th data-column-id="department" class="gridjs-th" style="width: 200px;">Department</th>
                                         <th data-column-id="materialprice" class="gridjs-th" style="width: 200px;">Total Material Price(KWD)</th>
@@ -102,54 +109,19 @@
                                     @foreach($cashflows as $index => $cashflow)
                                     <tr class="gridjs-tr">
                                         <td data-column-id="sno" class="gridjs-td"><span><a href="" class="fw-medium">{{ $index + 1 }}</a></span></td>
-                                        <td data-column-id="serialno" class="gridjs-td"><a href="{{ route('cashflow.detail', ['id' => $cashflow->id] ) }}"><span class="badge text-bg-secondary">{{ $cashflow->serialNo }}</span></a></td>
-                                        {{-- <td data-column-id="date" class="gridjs-td">
-                                        @foreach ($cashflow->cashflowItems as $item)
-                                            {{ $item->product }}
-                                        @endforeach</td> --}}
+                                        <td data-column-id="serialno" class="gridjs-td"><a href="{{ route('cashflow.detail', ['id' => $cashflow->cashflow_items_id] ) }}"><span class="badge text-bg-secondary">{{ $cashflow->serialNo }}</span></a></td>
+                                        <td data-column-id="date" class="gridjs-td">{{ $cashflow->product_name }}</td>
                                         <td data-column-id="date" class="gridjs-td">{{ date("d-m-Y",strtotime($cashflow->date)) }}</td>
-                                        <td data-column-id="clientname" class="gridjs-td">{{ $cashflow->customer->name }}<p class="text-muted">{{ $cashflow->customer->ref_no }}</p></td>
+                                        <td data-column-id="clientname" class="gridjs-td">{{ $cashflow->customer_name }}<p class="text-muted">{{ $cashflow->ref_no }}</p></td>
                                         <td data-column-id="department" class="gridjs-td">{{ $cashflow->department }}</td>
-                                        <td data-column-id="materialprice" class="gridjs-td">
-                                            @foreach ($cashflow->cashflowItems as $item)
-                                                {{ $item->totalMaterialPrice }}</br>
-                                            @endforeach
-                                        </td>
-                                        <td data-column-id="othercharges" class="gridjs-td">
-                                            @foreach ($cashflow->cashflowItems as $item)
-                                            {{ $item->totalOthercharges }}</br>
-                                        @endforeach
-                                        </td>
-                                        <td data-column-id="freight" class="gridjs-td">
-                                            @foreach ($cashflow->cashflowItems as $item)
-                                            {{ $item->totalFreight }}</br>
-                                        @endforeach
-                                        </td>
-                                        <td data-column-id="handling" class="gridjs-td">
-                                            @foreach ($cashflow->cashflowItems as $item)
-                                            {{ $item->totalHandling }}</br>
-                                        @endforeach
-                                        </td>
-                                        <td data-column-id="customs" class="gridjs-td">
-                                            @foreach ($cashflow->cashflowItems as $item)
-                                            {{ $item->totalCustoms }}</br>
-                                        @endforeach
-                                        </td>
-                                        <td data-column-id="bankcomm" class="gridjs-td">
-                                            @foreach ($cashflow->cashflowItems as $item)
-                                            {{ $item->totalBankComm }}</br>
-                                        @endforeach
-                                        </td>
-                                        <td data-column-id="companymargin" class="gridjs-td">
-                                            @foreach ($cashflow->cashflowItems as $item)
-                                            {{ $item->totalCompanyMargin }}</br>
-                                        @endforeach
-                                        </td>
-                                        <td data-column-id="sellingcost" class="gridjs-td">
-                                            @foreach ($cashflow->cashflowItems as $item)
-                                            {{ $cashflow->totalOthercharges + $cashflow->totalCompanyMargin }}</br>
-                                        @endforeach
-                                        </td>
+                                        <td data-column-id="materialprice" class="gridjs-td">{{ $cashflow->totalMaterialPrice }}</td>
+                                        <td data-column-id="othercharges" class="gridjs-td">{{ $cashflow->totalOtherCharges }}</td>
+                                        <td data-column-id="freight" class="gridjs-td">{{ $cashflow->totalFreight }}</td>
+                                        <td data-column-id="handling" class="gridjs-td"> {{ $cashflow->totalHandling }}</td>
+                                        <td data-column-id="customs" class="gridjs-td">{{ $cashflow->totalCustoms }}</td>
+                                        <td data-column-id="bankcomm" class="gridjs-td">{{ $cashflow->totalBankComm }}</td>
+                                        <td data-column-id="companymargin" class="gridjs-td">{{ $cashflow->totalCompanyMargin }}</td>
+                                        <td data-column-id="sellingcost" class="gridjs-td">{{ $cashflow->totalSelling }}</td>
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -172,6 +144,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 function searchContent() {
+    var serialNo = $('#serialNo').val();
     var company = $('#company').val();
     var department = $('#department').val();
     var fromDate = $('#fromDate').val();
@@ -180,7 +153,7 @@ function searchContent() {
     $.ajax({
         url: "{{ route('cashflow.search') }}", // Backend script to handle the search query
         type: 'GET',
-        data: { company: company,department: department, fromDate: fromDate, toDate: toDate },
+        data: { serialNo: serialNo,company: company,department: department, fromDate: fromDate, toDate: toDate },
         success: function(data) {
             $('#results').html(data);
         },
@@ -190,13 +163,14 @@ function searchContent() {
     });
 }
 $('#exportBtn').on('click', function() {
+    var serialNo = $('#serialNo').val();
     var company = $('#company').val();
     var department = $('#department').val();
     var fromDate = $('#fromDate').val();
     var toDate = $('#toDate').val();
 
-    var queryParams = `company=${company}&department=${department}&fromDate=${fromDate}&toDate=${toDate}`;
-
+    var queryParams = `serialNo=${serialNo}&company=${company}&department=${department}&fromDate=${fromDate}&toDate=${toDate}`;
+    
     $.ajax({
         url: '/cashflow/export?' + queryParams,
         type: 'GET',
@@ -221,12 +195,13 @@ $('#exportBtn').on('click', function() {
     });
 });
 $('#exportBtnXero').on('click', function() {
+    var serialNo = $('#serialNo').val();
     var company = $('#company').val();
     var department = $('#department').val();
     var fromDate = $('#fromDate').val();
     var toDate = $('#toDate').val();
 
-    var queryParams = `company=${company}&department=${department}&fromDate=${fromDate}&toDate=${toDate}`;
+    var queryParams = `serialNo=${serialNo}&company=${company}&department=${department}&fromDate=${fromDate}&toDate=${toDate}`;
     // alert(queryParams)
     $.ajax({
         url: '/cashflow/exportXero?' + queryParams,
@@ -253,6 +228,7 @@ $('#exportBtnXero').on('click', function() {
 });
 
 function resetContent() {
+    $('#serialNo').val('');
     $('#company').val('');
     $('#department').val('');
     $('#fromDate').val('');

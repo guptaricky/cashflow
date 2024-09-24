@@ -30,17 +30,17 @@ class ExportCashflow implements FromCollection, WithHeadings, WithMapping
         return [
             $cashflow->serialNo,
             $cashflow->date,
-            $cashflow->clientName,
+            $cashflow->customer_name,
             $cashflow->company,
             $cashflow->department,
             $cashflow->totalMaterialPrice,
-            $cashflow->totalOthercharges,
+            $cashflow->totalOtherCharges,
             $cashflow->totalFreight,
             $cashflow->totalHandling,
             $cashflow->totalCustoms,
             $cashflow->totalBankComm,
             $cashflow->totalCompanyMargin,
-            $cashflow->totalOthercharges + $cashflow->totalCompanyMargin,
+            $cashflow->totalOtherCharges + $cashflow->totalCompanyMargin,
         ];
     }
 
